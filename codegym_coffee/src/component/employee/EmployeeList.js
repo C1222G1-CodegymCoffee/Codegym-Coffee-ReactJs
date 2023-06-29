@@ -37,12 +37,12 @@ export function EmployeeList() {
                         <tr key={index}>
                             {/*<td>{employee.account.id}</td>*/}
                             <td>{employee.nameEmployee}</td>
-                            <td>{employee.address}</td>
-                            <td>{employee.phoneNumber}</td>
-                            <td>{employee.email}</td>
-                            <td>{employee.gender}</td>
-                            <td>{employee.dateOfBirth}</td>
-                            <td>{employee.salary}</td>
+                            {/*<td>{employee.address}</td>*/}
+                            {/*<td>{employee.phoneNumber}</td>*/}
+                            {/*<td>{employee.email}</td>*/}
+                            {/*<td>{employee.gender}</td>*/}
+                            {/*<td>{employee.dateOfBirth}</td>*/}
+                            {/*<td>{employee.salary}</td>*/}
                         </tr>
 
                     )
