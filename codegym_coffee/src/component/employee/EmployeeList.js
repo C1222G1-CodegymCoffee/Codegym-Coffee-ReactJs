@@ -6,7 +6,7 @@ export function EmployeeList() {
     const findAll = async () => {
         const res = await employeeService.findAll()
         console.log(res)
-        setEmployeeList(res)
+        setEmployeeList(res.content)
     }
     useEffect(() => {
         findAll()
@@ -15,7 +15,7 @@ export function EmployeeList() {
 
     return (
         <>
-            <table className="table table-striped container tb">
+            <table className="table table-striped  tb">
                 <thead className="table-danger">
                 <tr>
                     <th>#</th>
@@ -32,20 +32,22 @@ export function EmployeeList() {
                 </tr>
                 </thead>
                 <tbody>
+
                 {
-                    employeeList.map((employee,index) =>
+                    employeeList.map((employee, index) => (
                         <tr key={index}>
-                            {/*<td>{employee.account.id}</td>*/}
+                            <td>{index+1}</td>
+                            <td>{employee.account.nameAccount}</td>
                             <td>{employee.nameEmployee}</td>
-                            {/*<td>{employee.address}</td>*/}
-                            {/*<td>{employee.phoneNumber}</td>*/}
-                            {/*<td>{employee.email}</td>*/}
-                            {/*<td>{employee.gender}</td>*/}
-                            {/*<td>{employee.dateOfBirth}</td>*/}
-                            {/*<td>{employee.salary}</td>*/}
+                            <td>{employee.address}</td>
+                            <td>{employee.phoneNumber}</td>
+                            <td>{employee.email}</td>
+                            <td>{employee.gender}</td>
+                            <td>{employee.dateOfBirth}</td>
+                            <td>{employee.salary}</td>
                         </tr>
 
-                    )
+                    ))
                 }
                 </tbody>
             </table>
