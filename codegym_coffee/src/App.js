@@ -3,13 +3,17 @@ import {Header} from "./component/Homepage/Header";
 import React from "react";
 import {Routes, Route} from 'react-router-dom'
 import {BackgroundHeader} from "./component/Homepage/BackgroundHeader";
+import {HomePage} from "./component/Homepage/HomePage";
+import Login from "./component/login/Login";
 
 
 function App() {
   return (
       <>
-         <Header/>
-         <BackgroundHeader/>
+            <Routes>
+                <Route path="/login" element={<Login/>}></Route>
+                <Route path="/" element={<HomePage/>}></Route>
+            </Routes>
       </>
   );
 }
