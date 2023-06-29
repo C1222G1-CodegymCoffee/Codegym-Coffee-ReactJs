@@ -1,0 +1,68 @@
+*{
+    font-family: "Roboto Light";
+    margin: 0;
+    padding: 0;
+}
+body{
+    /*background-color: #5d452c;*/
+    /*padding-bottom:20px;*/
+}
+.button-movie {
+    background-color: #d7c1ab;
+    width: 70px;
+    color: #ffffff;
+    padding: 5px;
+    text-align: center;
+    margin-right: 10px;
+    padding-right: 5px;
+    border-radius: 10px;
+}
+#a{
+    padding: 2%;
+    background-color: #d7c1ab;
+    border: #d7c1ab;
+}
+.row{padding-left: 5%;}
+#b{
+    padding:2%;
+    border: 2px solid #d7c1ab;
+    background-color: white;
+}
+.button-movie:hover {
+    transform: scale(1.05);
+}
+
+ul li{
+    list-style-type: none;
+}
+.quynh-app-menu {
+    margin-bottom: 0;
+    padding-bottom: 40px;
+
+}
+.quynh-app-menu__item {
+    display: flex;
+    border: 1px solid rgb(22 22 72);
+    border-radius: .375rem;
+    margin-bottom: 10px;
+    padding: 15px;
+    font-size: 1.08em;
+    text-decoration: none;
+    color: black;
+
+}
+
+.quynh-app-menu__item:hover{
+    background: #eedac6;
+    text-decoration: none;
+    color: rgb(22 22 72);
+    box-shadow: none;
+    border: 1px solid rgb(22 22 72);
+}
+.quynh-app-menu__label {
+    padding-left: 7px;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+}
