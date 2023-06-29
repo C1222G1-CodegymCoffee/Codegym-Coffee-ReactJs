@@ -6,12 +6,18 @@ import {Field} from "formik";
 export const ListFeedback = () => {
     const navigate = useNavigate();
     const [feedbacks, setFeedbacks] = useState(null);
+    const [showModal, setShowModal] = useState(false);
 
     const getListFeedback = async () => {
         const listFeedback = await findAll();
         setFeedbacks(listFeedback.content);
         console.log(listFeedback)
     }
+
+    // const handleShowModal = (feedback) => {
+    //     setSelectedFeedback(feedback);
+    //     setShowModal(true);
+    // };
 
     useEffect(() => {
         getListFeedback();
@@ -66,6 +72,7 @@ export const ListFeedback = () => {
                                     <td>{feedback.email}</td>
                                     <td>{feedback.content.length > 15 ? feedback.content.slice(0,15) + "..." : feedback.content}</td>
                                     <button className="btn btn-primary d-none d-sm-table-cell"
+                                            // onClick={() => handleShowModal(feedback)}
                                             data-bs-target="#exampleModal" data-bs-toggle="modal" type="button">
                                         <svg className="bi bi-eye-fill" fill="currentColor" style={{height: 16, width: 16}}
                                              viewBox="0 0 16 16"
@@ -101,7 +108,7 @@ export const ListFeedback = () => {
                                                         <label className="fs-5" htmlFor="">STT: </label>
                                                     </th>
                                                     <td scope="row">
-                                                        {index + 1}
+                                                        {/*{index + 1}*/}
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -110,7 +117,7 @@ export const ListFeedback = () => {
                                                             hồi: </label>
                                                     </th>
                                                     <td>
-                                                        {feedback.codeFeedback}
+                                                        {/*{feedback.codeFeedback}*/}
                                                     </td>
                                                 </tr>
                                                 <tr>
