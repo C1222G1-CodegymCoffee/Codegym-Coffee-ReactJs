@@ -24,15 +24,8 @@ header {
 }
 body {
     background-image: url('bg_01.png');
-    z-index: 1;
-    min-height: 100vh;
-    position: relative;
-    background-size: cover;
-    background-color: #eceae3;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-position: center center
 }
+
 @media (max-width: 1080px) {
     body {
         background-size: contain;
@@ -112,7 +105,7 @@ header.sticky .menu-toggle .bar {
     transition: 0.4s;
 }
 
-@media (max-width: 1078px) {
+@media (max-width: 1079.2px) {
     header .menu-toggle {
         display: flex;
     }
@@ -121,8 +114,8 @@ header.sticky .menu-toggle .bar {
         display: none;
         position: absolute;
         top: 100%;
-        left: -36px;
-        width: 100%;
+        left: -87px;
+        width: 200px;
         padding: 20px;
         text-align: center;
         transition: 0.6s;
