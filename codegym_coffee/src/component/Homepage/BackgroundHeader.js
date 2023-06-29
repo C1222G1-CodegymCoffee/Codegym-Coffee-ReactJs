@@ -8,7 +8,9 @@ export const BackgroundHeader = () => {
                 <img src="/Homepage/img_01.png" alt="Banner Image" className="body_wrap" />
             </div>
             <div className="content">
-                <h1>Đây là nội dung bên trái</h1>
+                <h1 className='h1_content'>
+                    <strong className="h1_strong">CODEGYM</strong> <span className='span_content'>COFFEE</span>
+                </h1>
             </div>
         </div>
     );

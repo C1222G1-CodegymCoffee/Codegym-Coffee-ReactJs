@@ -5,6 +5,48 @@
     text-align: center;
     margin-top: 28%;
 }
+.h1_content{
+    font-size: 32px;
+    margin-bottom: 50px;
+}
+.h1_strong{
+    display: block;
+    line-height: 1;
+    font-size: 77px;
+    font-weight: 600;
+    letter-spacing: 3px;
+}
+@media (max-width: 412px) {
+    .h1_strong {
+        font-size: 60px;
+    }
+}
+@media (max-width: 412px) {
+    .span_content{
+        font-size: 50px;
+    }
+}
+.span_content{
+    z-index: 1;
+    position: relative;
+    color: #c7a17a;
+    display: inline-block;
+    font-size: 74px;
+    font-weight: 600;
+}
+.span_content:before{
+    top: 100%;
+    left: 50%;
+    content: "";
+    width: 230px;
+    height: 50px;
+    position: absolute;
+    background-size: auto;
+    transform: translateX(-50%);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url("shape_02.png");
+}
 
 .banner_image {
     margin-top: 32px;
@@ -18,6 +60,9 @@
 
 .content {
     margin-top: 32px;
+    padding: 4px;
+    box-sizing: border-box;
+    font-family: 'Poppins';
 }
 
 @keyframes updown {
@@ -33,7 +78,7 @@
     .container {
         flex-direction: row;
         justify-content: center;
-        text-align: left;
+        text-align: center;
         margin-top: 9%;
     }
 
