@@ -23,22 +23,28 @@ header {
     z-index: 100000;
 }
 body {
-    background-image: url('bg_01.png');
+    background-image: url('bg1.png');
     z-index: 1;
-    min-height: 100vh;
     position: relative;
-    background-size: cover;
-    background-color: #eceae3;
+    background-size: 100% 100%;
     background-attachment: fixed;
     background-repeat: no-repeat;
-    background-position: center center
+    background-position: center center;
 }
+
+
 @media (max-width: 1080px) {
     body {
-        background-size: contain;
+        background-image: url('bg1.png');
+        background-size: 100% 100%;
+        z-index: 1;
+        position: relative;
+        background-attachment: fixed;
         background-repeat: no-repeat;
+        background-position:  center;
     }
 }
+
 
 header.sticky {
     padding: 5px 100px;
@@ -112,7 +118,7 @@ header.sticky .menu-toggle .bar {
     transition: 0.4s;
 }
 
-@media (max-width: 1078px) {
+@media (max-width: 1080px) {
     header .menu-toggle {
         display: flex;
     }
@@ -121,8 +127,8 @@ header.sticky .menu-toggle .bar {
         display: none;
         position: absolute;
         top: 100%;
-        left: -36px;
-        width: 100%;
+        left: -87px;
+        width: 200px;
         padding: 20px;
         text-align: center;
         transition: 0.6s;
