@@ -19,6 +19,8 @@ function List() {
     const [totalPages, setTotalPages] = useState(0);
     const [totalElements, setTotalElements] = useState(0);
 
+
+
     const getListBill = async () => {
         const listBill = await findAll();
         setBill(listBill.content);
@@ -44,19 +46,26 @@ function List() {
     }, [currentPage])
 
 // lấy id chi tiết
-    const [creator, setCreator] = useState('')
+    const [creatorr, setCreator] = useState('')
     const [table, setTable] = useState('')
     const [content, setContent] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
     const [price, setPrice] = useState('')
+    const [emailFeedback, setEmailFeedback] = useState('')
+
+    const formattedPrice = new Intl.NumberFormat().format(price);
+    const formattedSalary = new Intl.NumberFormat().format();
 
 
-    function handleShowModal(id, tableBill, contentBill,  priceDetailBill,phoneNumberBill, nameCreator) {
+
+    function handleShowModal(nameCreator, tableBill, contentBill, priceDetailBill, phoneNumberBill, emailFeedback) {
         setCreator(nameCreator);
         setTable(tableBill);
         setContent(contentBill);
         setPhoneNumber(phoneNumberBill);
         setPrice(priceDetailBill);
+        setEmailFeedback(emailFeedback);
+
     }
 
     return (
@@ -128,7 +137,7 @@ function List() {
                                 <th>STT</th>
                                 <th>Mã hoá đơn</th>
                                 <th>Ngày tạo</th>
-                                <th>Tên khách hàng</th>
+                                <th>Tên Nhân Viên</th>
                                 <th>Email</th>
                                 <th>Tổng tiền</th>
                                 <th>Chi tiết</th>
@@ -153,7 +162,8 @@ function List() {
                                                     bills.tableCoffee.nameTable,
                                                     bills.feedback.content,
                                                     bills.billDetail.quantityOfProduct,
-                                                    bills.employee.phoneNumber
+                                                    bills.employee.phoneNumber,
+                                                    bills.feedback.email
                                                 )}>
                                                 <img width="20" height="20"
                                                      src="https://img.icons8.com/color/48/bulleted-list.png"
@@ -269,7 +279,7 @@ function List() {
                                 <div className="row">
                                     <div className="col-md-12">
                                         <p className="text-muted">
-                                            Tên khách hàng: <strong>{creator}</strong>
+                                            Tên khách hàng: <strong>{creatorr}</strong>
                                         </p>
                                         <p className="text-muted">
                                             Số bàn: <strong>{table}</strong>
@@ -282,10 +292,10 @@ function List() {
                                         </p>
 
                                         <p className="text-muted">
-                                            Tổng tiền: <strong>{price} VND</strong>
+                                            Tổng tiền: <strong>{formattedPrice} VND</strong>
                                         </p>
                                         <p className="text-muted">
-                                            Email: <strong>daupkaiemckuatung@gmail.com</strong>
+                                            Email: <strong>{emailFeedback}</strong>
                                         </p>
                                     </div>
                                 </div>
