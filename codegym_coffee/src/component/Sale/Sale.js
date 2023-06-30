@@ -1,5 +1,35 @@
 import "./sale.css";
+import {useEffect, useState} from "react";
+import axios from "axios";
+import saleAPI from "../service_API/sale";
+const positionStatus = {
+    0: 'unavailable',
+    1: 'available',
+    2: 'sell',
+};
+const seatRows = ["T1", "T2", "T3", "T4", "T5"];
 export function Sale() {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/api/sale/list")
+            .then(response => {
+                console.log(response);
+                setData(response.data);
+            })
+            .catch(error => {
+                console.error("Error fetching API:", error);
+            });
+    }, []);
+    useEffect(() => {
+        const listSale= ()=> {
+            const result = saleAPI.findAll();
+            setData(result.data)
+        }
+        listSale()
+    },[])
+
+    console.log(data)
     return (
         <>
             <div className="container-lg">
