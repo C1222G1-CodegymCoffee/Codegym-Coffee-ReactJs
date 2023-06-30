@@ -1,12 +1,29 @@
 import {useNavigate} from "react-router";
 import React, {useEffect, useState} from "react";
 import {findAll} from "../../service/feedback/FeedbackService";
-import {Field} from "formik";
+import ReactPaginate from "react-paginate";
+import {Axios as axios} from "axios";
 
 export const ListFeedback = () => {
     const navigate = useNavigate();
-    const [feedbacks, setFeedbacks] = useState(null);
+    const [feedbacks, setFeedbacks] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [dbData, setDbData] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [data, setData] = useState([]);
+
+
+    const [itemsPerPage, setItemsPerPage] = useState(10);
+    const [feedbackList, setFeedbackList] = useState([]);
+
+    const pageSize = 10;
+    // const totalPages = Math.ceil(feedbacks?.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentFeedback = feedbacks?.slice(startIndex, endIndex);
+    const [totalPages, setTotalPages] = useState(0);
+    const [totalElements, setTotalElements] = useState(0);
+
 
     const getListFeedback = async () => {
         const listFeedback = await findAll();
@@ -14,15 +31,30 @@ export const ListFeedback = () => {
         console.log(listFeedback)
     }
 
-    // const handleShowModal = (feedback) => {
-    //     setSelectedFeedback(feedback);
-    //     setShowModal(true);
-    // };
+
+    const fetchData = async (page) => {
+        try {
+            const result = await axios.get(`http://localhost:8080/api/admin/feedback?page=${page}&size=${itemsPerPage}`);
+            setData(result.data.content);
+            setTotalPages(result.data.totalPages);
+            setTotalElements(result.data.totalElements);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
 
     useEffect(() => {
         getListFeedback();
+        fetchData(currentPage);
 
-    }, [])
+    }, [currentPage])
+
+
+
     return (
         <>
             <div>
@@ -173,6 +205,85 @@ export const ListFeedback = () => {
                             </div>
                         </div>
                     </div>
+
+                    {/*Phân trang*/}
+                    {/*<nav*/}
+                    {/*    className="d-flex justify-content-center"*/}
+                    {/*    aria-label="Page navigation example"*/}
+                    {/*>*/}
+                    {/*    <div>*/}
+                    {/*        <ul className="pagination">*/}
+                    {/*            <li className="page-item">*/}
+                    {/*                <button*/}
+                    {/*                    className="page-link"*/}
+                    {/*                    style={{*/}
+                    {/*                        border: "none",*/}
+                    {/*                        backgroundColor: "#daeae9",*/}
+                    {/*                        color: "#1d1d1c"*/}
+                    {/*                    }}*/}
+                    {/*                    disabled={currentPage === 1}*/}
+                    {/*                    onClick={() => handlePageChange(currentPage - 1)}*/}
+                    {/*                >*/}
+                    {/*                    Trước*/}
+                    {/*                </button>*/}
+                    {/*            </li>*/}
+                    {/*            <li className="page-item" style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>*/}
+                    {/*                {[...Array(totalPages)].map((_, i) => (*/}
+                    {/*                    <button*/}
+                    {/*                        key={i}*/}
+                    {/*                        className={`page-link ${currentPage === i + 1 ? 'active' : ''}`}*/}
+                    {/*                        onClick={() => handlePageChange(i + 1)}*/}
+                    {/*                        className="page-link"*/}
+                    {/*                        style={{*/}
+                    {/*                            border: "none",*/}
+                    {/*                            backgroundColor: "#daeae9",*/}
+                    {/*                            color: "#1d1d1c"*/}
+                    {/*                        }}*/}
+                    {/*                    >*/}
+                    {/*                        {i + 1}*/}
+                    {/*                    </button>*/}
+                    {/*                ))}*/}
+                    {/*            </li>*/}
+                    {/*            <li className="page-item">*/}
+                    {/*                <button*/}
+                    {/*                    disabled={currentPage === totalPages}*/}
+                    {/*                    onClick={() => handlePageChange(currentPage + 1)}*/}
+                    {/*                    className="page-link"*/}
+                    {/*                    href="#"*/}
+                    {/*                    style={{*/}
+                    {/*                        border: "none",*/}
+                    {/*                        backgroundColor: "#daeae9",*/}
+                    {/*                        color: "#1d1d1c"*/}
+                    {/*                    }}*/}
+                    {/*                >*/}
+                    {/*                    Sau*/}
+                    {/*                </button>*/}
+                    {/*            </li>*/}
+                    {/*        </ul>*/}
+                    {/*    </div>*/}
+                    {/*</nav>*/}
+
+                    <div className=" d-flex justify-content-center">
+                        {/*<ReactPaginate*/}
+                        {/*    previousLabel="Trước"*/}
+                        {/*    nextLabel="Sau"*/}
+                        {/*    pageCount={pageCount}*/}
+                        {/*    onPageChange={handlePageClick}*/}
+                        {/*    containerClassName="pagination"*/}
+                        {/*    previousClassName="page-item"*/}
+                        {/*    previousLinkClassName="page-link"*/}
+                        {/*    nextClassName="page-item"*/}
+                        {/*    nextLinkClassName="page-link"*/}
+                        {/*    pageClassName="page-item"*/}
+                        {/*    pageLinkClassName="page-link"*/}
+                        {/*    activeClassName="active"*/}
+                        {/*    activeLinkClassName="page-link"*/}
+                        {/*    forcePage={currentPage}*/}
+                        {/*    pageRangeDisplayed={2} // Hiển thị 3 trang trên mỗi lần render*/}
+                        {/*    marginPagesDisplayed={1} // Hiển thị 1 trang ở đầu và cuối danh sách trang*/}
+                        {/*/>*/}
+                    </div>
+
                 </div>
             </div>
         </>
