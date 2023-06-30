@@ -8,6 +8,11 @@ const positionStatus = {
     2: 'sell',
 };
 const seatRows = ["T1", "T2", "T3", "T4", "T5"];
+
+function handlerSelecting(seatId, status) {
+
+}
+
 export function Sale() {
     const [data, setData] = useState([]);
 
@@ -28,8 +33,19 @@ export function Sale() {
         }
         listSale()
     },[])
-
+    useEffect()
     console.log(data)
+    const allSeatByRow = data.map((table) => ({
+        rowLabel: table.nameTable,
+        positions: [
+            {
+                seatId: table.idTable,
+                name: table.nameTable,
+                status: table.status,
+            },
+        ],
+    }));
+    const listSelecting = [];
     return (
         <>
             <div className="container-lg">
@@ -38,7 +54,27 @@ export function Sale() {
                         <div className="select-position-wrapper">
                             <h3 className="title text-center">Quản lý bán hàng</h3>
                             <div className="position-pick">
-                                <div className="situations" />
+                                <div className="situations">
+                                    {allSeatByRow.map((row) => (
+                                        <div key={row.rowLabel} className="d-flex justify-content-around">
+                                            <div className="row-label">{row.rowLabel}</div>
+                                            <div className="row-positions d-flex">
+                                                {row.positions.map((p) => (
+                                                    <div
+                                                        key={p.seatId}
+                                                        className={`position-item ${
+                                                            positionStatus[p.status]
+                                                        } ${listSelecting.includes(p.seatId) ? "selecting" : ""}`}
+                                                        onClick={() => handlerSelecting(p.seatId, p.status)}
+                                                    >
+                                                        {p.name.slice(1)}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <div className="row-label">{row.rowLabel}</div>
+                                        </div>
+                                    ))}
+                                </div>
                                 <div className="position-info row d-flex justify-content-center">
                                     <div className="col-8 col-md-12 col-sm-12">
                                         <div className="row">
