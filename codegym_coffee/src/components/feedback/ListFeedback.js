@@ -1,20 +1,17 @@
-import {useNavigate} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import React, {useEffect, useState} from "react";
 import {findAll} from "../../service/feedback/FeedbackService";
-import ReactPaginate from "react-paginate";
 import {Axios as axios} from "axios";
+
 
 export const ListFeedback = () => {
     const navigate = useNavigate();
     const [feedbacks, setFeedbacks] = useState([]);
-    const [showModal, setShowModal] = useState(false);
-    const [dbData, setDbData] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [data, setData] = useState([]);
 
 
     const [itemsPerPage, setItemsPerPage] = useState(10);
-    const [feedbackList, setFeedbackList] = useState([]);
 
     const pageSize = 10;
     // const totalPages = Math.ceil(feedbacks?.length / itemsPerPage);
@@ -23,7 +20,6 @@ export const ListFeedback = () => {
     const currentFeedback = feedbacks?.slice(startIndex, endIndex);
     const [totalPages, setTotalPages] = useState(0);
     const [totalElements, setTotalElements] = useState(0);
-
 
     const getListFeedback = async () => {
         const listFeedback = await findAll();
@@ -42,6 +38,22 @@ export const ListFeedback = () => {
             console.log(error);
         }
     };
+// lấy id chi tiết
+    const [code, setCode] = useState('')
+    const [day, setDay] = useState('')
+    const [people, setPeople] = useState('')
+    const [email, setEmail] = useState('')
+    const [content, setContent] = useState('')
+    const [img, setIMG] = useState('')
+
+    function handleShowModal(id, codeFeedback, dayOfFeedback, creator, email, content, image) {
+        setCode(codeFeedback);
+        setDay(dayOfFeedback);
+        setPeople(creator)
+        setEmail(email)
+        setContent(content)
+        setIMG(image)
+    }
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
@@ -52,7 +64,6 @@ export const ListFeedback = () => {
         fetchData(currentPage);
 
     }, [currentPage])
-
 
 
     return (
@@ -95,18 +106,19 @@ export const ListFeedback = () => {
                         </thead>
                         <tbody>
                         {feedbacks?.map((feedback, index) => {
-                            return(
+                            return (
                                 <tr key={feedback.idFeedback}>
                                     <td scope="row">{index + 1}</td>
                                     <td>{feedback.codeFeedback}</td>
                                     <td>{feedback.dayOfFeedback}</td>
                                     <td>{feedback.creator}</td>
                                     <td>{feedback.email}</td>
-                                    <td>{feedback.content.length > 15 ? feedback.content.slice(0,15) + "..." : feedback.content}</td>
+                                    <td>{feedback.content.length > 15 ? feedback.content.slice(0, 15) + "..." : feedback.content}</td>
                                     <button className="btn btn-primary d-none d-sm-table-cell"
-                                            // onClick={() => handleShowModal(feedback)}
+                                            onClick={() => handleShowModal(feedback.id, feedback.codeFeedback, feedback.dayOfFeedback, feedback.creator, feedback.email, feedback.content, feedback.image)}
                                             data-bs-target="#exampleModal" data-bs-toggle="modal" type="button">
-                                        <svg className="bi bi-eye-fill" fill="currentColor" style={{height: 16, width: 16}}
+                                        <svg className="bi bi-eye-fill" fill="currentColor"
+                                             style={{height: 16, width: 16}}
                                              viewBox="0 0 16 16"
                                              xmlns="http://www.w3.org/2000/svg">
                                             <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
@@ -126,8 +138,8 @@ export const ListFeedback = () => {
                             <div className="modal-content">
                                 <div className="modal-header">
                                     <h5 className="modal-title" id="exampleModalLabel"
-                                        style = {{fontWeight: "bold"}}>Thông tin
-                                        phản hồi</h5>
+                                        style={{fontWeight: "bold"}}>Thông tin
+                                        phản hồi của <span>{people}</span></h5>
                                     <button aria-label="Close" className="btn-close" data-bs-dismiss="modal"
                                             type="button"></button>
                                 </div>
@@ -137,60 +149,52 @@ export const ListFeedback = () => {
                                             <table className="">
                                                 <tr>
                                                     <th>
-                                                        <label className="fs-5" htmlFor="">STT: </label>
-                                                    </th>
-                                                    <td scope="row">
-                                                        {/*{index + 1}*/}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>
-                                                        <label className="fs-5" htmlFor="">Mã số phản
+                                                        <label className="fs-5" style={{paddingRight:"5rem", paddingLeft:"5rem"}} htmlFor="">Mã số phản
                                                             hồi: </label>
                                                     </th>
                                                     <td>
-                                                        {/*{feedback.codeFeedback}*/}
+                                                        {code}
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th>
-                                                        <label className="fs-5" htmlFor="">Ngày phản
+                                                        <label className="fs-5" style={{paddingLeft:"5rem"}} htmlFor="">Ngày phản
                                                             hồi: </label>
                                                     </th>
                                                     <td>
-                                                        20/10/2021
+                                                        {day}
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th>
-                                                        <label className="fs-5" htmlFor="">Người tạo: </label>
+                                                        <label className="fs-5" style={{paddingLeft:"5rem"}} htmlFor="">Người tạo: </label>
                                                     </th>
                                                     <td>
-                                                        Nguyễn Văn A
+                                                        {people}
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th>
-                                                        <label className="fs-5" htmlFor="">Email: </label>
+                                                        <label className="fs-5" style={{paddingLeft:"5rem"}} htmlFor="">Email: </label>
                                                     </th>
                                                     <td>
-                                                        abc@gmail.com
+                                                        {email}
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th>
-                                                        <label className="fs-5" htmlFor="">Phản hồi: </label>
+                                                        <label className="fs-5" style={{paddingLeft:"5rem"}} htmlFor="">Phản hồi: </label>
                                                     </th>
                                                     <td>
-                                                        Đồ uống ngon
+                                                        {content}
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th>
-                                                        <label className="fs-5" htmlFor="">Hình ảnh: </label>
+                                                        <label className="fs-5" style={{paddingLeft:"5rem"}} htmlFor="">Hình ảnh: </label>
                                                     </th>
                                                     <td>
-
+                                                        {img}
                                                     </td>
                                                 </tr>
                                             </table>
@@ -207,61 +211,6 @@ export const ListFeedback = () => {
                     </div>
 
                     {/*Phân trang*/}
-                    {/*<nav*/}
-                    {/*    className="d-flex justify-content-center"*/}
-                    {/*    aria-label="Page navigation example"*/}
-                    {/*>*/}
-                    {/*    <div>*/}
-                    {/*        <ul className="pagination">*/}
-                    {/*            <li className="page-item">*/}
-                    {/*                <button*/}
-                    {/*                    className="page-link"*/}
-                    {/*                    style={{*/}
-                    {/*                        border: "none",*/}
-                    {/*                        backgroundColor: "#daeae9",*/}
-                    {/*                        color: "#1d1d1c"*/}
-                    {/*                    }}*/}
-                    {/*                    disabled={currentPage === 1}*/}
-                    {/*                    onClick={() => handlePageChange(currentPage - 1)}*/}
-                    {/*                >*/}
-                    {/*                    Trước*/}
-                    {/*                </button>*/}
-                    {/*            </li>*/}
-                    {/*            <li className="page-item" style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>*/}
-                    {/*                {[...Array(totalPages)].map((_, i) => (*/}
-                    {/*                    <button*/}
-                    {/*                        key={i}*/}
-                    {/*                        className={`page-link ${currentPage === i + 1 ? 'active' : ''}`}*/}
-                    {/*                        onClick={() => handlePageChange(i + 1)}*/}
-                    {/*                        className="page-link"*/}
-                    {/*                        style={{*/}
-                    {/*                            border: "none",*/}
-                    {/*                            backgroundColor: "#daeae9",*/}
-                    {/*                            color: "#1d1d1c"*/}
-                    {/*                        }}*/}
-                    {/*                    >*/}
-                    {/*                        {i + 1}*/}
-                    {/*                    </button>*/}
-                    {/*                ))}*/}
-                    {/*            </li>*/}
-                    {/*            <li className="page-item">*/}
-                    {/*                <button*/}
-                    {/*                    disabled={currentPage === totalPages}*/}
-                    {/*                    onClick={() => handlePageChange(currentPage + 1)}*/}
-                    {/*                    className="page-link"*/}
-                    {/*                    href="#"*/}
-                    {/*                    style={{*/}
-                    {/*                        border: "none",*/}
-                    {/*                        backgroundColor: "#daeae9",*/}
-                    {/*                        color: "#1d1d1c"*/}
-                    {/*                    }}*/}
-                    {/*                >*/}
-                    {/*                    Sau*/}
-                    {/*                </button>*/}
-                    {/*            </li>*/}
-                    {/*        </ul>*/}
-                    {/*    </div>*/}
-                    {/*</nav>*/}
 
                     <div className=" d-flex justify-content-center">
                         {/*<ReactPaginate*/}
