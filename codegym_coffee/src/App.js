@@ -5,14 +5,16 @@ import {Routes, Route} from 'react-router-dom'
 import {BackgroundHeader} from "./component/Homepage/BackgroundHeader";
 import {HomePage} from "./component/Homepage/HomePage";
 import {EmployeeList} from "./component/employee/EmployeeList";
+import {AddEmployee} from "./component/employee/AddEmployee";
 
 
 function App() {
   return (
       <>
             <Routes>
-                {/*<Route path="/" element={<HomePage/>}></Route>*/}
-                <Route path="/" element={<EmployeeList/>}/>
+                <Route path="/" element={<HomePage/>}/>
+                <Route path="/employee" element={<EmployeeList/>}/>
+                <Route path="/employee/addEmployee" element={<AddEmployee/>}/>
             </Routes>
       </>
   );
