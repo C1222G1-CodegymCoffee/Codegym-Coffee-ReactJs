@@ -1,0 +1,158 @@
+
+.form-holder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.form-items {
+  border: 3px solid #fff;
+  padding: 40px;
+  width: 100%;
+  min-width: 540px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  text-align: left;
+  -webkit-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+  height: 100%;
+  background: darkgray;
+  overflow: hidden;
+}
+.form-button #button{
+  text-align: center;
+}
+
+.title {
+  font-family: "Roboto Light";
+  text-align: left;
+  font-size: 42px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.title-p {
+  font-family: "Roboto Light";
+  text-align: left;
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 20px;
+  margin-bottom: 30px;
+}
+
+.input-feedback {
+  width: 100%;
+  padding: 9px 20px;
+  text-align: left;
+  background-color: white;
+  font-size: 15px;
+  margin-top: 16px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+}
+
+.button-submit {
+  padding: 8px 20px;
+  border-radius: 50px;
+  border: 0;
+  background-color: #8C6842;
+  box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+  letter-spacing: 1.5px;
+  font-size: 15px;
+  transition: all .5s ease;
+}
+
+.button-cancel {
+  padding: 8px 20px;
+  border-radius: 50px;
+  border: 0;
+  background-color: #B29A81;
+  box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+  letter-spacing: 1.5px;
+  font-size: 15px;
+  transition: all .5s ease;
+}
+.button-cancel:hover {
+  background-color: hsl(261deg 80% 48%);
+  color: hsl(0, 0%, 100%);
+  box-shadow: rgb(93 24 220) 0px 7px 29px 0px;
+}
+
+.button-submit:hover {
+  background-color: hsl(261deg 80% 48%);
+  color: hsl(0, 0%, 100%);
+  box-shadow: rgb(93 24 220) 0px 7px 29px 0px;
+}
+
+.rate{
+
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+
+}
+
+
+
+.rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center
+}
+.rate p{
+  font-weight: 600;
+  margin-bottom: 0!important;
+}
+
+.rating>input {
+  display: none
+}
+
+.rating>label {
+  position: relative;
+  width: 1em;
+  font-size: 30px;
+  font-weight: 300;
+  color: #FFD600;
+  cursor: pointer
+}
+
+.rating>label::before {
+  content: "\2605";
+  position: absolute;
+  opacity: 0
+}
+
+.rating>label:hover:before,
+.rating>label:hover~label:before {
+  opacity: 1 !important
+}
+
+.rating>input:checked~label:before {
+  opacity: 1
+}
+
+.rating:hover>input:checked~label:before {
+  opacity: 0.4
+}
+
+
+.buttons{
+  top: 36px;
+  position: relative;
+}
+
+
+.rating-submit{
+  border-radius: 15px;
+  color: #fff;
+  height: 49px;
+}
+
+
+.rating-submit:hover{
+
+  color: #fff;
+}

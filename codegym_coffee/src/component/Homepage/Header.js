@@ -63,7 +63,7 @@ export const Header = () => {
                     <li><a href="#">Hóa đơn</a></li>
                     <li><a href="#">Bài đăng</a></li>
                     <li><a href="#">Sản phẩm</a></li>
-                    <li><a href="#">Phản hồi</a></li>
+                    <li><a href="/public/feedback">Phản hồi</a></li>
                     <li><a href="#">Thu nhập</a></li>
                     <li><a href="#">Quản lí nhân viên</a></li>
                 </ul>

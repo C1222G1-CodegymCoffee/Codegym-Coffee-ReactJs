@@ -1,0 +1,115 @@
+
+.color-card {
+  background-image: url("https://zda.vn/wp-content/uploads/2023/03/cd68f17c5506ea671ccaa645ddb69630.jpg");
+}
+
+.direction {
+  text-align: center;
+}
+
+.direction button {
+  font-family: "Roboto Light";
+  font-weight: bold;
+  background-color: lightskyblue;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  transition: 0.5s;
+  margin: auto;
+}
+
+.direction button:hover {
+  background-color: #7e878d;
+}
+
+.item {
+  border-radius: 15px;
+  width: 300px;
+  height:400px;
+  background-image: linear-gradient(to top, lightskyblue, bisque);
+  overflow: hidden;
+  transition: 0.5s;
+  margin: 10px;
+  scroll-snap-align: start;
+}
+
+.item .avatar {
+  display: block;
+  margin: 50px auto 10px;
+  width: 100%;
+  height: 33%;
+  object-fit: cover;
+  border-radius: 3%;
+  box-shadow: 0 10px 15px #7e878d;
+}
+
+.item .content {
+  padding: 2%;
+  font-family: "Roboto Light";
+}
+
+.item .nameGroup {
+  text-align: inherit;
+  font-family: "Roboto Light";
+  font-size: 24px;
+}
+.item .nameGroup a{
+  text-decoration: none;
+  color: black;
+}
+
+
+
+.date-news {
+  text-align: right;
+}
+
+.item .content span {
+  font-size: 12px;
+  margin-left: 66%;
+}
+
+.item .content h3 {
+  font-weight: 600;
+}
+
+#list {
+  display: flex;
+  width: max-content;
+}
+
+#formList {
+  width: 1263px;
+  max-width: 100%;
+  overflow: auto;
+  margin: 100px auto 50px;
+  scroll-behavior: smooth;
+  scroll-snap-type: both;
+  display: flex;
+  justify-content: center;
+}
+
+#formList::-webkit-scrollbar {
+  display: none;
+}
+
+@media screen and (max-width: 1024px) {
+  .item {
+    width: calc(33.3vw - 20px);
+  }
+
+  .direction {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .item {
+    width: calc(50vw - 20px);
+  }
+
+  .direction {
+    display: none;
+  }
+}
