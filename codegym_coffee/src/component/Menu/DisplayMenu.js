@@ -1,98 +1,152 @@
-import {useEffect, useState} from "react";
-import {getAllProduct, getAllTypeProduct} from "../../service/menu/MenuService";
+import React, {useEffect, useState} from "react";
+import {addToBill, getAllProduct, getAllProductByType, getAllTypeProduct} from "../../service/menu/MenuService";
 import "../../css/Menu/menu.css"
 
-let cart = [];
-
 export function DisplayMenu() {
+
+    const [items, setItems] = useState([]);
+    const [total, setTotal] = useState(0);
     const [listProduct, setListProduct] = useState([])
     const [listTypeProduct, setListTypeProduct] = useState([])
+    // const [listProductByType, setListProductByType] = useState([])
+
     const displayListProduct = async () => {
-        const res = await getAllProduct();
+        const res = await getAllProduct()
         setListProduct(res);
     }
     const displayTypeProduct = async () => {
         const res = await getAllTypeProduct()
         setListTypeProduct(res)
     }
-
-    const handleDisplayCart = () => {
-        document.getElementById("showCart").style.display = "none"
-    }
-    const showCart = () => {
-        let display = document.getElementById("showCart")
-        if (display.style.display === " block") {
-            display.style.display = " none"
+    const addToCart = (item) => {
+        const existingItem = items.find((value) => value.id === item.id);
+        if (existingItem) {
+            const updatedItems = items.map((i) =>
+                i.id === item.id ? {...i, quantity: i.quantity + 1} : i
+            );
+            setItems(updatedItems);
         } else {
-            display.style.display = " block"
+            setItems([...items, {...item, quantity: 1}]);
         }
+    };
+
+    const removeFromCart = (index) => {
+        const updatedItems = [...items];
+        const myTimeout = setTimeout(updatedItems.splice(index, 1), 1)
+        clearTimeout(myTimeout)
+        setItems(updatedItems);
+    };
+
+    const increaseQuantity = (index) => {
+        const updatedItems = [...items];
+        updatedItems[index].quantity += 1;
+        setItems(updatedItems);
+    };
+
+    const decreaseQuantity = (index) => {
+        const updatedItems = [...items];
+        if (updatedItems[index].quantity > 1) {
+            updatedItems[index].quantity -= 1;
+            setItems(updatedItems);
+        }
+    };
+
+    const calculateTotal = (cartItems) => {
+        const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        setTotal(total);
+    };
+    const handleAddToBill = async (value) => {
+        console.log(value)
+       await addToBill(value)
     }
-    const addToCart = (element) => {
-        // let father = element.parentElement.children
-        // let image = father[0];
-        console.log(element)
-    }
+    // const handleDisplayByType = async (type) => {
+    //     const res = await getAllProductByType(type)
+    //     setListProduct(res)
+    // }
+
     useEffect(() => {
-        displayListProduct()
         displayTypeProduct()
-        handleDisplayCart()
-    }, [])
+        displayListProduct()
+        const cartItems = JSON.parse(sessionStorage.getItem('cartItems')) || [];
+        setItems(cartItems);
+        calculateTotal(cartItems);
+    }, []);
 
-
+    useEffect(() => {
+        sessionStorage.setItem('cartItems', JSON.stringify(items));
+        calculateTotal(items);
+    }, [items]);
     return (
         <>
             {
-                listProduct.map(value => {
+                listTypeProduct.map(value => {
                     return (
-                        <div className="card" style={{width: "18rem"}} key={value}>
-                            <img src={value.image} className="card-img-top" alt="..."/>
-                            <div className="card-body">
-                                <h5 className="card-title">{value.nameProduct}</h5>
-                                <p className="card-text">{value.price} đ</p>
-                                <a onClick={() => addToCart(this)} className="btn btn-primary">Add</a>
-                            </div>
-                        </div>
+                        <ul>
+                            {/*<button onClick={() => handleDisplayByType(value.nameType)} name="type">*/}
+                            {/*    {value.nameType}*/}
+                            {/*</button>*/}
+                        </ul>
                     )
                 })
             }
-
             <div>
-                <i className="fa-solid fa-list" onClick={() => showCart()}/>
-            </div>
-            <div id="showCart">
+                {
+                    listProduct.map(value => {
+                        return (
+                            <div className="card" style={{width: "18rem"}} key={value}>
+                                <img src={value.image} className="card-img-top" alt="..."/>
+                                <div className="card-body">
+                                    <h5 className="card-title">{value.nameProduct}</h5>
+                                    <p className="card-text">{value.price} đ</p>
+                                    <button onClick={() => addToCart({
+                                        id: value.idProduct,
+                                        name: value.nameProduct,
+                                        price: value.price
+                                    })}>
+                                        Thêm vào giỏ hàng
+                                    </button>
+                                </div>
+                            </div>
+                        )
+                    })
+                }
+                <h1>Giỏ hàng</h1>
                 <table>
                     <thead>
                     <tr>
-                        <th>
-                            <div className="form-check">
-                                <input className="form-check-input" type="checkbox" value="" id="checkbox-all"/>
-                            </div>
-                        </th>
                         <th className="">STT</th>
                         <th>Tên món</th>
                         <th>Số lượng</th>
                         <th>Giá</th>
-                        <th>Tổng tiền</th>
                         <th>Thời gian chờ</th>
                     </tr>
                     </thead>
-                    <tbody id="myCart">
+                    <tbody>
+                    {
+                        items.map((item, index) => (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{item.name} </td>
+                                <td>
+                                    <button onClick={() => decreaseQuantity(index)}>-</button>
+                                    {item.quantity}
+                                    <button onClick={() => increaseQuantity(index)}>+</button>
+                                </td>
+                                <td>{item.price}</td>
+                                <td></td>
+                                <button onClick={() => removeFromCart(index)}>Xóa</button>
+                            </tr>
+                        ))}
                     <tr>
-                        <td>
-                            <div className="form-check">
-                                <input className="form-check-input" type="checkbox" value="" name="courseIds[]"/>
-                            </div>
-                        </td>
-                        <td>1</td>
-                        <td>Cà phê</td>
-                        <td>2</td>
-                        <td>1000</td>
-                        <td>10000</td>
-                        <td>05:05</td>
+                        <div><h3>Tổng cộng: {total} đ</h3></div>
+                    </tr>
+                    <tr>
+                        <button onClick={() => handleAddToBill(items)}>Thanh toán</button>
                     </tr>
                     </tbody>
                 </table>
+
             </div>
         </>
-    )
+    );
 }
