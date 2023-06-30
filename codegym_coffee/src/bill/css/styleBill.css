@@ -1,0 +1,42 @@
+* {
+    font-family: Roboto;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+}
+
+.pagination-form {
+    margin-right: 10px;
+}
+
+.pagination-button {
+    padding: 5px 10px;
+    background-color: #f1f1f1;
+    border: none;
+    cursor: pointer;
+}
+
+.pagination-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination-info {
+    margin-right: 10px;
+}
+
+#pagina {
+    display: flex;
+    justify-content: center;
+}
+
+.element {
+    background-color: whitesmoke; /* Background color */
+    /*background-image: url("text.jpg"); !* Background image *!*/
+    background-repeat: no-repeat; /* Don't repeat the image */
+    background-position: center; /* Center the image */
+    background-size: cover; /* Scale the image to cover the element */
+}
+
