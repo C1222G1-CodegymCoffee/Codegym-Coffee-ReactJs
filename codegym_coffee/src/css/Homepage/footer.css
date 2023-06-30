@@ -1,0 +1,12 @@
+.footer {
+    /*background-color: yellow;*/
+    padding: 4rem 0 2.5rem;
+}
+
+.footer__title {
+    text-align: center;
+    color: black;
+    font-size: 77px;
+    margin-bottom: 10px;
+}
+
