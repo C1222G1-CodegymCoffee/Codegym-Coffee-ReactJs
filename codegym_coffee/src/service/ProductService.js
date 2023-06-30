@@ -9,11 +9,10 @@ export const findProductById = async (id) => {
         console.log(e);
     }
 };
-export const createProduct = async (product) => {
+export const save = async (product) => {
     try {
-        await axios.post("http://localhost:8080/api/product/create", {
-            ...product,
-        });
+        await axios.post("http://localhost:8080/api/product/create", { ...product });
+        console(product)
     } catch (e) {
         console.log(e);
     }
@@ -24,6 +23,16 @@ export const updateProduct = async (product) => {
         await axios.patch("http://localhost:8080/api/product/update/" + product.idProduct, {
             ...product,
         });
+    } catch (e) {
+        console.log(e);
+    }
+};
+export const findProductType = async () => {
+    try {
+        const result = await axios.get(
+            `http://localhost:8080/productType`
+        );
+        return result.data;
     } catch (e) {
         console.log(e);
     }
