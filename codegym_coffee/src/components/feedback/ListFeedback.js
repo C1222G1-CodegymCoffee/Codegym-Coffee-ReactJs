@@ -1,7 +1,10 @@
-import {useNavigate, useParams} from "react-router";
+import {useNavigate} from "react-router";
 import React, {useEffect, useState} from "react";
+import * as FeedbackService from "../../service/feedback/FeedbackService";
 import {findAll} from "../../service/feedback/FeedbackService";
 import {Axios as axios} from "axios";
+import {Field, Form, Formik} from "formik";
+import Pagination from "react-js-pagination";
 
 
 export const ListFeedback = () => {
@@ -9,7 +12,8 @@ export const ListFeedback = () => {
     const [feedbacks, setFeedbacks] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [data, setData] = useState([]);
-
+    const [activePage, setActivePage] = useState(1);
+    const [totalItemsCount, setTotalItemsCount] = useState(0);
 
     const [itemsPerPage, setItemsPerPage] = useState(10);
 
@@ -27,17 +31,6 @@ export const ListFeedback = () => {
         console.log(listFeedback)
     }
 
-
-    const fetchData = async (page) => {
-        try {
-            const result = await axios.get(`http://localhost:8080/api/admin/feedback?page=${page}&size=${itemsPerPage}`);
-            setData(result.data.content);
-            setTotalPages(result.data.totalPages);
-            setTotalElements(result.data.totalElements);
-        } catch (error) {
-            console.log(error);
-        }
-    };
 // lấy id chi tiết
     const [code, setCode] = useState('')
     const [day, setDay] = useState('')
@@ -55,13 +48,23 @@ export const ListFeedback = () => {
         setIMG(image)
     }
 
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
+    useEffect(() => {
+        const fetchFeedbacks = async () => {
+            let result = await FeedbackService.getFeedbacks(activePage);
+            console.log("rss", result)
+            setFeedbacks(result.content);
+            console.log("1", result.content)
+            setTotalItemsCount(result.totalCount);
+        };
+        fetchFeedbacks();
+    }, [activePage]);
+
+    const handlePageChange = (pageNumber) => {
+        setActivePage(pageNumber);
     };
 
     useEffect(() => {
         getListFeedback();
-        fetchData(currentPage);
 
     }, [currentPage])
 
@@ -73,25 +76,48 @@ export const ListFeedback = () => {
             </div>
             <div className="row mx-0 mt-3 px-5 py-1">
                 <div className="table-responsive">
-                    {/*<formik>*/}
-                    {/*    <div className="input-group mb-4" style={{width: "45%"}}>*/}
-                    {/*    <span className="input-group-text">*/}
-                    {/*        <svg className="bi bi-search-heart" fill="currentColor" style={{height: 16, width: 16}}viewBox="0 0 16 16"*/}
-                    {/*             xmlns="http://www.w3.org/2000/svg">*/}
-                    {/*            <path d="M6.5 4.482c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.69 0-5.018Z"/>*/}
-                    {/*            <path*/}
-                    {/*                d="M13 6.5a6.471 6.471 0 0 1-1.258 3.844c.04.03.078.062.115.098l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1.007 1.007 0 0 1-.1-.115h.002A6.5 6.5 0 1 1 13 6.5ZM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11Z"/>*/}
-                    {/*        </svg>*/}
-                    {/*    </span>*/}
-                    {/*        <Field className="form-control" placeholder="Tên/Nội dung" type="text"/>*/}
-                    {/*        <Field aria-label="Server" className="form-control" placeholder="Server" type="date"/>*/}
-                    {/*        <button className="btn btn-success" style={{marginLeft: "1%", backgroundColor:"#8C6842"}}*/}
-                    {/*                type="button">*/}
-                    {/*            Tìm kiếm*/}
-                    {/*        </button>*/}
-                    {/*    </div>*/}
-                    {/*</formik>*/}
+                    <Formik
+                        initialValues={{
+                            searchTerm: "",
+                            dayOfFeedback: ""
+                        }}
+                        onSubmit={(values) => {
+                            const search = async () => {
+                                let result = await FeedbackService.search(values.searchTerm, values.dayOfFeedback)
+                                console.log("vl", values)
+                                console.log("rs", result)
+                                if (result.length === 0) {
+                                    alert("không tìm thấy")
+                                } else {
+                                    setFeedbacks(result.content)
+                                }
 
+                                console.log("value", values)
+                            }
+                            search()
+                        }}
+                    >
+                        <Form>
+                            <div className="input-group mb-4" style={{width: "45%"}}>
+                            <span className="input-group-text">
+                            <svg className="bi bi-search-heart" fill="currentColor" style={{height: 16, width: 16}}
+                                 viewBox="0 0 16 16"
+                                 xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6.5 4.482c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.69 0-5.018Z"/>
+                            <path
+                                d="M13 6.5a6.471 6.471 0 0 1-1.258 3.844c.04.03.078.062.115.098l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1.007 1.007 0 0 1-.1-.115h.002A6.5 6.5 0 1 1 13 6.5ZM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11Z"/>
+                            </svg>
+                            </span>
+                                <Field className="form-control" placeholder="Tên/Nội dung" type="text" name='searchTerm'/>
+                                <Field aria-label="Ngày feedback" className="form-control" placeholder="Ngày feedback"
+                                       type="date" name='dayOfFeedback'/>
+                                <button className="btn btn-success"
+                                        style={{marginLeft: "1%", backgroundColor: "#8C6842"}} type="submit">
+                                    Tìm kiếm
+                                </button>
+                            </div>
+                        </Form>
+                    </Formik>
 
                     <table className="table table-striped">
                         <thead>
@@ -114,18 +140,22 @@ export const ListFeedback = () => {
                                     <td>{feedback.creator}</td>
                                     <td>{feedback.email}</td>
                                     <td>{feedback.content.length > 15 ? feedback.content.slice(0, 15) + "..." : feedback.content}</td>
-                                    <button className="btn btn-primary d-none d-sm-table-cell"
-                                            onClick={() => handleShowModal(feedback.id, feedback.codeFeedback, feedback.dayOfFeedback, feedback.creator, feedback.email, feedback.content, feedback.image)}
-                                            data-bs-target="#exampleModal" data-bs-toggle="modal" type="button">
-                                        <svg className="bi bi-eye-fill" fill="currentColor"
-                                             style={{height: 16, width: 16}}
-                                             viewBox="0 0 16 16"
-                                             xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-                                            <path
-                                                d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
-                                        </svg>
-                                    </button>
+                                    <td>
+                                        <button className="btn btn-primary d-none d-sm-table-cell"
+                                                style={{backgroundColor: "#0074d9"}}
+                                                onClick={() => handleShowModal(feedback.id, feedback.codeFeedback, feedback.dayOfFeedback, feedback.creator, feedback.email, feedback.content, feedback.image)}
+                                                data-bs-target="#exampleModal" data-bs-toggle="modal" type="button">
+                                            <svg className="bi bi-eye-fill" fill="currentColor"
+                                                 style={{height: 16, width: 16}}
+                                                 viewBox="0 0 16 16"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                                                <path
+                                                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                                            </svg>
+                                        </button>
+                                    </td>
+
                                 </tr>
                             )
                         })}
@@ -149,7 +179,11 @@ export const ListFeedback = () => {
                                             <table className="">
                                                 <tr>
                                                     <th>
-                                                        <label className="fs-5" style={{paddingRight:"5rem", paddingLeft:"5rem"}} htmlFor="">Mã số phản
+                                                        <label className="fs-5" style={{
+                                                            paddingRight: "5rem",
+                                                            paddingLeft: "5rem",
+                                                            width: "20rem"
+                                                        }} htmlFor="">Mã số phản
                                                             hồi: </label>
                                                     </th>
                                                     <td>
@@ -158,7 +192,8 @@ export const ListFeedback = () => {
                                                 </tr>
                                                 <tr>
                                                     <th>
-                                                        <label className="fs-5" style={{paddingLeft:"5rem"}} htmlFor="">Ngày phản
+                                                        <label className="fs-5" style={{paddingLeft: "5rem"}}
+                                                               htmlFor="">Ngày phản
                                                             hồi: </label>
                                                     </th>
                                                     <td>
@@ -167,7 +202,8 @@ export const ListFeedback = () => {
                                                 </tr>
                                                 <tr>
                                                     <th>
-                                                        <label className="fs-5" style={{paddingLeft:"5rem"}} htmlFor="">Người tạo: </label>
+                                                        <label className="fs-5" style={{paddingLeft: "5rem"}}
+                                                               htmlFor="">Người tạo: </label>
                                                     </th>
                                                     <td>
                                                         {people}
@@ -175,7 +211,8 @@ export const ListFeedback = () => {
                                                 </tr>
                                                 <tr>
                                                     <th>
-                                                        <label className="fs-5" style={{paddingLeft:"5rem"}} htmlFor="">Email: </label>
+                                                        <label className="fs-5" style={{paddingLeft: "5rem"}}
+                                                               htmlFor="">Email: </label>
                                                     </th>
                                                     <td>
                                                         {email}
@@ -183,7 +220,8 @@ export const ListFeedback = () => {
                                                 </tr>
                                                 <tr>
                                                     <th>
-                                                        <label className="fs-5" style={{paddingLeft:"5rem"}} htmlFor="">Phản hồi: </label>
+                                                        <label className="fs-5" style={{paddingLeft: "5rem"}}
+                                                               htmlFor="">Phản hồi: </label>
                                                     </th>
                                                     <td>
                                                         {content}
@@ -191,10 +229,11 @@ export const ListFeedback = () => {
                                                 </tr>
                                                 <tr>
                                                     <th>
-                                                        <label className="fs-5" style={{paddingLeft:"5rem"}} htmlFor="">Hình ảnh: </label>
+                                                        <label className="fs-5" style={{paddingLeft: "5rem"}}
+                                                               htmlFor="">Hình ảnh: </label>
                                                     </th>
                                                     <td>
-                                                        {img}
+                                                        <img style={{width: "45%"}} src={img}></img>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -213,6 +252,14 @@ export const ListFeedback = () => {
                     {/*Phân trang*/}
 
                     <div className=" d-flex justify-content-center">
+                        <Pagination
+                            activePage={activePage}
+                            totalItemsCount={totalItemsCount}
+                            itemsCountPerPage={10}
+                            onChange={handlePageChange}
+                            itemClass="page-item"
+                            linkClass="page-link"
+                        />
                         {/*<ReactPaginate*/}
                         {/*    previousLabel="Trước"*/}
                         {/*    nextLabel="Sau"*/}
