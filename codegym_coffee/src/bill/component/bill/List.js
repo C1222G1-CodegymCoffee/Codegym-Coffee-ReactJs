@@ -1,6 +1,6 @@
 import {Field, Form, Formik} from "formik";
 import React, {useEffect, useState} from 'react';
-import {findAll} from "../../service/BillService";
+import {findAll, findBillCode, search} from "../../service/BillService";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
@@ -36,9 +36,6 @@ function List() {
         }
     };
 
-    // const handlePageChange = (page) => {
-    //     setCurrentPage(page);
-    // };
 
     useEffect(() => {
         getListBill();
@@ -47,18 +44,21 @@ function List() {
     }, [currentPage])
 
 // lấy id chi tiết
+    const [creator, setCreator] = useState('')
     const [table, setTable] = useState('')
+    const [content, setContent] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
+    const [price, setPrice] = useState('')
 
 
-    function handleShowModal(id, tableBill, phoneNumber) {
-
+    function handleShowModal(id, tableBill, contentBill,  priceDetailBill,phoneNumberBill, nameCreator) {
+        setCreator(nameCreator);
         setTable(tableBill);
-        setPhoneNumber(phoneNumber);
-
+        setContent(contentBill);
+        setPhoneNumber(phoneNumberBill);
+        setPrice(priceDetailBill);
     }
 
-    console.log(phoneNumber)
     return (
         <div>
             <div className="element">
@@ -69,42 +69,54 @@ function List() {
                 <div className="row">
                     <div className="col-md-2"/>
                     <div className="col-md-8">
-                        <div className="input-group mb-3">
-        <span className="input-group-text">
-          <img
-              width={24}
-              height={24}
-              src="https://img.icons8.com/glyph-neue/64/bill.png"
-              alt="bill"
-          />
-        </span>
-                            <input type="text" className="form-control" placeholder="Mã hoá đơn"/>
-                            <span className="input-group-text">
-          <img
-              width={24}
-              height={24}
-              src="https://img.icons8.com/windows/32/calendar.png"
-              alt="date"
-          />
-        </span>
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="dd/mm/yyyy"
-                                aria-label="Server"
-                            />
-                            <button
-                                className="input-group-text border-0 btn btn-light"
-                                id="search-addon"
-                            >
-                                <img
-                                    width={20}
-                                    height={20}
-                                    src="https://img.icons8.com/ios-filled/50/search--v1.png"
-                                    alt="search--v1"
+                        <Formik
+                            initialValues={{searchTerm: "", dayOfBill: ""}}
+                            onSubmit={async (values) => {
+                                const result = await search(values.searchTerm, values.dayOfBill
+                                );
+                                if (result.length === 0) {
+                                    alert("không tìm thấy");
+                                } else {
+                                    setBill(result.content);
+                                }
+                            }}
+                        >
+                            <Form className="d-flex">
+                                <span className="input-group-text">
+                                    <img width={24} height={24} src="https://img.icons8.com/glyph-neue/64/bill.png"
+                                         alt="bill"/>
+                                </span>
+                                <Field
+                                    style={{width: "90%", height: "40px"}}
+                                    className="form-control"
+                                    type="text"
+                                    name="searchTerm"
+                                    placeholder="Mã hoá đơn"
                                 />
-                            </button>
-                        </div>
+                                <span className="input-group-text">
+                                    <img width={24} height={24} src="https://img.icons8.com/windows/32/calendar.png"
+                                         alt="date"/>
+                                </span>
+                                <Field
+                                    style={{width: "90%", height: "40px"}}
+                                    className="form-control"
+                                    type="date"
+                                    name="dayOfBill"
+                                />
+
+                                <button
+                                    className="input-group-text border-0 btn btn-light"
+                                    id="search-addon"
+                                >
+                                    <img
+                                        width={20}
+                                        height={20}
+                                        src="https://img.icons8.com/ios-filled/50/search--v1.png"
+                                        alt="search--v1"
+                                    />
+                                </button>
+                            </Form>
+                        </Formik>
                     </div>
                 </div>
                 <div className="row mt-4">
@@ -136,7 +148,13 @@ function List() {
                                         <td>
                                             <button type="button" className="btn btn-light" data-bs-toggle="modal"
                                                     data-bs-target="#staticBackdrop" onClick={() =>
-                                                handleShowModal(bills.employee.phoneNumber, bills.tableCoffee.nameTable)}>
+                                                handleShowModal(
+                                                    bills.feedback.creator,
+                                                    bills.tableCoffee.nameTable,
+                                                    bills.feedback.content,
+                                                    bills.billDetail.quantityOfProduct,
+                                                    bills.employee.phoneNumber
+                                                )}>
                                                 <img width="20" height="20"
                                                      src="https://img.icons8.com/color/48/bulleted-list.png"
                                                      alt="bulleted-list"/>
@@ -251,17 +269,20 @@ function List() {
                                 <div className="row">
                                     <div className="col-md-12">
                                         <p className="text-muted">
-                                            Tên khách hàng: <strong>Nguyễn Văn Danh</strong>
+                                            Tên khách hàng: <strong>{creator}</strong>
                                         </p>
                                         <p className="text-muted">
                                             Số bàn: <strong>{table}</strong>
+                                        </p>
+                                        <p className="text-muted">
+                                            Content: <strong>{content}</strong>
                                         </p>
                                         <p className="text-muted">
                                             Số điện thoại: <strong>{phoneNumber}</strong>
                                         </p>
 
                                         <p className="text-muted">
-                                            Tổng tiền: <strong>20 000 VND</strong>
+                                            Tổng tiền: <strong>{price} VND</strong>
                                         </p>
                                         <p className="text-muted">
                                             Email: <strong>daupkaiemckuatung@gmail.com</strong>
