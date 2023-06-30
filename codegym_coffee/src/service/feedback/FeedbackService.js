@@ -18,9 +18,9 @@ export const find = async (id) => {
         console.log(error)
     }
 }
-export const search = async (searchTerm, dayOfFeedback) => {
+export const search = async (searchTerm, dayOfFeedback, page, size) => {
     try {
-        const result = await axios.get(`http://localhost:8080/api/admin/feedback/search?searchTerm=${searchTerm}&dayOfFeedback=${dayOfFeedback}`)
+        const result = await axios.get(`http://localhost:8080/api/admin/feedback/search?searchTerm=${searchTerm}&dayOfFeedback=${dayOfFeedback}&page=${page}&size=${size}`)
         return result.data
     } catch (error) {
         console.log(error)
@@ -29,9 +29,10 @@ export const search = async (searchTerm, dayOfFeedback) => {
 
 export const getFeedbacks = async (page, size) => {
     try {
-        const result = await axios.get(`http://localhost:8080/api/admin/feedback/?page=${page}&size=${size}`)
-        return result.data
+        const result = await axios.get(`http://localhost:8080/api/admin/feedback/?page=${page}&size=${size}`);
+        console.log(result)
+        return result.data;
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
-}
+};
