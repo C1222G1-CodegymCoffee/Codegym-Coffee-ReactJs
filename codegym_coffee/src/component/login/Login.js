@@ -1,10 +1,23 @@
 import "../../css/login/login.css";
 import { Formik, Form, Field } from "formik";
-import { postLogin } from "../../service/Service";
+import { getEmail, postLogin } from "../../service/Service";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Login() {
+    const [email, setEmail] = useState("");
+
     const navigate = useNavigate();
+
+    const handleInputEmail = (e) => {
+      setEmail((prev) => prev = e.target.value);
+    }
+
+    const handleEmail = (email) => {
+      // let res = await getEmail(email)
+      console.log(email);
+    }
+
     return (
         <div className="container">
         <div className="content row w-500">
@@ -49,7 +62,7 @@ function Login() {
                     
             </div>
         </div>
-        <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
               <div className="modal-content bg-modal">
                 <div className="modal-header">
@@ -58,15 +71,15 @@ function Login() {
                 </div>
                 <div className="modal-body">
                     <div className="mb-3">
-                        <label for="exampleFormControlInput1" className="form-label text-secondary">Email <sup className="text-danger">*</sup></label>
-                        <input type="email" className="form-control text-dark" id="exampleFormControlInput1" placeholder="name@example.com"/>
-                        <span className="text-danger fs-15">Email sai định dạng</span>
+                        <label htmlFor="exampleFormControlInput1" className="form-label text-secondary">Email <sup className="text-danger">*</sup></label>
+                        <input type="email" className="form-control text-dark email-password" id="exampleFormControlInput1" placeholder="name@example.com" value={email} onChange={(e)=> {setEmail(e.target.value)}}/>
+                        {/* <span className="text-danger fs-15">Email sai định dạng</span> */}
                         <div id="emailHelp" className="form-text">Chúng tôi sẽ gửi mật khẩu qua email của bạn.</div>
                       </div>
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn button btn-secondary bg-secondary text-capitalize" data-bs-dismiss="modal">Hủy</button>
-                  <button type="button" className="btn button btn-success text-capitalize">Gửi</button>
+                  <button type="button" className="btn button btn-success text-capitalize" onClick={handleEmail(email)}>Gửi</button>
                 </div>
               </div>
             </div>
