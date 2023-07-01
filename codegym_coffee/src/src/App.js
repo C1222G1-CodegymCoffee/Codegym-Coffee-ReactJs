@@ -12,6 +12,8 @@ function App() {
               {/*<Route path="/" element={<HomePage />}/>*/}
               {/*<Route path="/" element={<ChangePassword/>}/>*/}
               {<Route path="/" element={<EmployeeInformation/>}/> }
+              {<Route path="/account/change-password" element={<ChangePassword/>}/> }
+              
           </Routes>
   );
 }

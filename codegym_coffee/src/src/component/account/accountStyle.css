@@ -9,7 +9,7 @@ body{
 }
 .button-movie {
     background-color: #d7c1ab;
-    width: 70px;
+    width: 80px;
     color: #ffffff;
     padding: 5px;
     text-align: center;
@@ -65,4 +65,38 @@ ul li{
     text-align: center;
     font-size: 15px;
     font-weight: 500;
+}
+.border-camera{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right: 75px;
+    background-color: #d7c1ab;
+    border-radius: 50px;
+    width: 50px;
+    height: 50px;
+    
+}
+.avatar{
+    position: relative;
+}
+.border-avatar{
+    border: 3px solid;
+    border-color: #787470;
+}
+.bi-eye{
+    color: #d7c1ab;
+}
+.bi-eye-slash{
+    color: #d7c1ab;
+}
+.eye-password{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-bottom: 7px;
+    margin-right: 23px !important;
+}
+.bg-coffe{
+    background-color: #d7c1ab;
 }
