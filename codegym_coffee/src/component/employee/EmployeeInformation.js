@@ -7,7 +7,7 @@ import * as Yup from 'yup'
 import Swal from "sweetalert2";
 import {AvatarContext} from "./AvatarContex";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { storage } from "../FireBase";
+import { storage } from "../../firebase";
 import positionService from "../../service/positionService"
 export default function EmployeeInformation() {
     const [employeeDetail,setEmployeeDetail]= useState()
@@ -21,6 +21,15 @@ export default function EmployeeInformation() {
     const [showErr, setShowErr] = useState(false)
     const [avatarErr, setAvatarErr] = useState(false)
     const [position, setPosition] = useState([]);
+    const findAllPosition = async () => {
+        const res = await positionService.findAll();
+        setPosition(res.data);
+    };
+    useEffect(() => {
+        findAllPosition();
+    }, []);
+
+
     const getMinDate = () => {
         const today = new Date();
         return new Date(
@@ -127,7 +136,8 @@ export default function EmployeeInformation() {
                         phoneNumber: Yup.string().required('Không được bỏ trống')
                             .matches(/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/, 'Nhập đúng định dạng SDT VD: 0903.XXX.XXX (X là chữ số)'),
                         address: Yup.string().required('Không được bỏ trống'),
-                        email: Yup.string().required('Không được bỏ trống').email('Nhập đúng định dạng email'),
+                        // email: Yup.string().required('Không được bỏ trống').email('Nhập đúng định dạng email'),
+                        // position:Yup.string().required('Không được bỏ trống')
                         // avatar: Yup.string().required('Không được bỏ trống').matches(/^.{0,}(.png|.jpg|.jpeg)[?](alt=media&token=).{0,}$/, 'Sai định dạng ảnh, phải có dạng đuôi .jpg, .jpeg, .png')
                     })}
                     onSubmit={(value, { setSubmitting }) => {

@@ -3,7 +3,7 @@ import request from "../request";
 const detail = () => {
     // const token = localStorage.getItem('token')
     try {
-        const res = request.get('/employee/detail',
+        const res = request.get('/employee/detail'
             // {
             //     headers:
             //         {
