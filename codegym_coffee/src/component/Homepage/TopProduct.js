@@ -30,7 +30,8 @@ export const TopProduct = () => {
                         className={`slide ${index === currentSlide ? 'active' : ''}`}
                         onClick={() => handleSlideClick(index)} // Xử lý sự kiện chạm vào hình ảnh
                     >
-                        <img src={`/Homepage/${product.image}`} />
+                        <img src={`/Homepage/${product.image}`} className="slide_img"/>
+                        {/*<img src='/Homepage/new.png' />*/}
                         <div className="slide-content">
                             <div className="div_slide_a">
                                 <a className="slide_a"><span>Đặt món</span></a>
