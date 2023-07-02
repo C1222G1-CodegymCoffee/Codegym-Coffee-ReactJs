@@ -2,50 +2,77 @@ import "./sale.css";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import saleAPI from "../service_API/sale";
+
 const positionStatus = {
     0: 'unavailable',
     1: 'available',
     2: 'sell',
 };
-const seatRows = ["T1", "T2", "T3", "T4", "T5"];
-
-function handlerSelecting(seatId, status) {
-
-}
 
 export function Sale() {
     const [data, setData] = useState([]);
+    const [seatList, setSeatList] = useState([]);
+    const [listSelecting, setListSelecting] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:8080/api/sale/list")
-            .then(response => {
-                console.log(response);
-                setData(response.data);
-            })
-            .catch(error => {
-                console.error("Error fetching API:", error);
-            });
+        const fetchData = async () => {
+            try {
+                const result = await saleAPI.findAll();
+                setSeatList(result);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchData();
     }, []);
-    useEffect(() => {
-        const listSale= ()=> {
-            const result = saleAPI.findAll();
-            setData(result.data)
+
+    const seatRows = ["T1", "T2", "T3", "T4", "T5"];
+
+    const allSeatByRow = seatRows.map((rowLabel) => {
+        let positions = [];
+        positions = seatList
+            .filter((seat) => seat.nameTable.startsWith(`${rowLabel}-`))
+            .map((seat) => ({
+                seatId: seat.idTable,
+                status: seat.status,
+                name: seat.nameTable,
+            }));
+
+        return {rowLabel, positions};
+    });
+
+    const handlerSelecting = async (seatId, status) => {
+        if (status === 1) {
+            setListSelecting((prevList) => {
+                if (prevList.includes(seatId)) {
+                    return prevList.filter((id) => id !== seatId);
+                } else {
+                    // Remove the previously selected seat
+                    const filteredList = prevList.filter(
+                        (id) => seatList.find((seat) => seat.idTable === id).status !== 1
+                    );
+                    return [...filteredList, seatId];
+                }
+            });
+
+            try {
+                const billDetails = await saleAPI.getBillDetails(seatId);
+                console.log(billDetails);
+                setData(billDetails);
+            } catch (error) {
+                console.error('Error fetching bill details:', error);
+                // If the API request returns a 404 error, set the data to an empty array
+                setData([]);
+            }
+        } else {
+            // Clear the listSelecting state
+            setListSelecting([]);
         }
-        listSale()
-    },[])
-    useEffect()
+    };
+    console.log(seatList)
     console.log(data)
-    const allSeatByRow = data.map((table) => ({
-        rowLabel: table.nameTable,
-        positions: [
-            {
-                seatId: table.idTable,
-                name: table.nameTable,
-                status: table.status,
-            },
-        ],
-    }));
-    const listSelecting = [];
+
     return (
         <>
             <div className="container-lg">
@@ -62,12 +89,12 @@ export function Sale() {
                                                 {row.positions.map((p) => (
                                                     <div
                                                         key={p.seatId}
-                                                        className={`position-item ${
-                                                            positionStatus[p.status]
-                                                        } ${listSelecting.includes(p.seatId) ? "selecting" : ""}`}
+                                                        className={`position-item ${positionStatus[p.status]} ${
+                                                            listSelecting.includes(p.seatId) ? "selecting" : ""
+                                                        }`}
                                                         onClick={() => handlerSelecting(p.seatId, p.status)}
                                                     >
-                                                        {p.name.slice(1)}
+                                                        {p.name.substring(3)}
                                                     </div>
                                                 ))}
                                             </div>
@@ -78,16 +105,19 @@ export function Sale() {
                                 <div className="position-info row d-flex justify-content-center">
                                     <div className="col-8 col-md-12 col-sm-12">
                                         <div className="row">
-                                            <div className="col-12 col-md-4 col-sm-6 d-flex align-items-center justify-content-center">
-                                                <div className="sell label" />
+                                            <div
+                                                className="col-12 col-md-4 col-sm-6 d-flex align-items-center justify-content-center">
+                                                <div className="sell label"/>
                                                 <span>Bàn đang được chọn</span>
                                             </div>
-                                            <div className="col-12 col-md-4 col-sm-6 d-flex align-items-center justify-content-center">
-                                                <div className="available label" />
+                                            <div
+                                                className="col-12 col-md-4 col-sm-6 d-flex align-items-center justify-content-center">
+                                                <div className="available label"/>
                                                 <span>Bàn không có khách</span>
                                             </div>
-                                            <div className="col-12 col-md-4 col-sm-6 d-flex align-items-center justify-content-center">
-                                                <div className="selecting label" />
+                                            <div
+                                                className="col-12 col-md-4 col-sm-6 d-flex align-items-center justify-content-center">
+                                                <div className="selecting label"/>
                                                 <span>Bàn đang hoạt động</span>
                                             </div>
                                         </div>
@@ -100,13 +130,12 @@ export function Sale() {
                         <div className="film-info">
                             <h3
                                 className="title text-center"
-                                style={{ color: "white", marginBottom: 20 }}
+                                style={{color: "white", marginBottom: 20}}
                             >
                                 Quản lý bán hàng
                             </h3>
                             <table className="table table-bordered">
-                                <tbody>
-                                <tr style={{ textAlign: "center", fontSize: 16 }}>
+                                <tr style={{textAlign: "center", fontSize: 16}}>
                                     <th>STT</th>
                                     <th>Tên món</th>
                                     <th>Số lượng</th>
@@ -114,43 +143,38 @@ export function Sale() {
                                     <th>Số bàn</th>
                                     <th>Tổng tiền</th>
                                 </tr>
-                                <tr style={{ textAlign: "center", fontSize: 16 }}>
-                                    <td>01</td>
-                                    <td>Cà phê đen</td>
-                                    <td>02</td>
-                                    <td>
-                                        15,000 <span>VNĐ</span>
-                                    </td>
-                                    <td>T1-01</td>
-                                    <td>
-                                        30,000 <span>VNĐ</span>
-                                    </td>
-                                </tr>
-                                <tr style={{ textAlign: "center", fontSize: 16 }}>
-                                    <td>02</td>
-                                    <td>Cà phê sữa</td>
-                                    <td>02</td>
-                                    <td>
-                                        15,000 <span>VNĐ</span>
-                                    </td>
-                                    <td>T1-01</td>
-                                    <td>
-                                        30,000 <span>VNĐ</span>
-                                    </td>
-                                </tr>
-                                <tr style={{ textAlign: "center", fontSize: 18 }}>
-                                    <td
-                                        colSpan={6}
-                                        style={{ textAlign: "right", fontWeight: "bold" }}
-                                    >
-                                        Tổng cộng:{" "}
-                                        <span style={{ fontWeight: "normal" }}>60,000 VNĐ</span>
-                                    </td>
-                                </tr>
-                                </tbody>
+                                {
+                                    data.length === 0 ? (
+                                        <tr>
+                                            <td colSpan={6} style={{textAlign: "center", fontSize: 16}}>
+                                                Danh sách trống
+                                            </td>
+                                        </tr>
+                                    ) : (
+                                        data.map((dataList, index) => (
+                                            <tr style={{textAlign: "center", fontSize: 16}} key={dataList.idBillDetail}>
+                                                <td>{index + 1}</td>
+                                                <td>{dataList.nameProduct}</td>
+                                                <td>{dataList.quantityOfProduct}</td>
+                                                <td>{dataList.price}đ</td>
+                                                <td>{dataList.nameTable}</td>
+                                                <td>{dataList.totalPrice}đ</td>
+                                            </tr>
+                                        ))
+                                    )}
+                                {data.map((dataList, index) => (
+                                    index === 0 && (
+                                        <tr style={{textAlign: "center", fontSize: 18}}>
+                                            <td colSpan={6} style={{textAlign: "right", fontWeight: "bold"}}>
+                                                Tổng cộng: <span
+                                                style={{fontWeight: "normal"}}>{dataList.totalAmount}đ</span>
+                                            </td>
+                                        </tr>
+                                    )
+                                ))}
                             </table>
                             <div className="d-flex justify-content-center mt-4 mb-4 gap-2">
-                                <div className="btn-group" role="group" style={{ width: "100%" }}>
+                                <div className="btn-group" role="group" style={{width: "100%"}}>
                                     <button
                                         className="btn"
                                         type="button"
