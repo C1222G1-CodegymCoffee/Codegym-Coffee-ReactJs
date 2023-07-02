@@ -9,25 +9,23 @@ export const findProductById = async (id) => {
         console.log(e);
     }
 };
-export const save = async (product) => {
+export const saveProduct = async (productDTO) => {
     try {
-        await axios.post("http://localhost:8080/api/product/create", { ...product });
-        console(product)
+        await axios.post(`http://localhost:8080/api/product/create`, { ...productDTO });
+        console(productDTO)
     } catch (e) {
         console.log(e);
     }
 };
-export const updateProduct = async (product) => {
-    console.log(product);
+export const updateProduct = async (productDTO) => {
+    console.log(productDTO);
     try {
-        await axios.patch("http://localhost:8080/api/product/update/" + product.idProduct, {
-            ...product,
-        });
+        await axios.patch(`http://localhost:8080/api/product/update/${productDTO.idProduct}`, { ...productDTO });
     } catch (e) {
         console.log(e);
     }
 };
-export const findProductType = async () => {
+export const findProductTypeDTO = async () => {
     try {
         const result = await axios.get(
             `http://localhost:8080/productType`

@@ -4,8 +4,8 @@ import React from "react";
 import {Routes, Route} from 'react-router-dom'
 import {BackgroundHeader} from "./component/Homepage/BackgroundHeader";
 import {HomePage} from "./component/Homepage/HomePage";
-import { CreateProduct } from './component/Homepage/product/CreateProduct';
-import { EditProduct } from './component/Homepage/product/EditProduct';
+import { CreateProduct } from './component/product/CreateProduct';
+import { EditProduct } from './component/product/EditProduct';
 
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
                 <Route path="/" element={<HomePage/>}></Route>
                 <Route path="/" element={<Header/>}></Route>
                 <Route path="/createProduct" element={<CreateProduct/>}></Route>
-                {/* <Route path="/editProduct/:id" element={<EditProduct/>}></Route> */}
+                <Route path="/editProduct/:id" element={<EditProduct/>}></Route>
 
             </Routes>
       </>

@@ -1,13 +1,13 @@
 import { Formik, Form, Field, ErrorMessage } from "formik"
-import "../../../css/Homepage/drink.css"
-import * as productService from "../../../service/ProductService"
+import "../../css/Homepage/drink.css"
+import * as productService from "../../service/ProductService"
 import "react-toastify/dist/ReactToastify.css"
-import { ToastContainer, toast } from "react-toastify"
+// import { ToastContainer, toast } from "react-toastify"
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom"
+// import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
-import  {storage} from "../../../firebase";
+import { storage } from "../../firebase";
 
 
 
@@ -16,12 +16,21 @@ export function CreateProduct() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [firebaseImg, setImg] = useState(null);
     const [progress, setProgress] = useState(0);
+    const [product, setProduct] = useState([]);
+    useEffect(() => {
+        const listTypeProduct = async () => {
+            const result = await productService.findProductTypeDTO();
+            setProduct(result)
+            console.log(result)
+        }
+        listTypeProduct();
+    }, [])
 
-    
+
 
     const handleFileSelect = (event) => {
         const file = event.target.files[0];
-        
+
         if (file) {
             setSelectedFile(file);
         }
@@ -54,47 +63,59 @@ export function CreateProduct() {
     };
 
 
-    const navigate = useNavigate()
-    const [productType, setProductType] = useState([])
+    // const navigate = useNavigate()
+    const [productTypeDTO, setproductTypeDTO] = useState([])
     useEffect(() => {
-        const getCategory = async () => {
-            let rs = await productService.findProductType();
-            setProductType(rs);
+        const getproductTypeDTO = async () => {
+            let rs = await productService.findProductTypeDTO();
+            setproductTypeDTO(rs);
         }
-        getCategory();
+        getproductTypeDTO();
     }, []);
 
     return (
         <>
 
             <Formik initialValues={{
+                ingredient: "",
                 nameProduct: "",
-                image: "",
-                productTypeDTO: "",
                 price: "",
-                ingredient: ""
+                productTypeDTO: {
+                    idType:0,
+                    nameType:""
+                }
+
             }}
                 validationSchema={
                     Yup.object({
-                        name: Yup.string().required("Nhập tên món")
+                        ingredient: Yup.string().required("Vui lòng nhập thành phần"),
+                        nameProduct: Yup.string().required("Vui lòng nhập tên món"),
+                        price: Yup.string().required("Vui lòng nhập giá")
                     })
                 }
-                onSubmit={(values) => {
-                    const createProduct = async () => {
+                onSubmit={(values, { setSubmitting }) => {
+                    // debugger
+                    const create = async () => {
                         const newValue = {
                             ...values,
                             image: firebaseImg,
+                           
                         };
                         newValue.image = await handleSubmitAsync();
-
-                        await productService.save(newValue)
+                        newValue.productTypeDTO.idType = parseInt(values.idType);
+                        delete values.idType;
+                        await productService.saveProduct(newValue);
                         console.log(newValue);
-                    }
-                    createProduct();
+                        // toast(`Thêm phản hồi thành công! `);
+                        // navigate(`/`);
+                        // setSubmitting(false);
+                        alert(' thANH CONG');
+                    };
+                    create();
                 }}
             >
 
-                <div className="container my-5 form-employee">
+                <div className="container my-5 ">
                     <div className="container">
                         <div className="banner_image ">
                             <img src="/Homepage/img_01.png" alt="Banner Image" className="body_wrap" />
@@ -130,7 +151,7 @@ export function CreateProduct() {
                                                 </label>
                                                 <label style={{ color: "red" }}>*</label>
                                             </div>
-                                            
+
                                             <Field
                                                 type="file"
                                                 onChange={(e) => handleFileSelect(e)}
@@ -155,7 +176,7 @@ export function CreateProduct() {
                                                     className={"mt-2"}
                                                     src={URL.createObjectURL(selectedFile)}
                                                     style={{ width: "100%" }}
-                                                />
+                                                    alt="" />
                                             )}
                                         </div>
                                     </div>
@@ -168,18 +189,17 @@ export function CreateProduct() {
                                                 </label>
                                                 <label style={{ color: "red" }}>*</label>
                                             </div>
-                                            <Field as='select' name='productTypeDTO' style={{ width: "100%", height: 37, }}>
+                                            <Field as='select' name='idType' style={{ width: "100%", height: 37, }}>
                                                 <option style={{ textAlign: "center" }} value="">
                                                     --Hãy chọn nhóm món--
                                                 </option>
-                                                {
-                                                    productType.map((products, index) => (
-                                                        <option key={index} value={products.idType}>
-                                                            {products.nameType}
-                                                        </option>
-                                                    ))
-                                                }
+                                                {product.map((listType, index) => (
+                                                    <option key={index}
+                                                        value={listType.idType}>{listType.nameType}</option>
+                                                ))}
                                             </Field>
+                                            <ErrorMessage name="productTypeDTO" component={"p"}
+                                                style={{ color: "red" }} />
                                         </div>
                                         <div className="form-group" style={{ paddingTop: 20 }}>
                                             <div className="d-flex align-items-center mb-1">
@@ -196,6 +216,8 @@ export function CreateProduct() {
                                                 id="price"
                                                 required=""
                                             />
+                                            <ErrorMessage name="price" component={"p"}
+                                                style={{ color: "red" }} />
                                         </div>
                                         <div className="form-group" style={{ paddingTop: 24 }}>
                                             <label htmlFor="ingredient" className="fw-bold">
@@ -209,6 +231,8 @@ export function CreateProduct() {
                                                 rows={4}
 
                                             />
+                                            <ErrorMessage name="ingredient" component={"p"}
+                                                style={{ color: "red" }} />
                                         </div>
                                     </div>
                                 </div>
