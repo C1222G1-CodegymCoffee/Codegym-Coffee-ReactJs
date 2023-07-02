@@ -2,6 +2,8 @@ import "./sale.css";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import saleAPI from "../service_API/sale";
+import {Header} from "../Homepage/Header";
+import {Modal} from "reactstrap";
 
 const positionStatus = {
     0: 'unavailable',
@@ -13,6 +15,7 @@ export function Sale() {
     const [data, setData] = useState([]);
     const [seatList, setSeatList] = useState([]);
     const [listSelecting, setListSelecting] = useState([]);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -62,7 +65,7 @@ export function Sale() {
                 setData(billDetails);
             } catch (error) {
                 console.error('Error fetching bill details:', error);
-                // If the API request returns a 404 error, set the data to an empty array
+                // If the API request returns an error, set the data to an empty array
                 setData([]);
             }
         } else {
@@ -70,8 +73,33 @@ export function Sale() {
             setListSelecting([]);
         }
     };
-    console.log(seatList)
+
+    const handleUpdateSale = async () => {
+        if (listSelecting.length > 0) {
+            const seatId = listSelecting[0];
+            console.log("Payment confirmation for seatId:", seatId);
+
+            try {
+                const response = await axios.patch(`http://localhost:8080/api/sale/update/${seatId}`);
+                console.log(response.data);
+                console.log("Sale updated successfully!");
+                setShowModal(false);
+            } catch (error) {
+                console.error("Error updating sale:", error);
+            }
+        } else {
+            console.log("No seat selected for payment.");
+        }
+    };
+
     console.log(data)
+    const handleCancelPayment = () => {
+        setShowModal(false); // Close the modal
+    };
+    const handleConfirmPayment = async () => {
+        setShowModal(false); // Close the modal
+        // await handleUpdateSale(); // Remove this line
+    };
 
     return (
         <>
@@ -191,7 +219,30 @@ export function Sale() {
                                             fontSize: 16
                                         }}
                                         data-text="Tính tiền"
+                                        onClick={() => setShowModal(true)}
+                                        disabled={data.length === 0}
                                     />
+                                    <Modal
+                                        isOpen={showModal}
+                                        toggle={handleCancelPayment}
+                                        className="modal-dialog-centered"
+                                    >
+                                        <div className="modal-content">
+                                            <div className="modal-header">
+                                                <h5 className="modal-title">Confirmation</h5>
+                                                <button type="button" className="btn-close" onClick={handleCancelPayment} />
+                                            </div>
+                                            <div className="modal-body">
+                                                <p>Bạn có xác nhận thanh toán không ?</p>
+                                            </div>
+                                            <div className="modal-footer">
+                                                <button className="btn btn-primary" onClick={handleUpdateSale}>
+                                                    Xác nhận
+                                                </button>
+                                                <button className="btn btn-secondary" onClick={handleCancelPayment}>Hủy</button>
+                                            </div>
+                                        </div>
+                                    </Modal>
                                     <button
                                         className="btn"
                                         type="button"
@@ -225,7 +276,9 @@ export function Sale() {
                                             fontSize: 16
                                         }}
                                         data-text="Hóa đơn"
-                                    />
+                                        disabled={data.length === 0} // Disable the button if listSelecting is empty
+                                    >
+                                    </button>
                                     <button
                                         className="btn"
                                         type="button"

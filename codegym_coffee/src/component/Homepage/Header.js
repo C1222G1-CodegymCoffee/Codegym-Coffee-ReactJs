@@ -6,6 +6,7 @@ export const Header = () => {
     const [isMediaQueryMatched, setIsMediaQueryMatched] = useState(false);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+
     useEffect(() => {
         const handleScroll = () => {
             const header = document.querySelector("header");

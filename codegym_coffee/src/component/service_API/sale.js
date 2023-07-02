@@ -17,10 +17,19 @@ const getBillDetails = async (tableId) => {
         throw error;
     }
 };
+const updateSale = async (billId) => {
+    try {
+        const response = await axios.patch(`http://localhost:8080/api/sale/update/${billId}`);
+        console.log(response.data);
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 const sale = {
     findAll,
-    getBillDetails
+    getBillDetails,
+    updateSale
 }
 
 export default sale
