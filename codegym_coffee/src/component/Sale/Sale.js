@@ -16,6 +16,8 @@ export function Sale() {
     const [seatList, setSeatList] = useState([]);
     const [listSelecting, setListSelecting] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [paymentSuccess, setPaymentSuccess] = useState(false);
+    const [showPaymentSuccess, setShowPaymentSuccess] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,7 +30,7 @@ export function Sale() {
         };
 
         fetchData();
-    }, []);
+    }, [paymentSuccess]);
 
     const seatRows = ["T1", "T2", "T3", "T4", "T5"];
 
@@ -51,7 +53,6 @@ export function Sale() {
                 if (prevList.includes(seatId)) {
                     return prevList.filter((id) => id !== seatId);
                 } else {
-                    // Remove the previously selected seat
                     const filteredList = prevList.filter(
                         (id) => seatList.find((seat) => seat.idTable === id).status !== 1
                     );
@@ -65,12 +66,11 @@ export function Sale() {
                 setData(billDetails);
             } catch (error) {
                 console.error('Error fetching bill details:', error);
-                // If the API request returns an error, set the data to an empty array
                 setData([]);
             }
         } else {
-            // Clear the listSelecting state
             setListSelecting([]);
+            setData([]);
         }
     };
 
@@ -83,6 +83,15 @@ export function Sale() {
                 const response = await axios.patch(`http://localhost:8080/api/sale/update/${seatId}`);
                 console.log(response.data);
                 console.log("Sale updated successfully!");
+
+                // Fetch updated seat data
+                const result = await saleAPI.findAll();
+                setSeatList(result);
+
+                // Set paymentSuccess to true
+                setPaymentSuccess(true);
+                setShowPaymentSuccess(true); // Show the success message
+
                 setShowModal(false);
             } catch (error) {
                 console.error("Error updating sale:", error);
@@ -98,7 +107,7 @@ export function Sale() {
     };
     const handleConfirmPayment = async () => {
         setShowModal(false); // Close the modal
-        // await handleUpdateSale(); // Remove this line
+        await handleUpdateSale();
     };
 
     return (
@@ -229,7 +238,7 @@ export function Sale() {
                                     >
                                         <div className="modal-content">
                                             <div className="modal-header">
-                                                <h5 className="modal-title">Confirmation</h5>
+                                                <h5 className="modal-title">Thanh toán</h5>
                                                 <button type="button" className="btn-close" onClick={handleCancelPayment} />
                                             </div>
                                             <div className="modal-body">
@@ -240,6 +249,21 @@ export function Sale() {
                                                     Xác nhận
                                                 </button>
                                                 <button className="btn btn-secondary" onClick={handleCancelPayment}>Hủy</button>
+                                            </div>
+                                        </div>
+                                    </Modal>
+                                    <Modal
+                                        isOpen={showPaymentSuccess}
+                                        toggle={() => setShowPaymentSuccess(false)}
+                                        className="modal-dialog-centered"
+                                    >
+                                        <div className="modal-content">
+                                            <div className="modal-header">
+                                                <h5 className="modal-title">Thông báo</h5>
+                                                <button type="button" className="btn-close" onClick={() => setShowPaymentSuccess(false)} />
+                                            </div>
+                                            <div className="modal-body">
+                                                <p>Bạn đã tính tiền thành công</p>
                                             </div>
                                         </div>
                                     </Modal>
@@ -276,7 +300,7 @@ export function Sale() {
                                             fontSize: 16
                                         }}
                                         data-text="Hóa đơn"
-                                        disabled={data.length === 0} // Disable the button if listSelecting is empty
+                                        disabled={data.length === 0}
                                     >
                                     </button>
                                     <button
