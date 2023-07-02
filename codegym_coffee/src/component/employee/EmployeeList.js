@@ -67,11 +67,11 @@ export function EmployeeList() {
 
     <Link to={"/employee/addEmployee"}
           className="btn btn-primary long-button"><i className="fa-solid fa-user-plus"></i></Link>
-    <table className="table table-striped  tb">
+    <table className="table table-striped a tb">
         <thead className="table-danger">
         <tr>
             <th>#</th>
-            <th>Tên tài khoản</th>
+            <th>Tên tài khoản a</th>
             <th>Họ và tên</th>
             <th>Địa chỉ</th>
             <th>Số điện thoại</th>
