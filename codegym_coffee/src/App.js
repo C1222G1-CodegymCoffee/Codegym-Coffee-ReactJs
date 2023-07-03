@@ -1,5 +1,5 @@
 import './App.css';
-import {Routes, Route, RouterProvider} from "react-router-dom";
+import {Routes, Route} from "react-router-dom";
 import List from "./bill/component/bill/List";
 
 function App() {

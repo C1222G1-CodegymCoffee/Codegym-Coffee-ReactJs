@@ -1,8 +1,9 @@
 import {Field, Form, Formik} from "formik";
 import React, {useEffect, useState} from 'react';
-import {findAll, findBillCode, search} from "../../service/BillService";
+import {findAll, findBillCode, getBills, search} from "../../service/BillService";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import ReactPaginate from "react-paginate";
 
 function List() {
     const navigate = useNavigate();
@@ -20,12 +21,15 @@ function List() {
     const [totalElements, setTotalElements] = useState(0);
 
 
-
     const getListBill = async () => {
         const listBill = await findAll();
         setBill(listBill.content);
-        console.log(listBill)
     }
+
+    // const getListBills = async () => {
+    //     const listBill = await findAll();
+    //     setBill(listBill.content);
+    // }
 
     const fetchData = async (page) => {
         try {
@@ -38,14 +42,38 @@ function List() {
         }
     };
 
+    const getListBills = async () => {
+        const listBill = await getBills(currentPage, pageSize);
+        setTotalPages(listBill.totalPages)
+        setBill(listBill.content);
+    }
+
+    let state = {
+        pagedResponse: {},
+        users: [],
+        showLoading: false
+    };
+
+    function handleClickPage(page) {
+        setCurrentPage(page.selected)
+    }
+
+    function handleChangePage(pageable) {
+        if (currentPage + 1 === totalPages && pageable.isNext === true) return false
+        if (pageable.isNext === true) {
+            setCurrentPage(pageable.selected + 1);
+        } else {
+            setCurrentPage(pageable.selected - 1);
+        }
+    }
 
     useEffect(() => {
-        getListBill();
+        getListBills();
         fetchData(currentPage);
 
     }, [currentPage])
 
-// lấy id chi tiết
+// lấy id chi tiết *
     const [creatorr, setCreator] = useState('')
     const [table, setTable] = useState('')
     const [content, setContent] = useState('')
@@ -54,10 +82,8 @@ function List() {
     const [emailFeedback, setEmailFeedback] = useState('')
 
     const formattedPrice = new Intl.NumberFormat().format(price);
-    const formattedSalary = new Intl.NumberFormat().format();
 
-
-
+// *
     function handleShowModal(nameCreator, tableBill, contentBill, priceDetailBill, phoneNumberBill, emailFeedback) {
         setCreator(nameCreator);
         setTable(tableBill);
@@ -152,7 +178,7 @@ function List() {
                                         <td>{bills.dayOfBill}</td>
                                         <td>{bills.employee.nameEmployee}</td>
                                         <td>{bills.feedback.email}</td>
-                                        <td>{bills.employee.salary}</td>
+                                        <td>{new Intl.NumberFormat().format(bills.employee.salary)}</td>
 
                                         <td>
                                             <button type="button" className="btn btn-light" data-bs-toggle="modal"
@@ -175,79 +201,6 @@ function List() {
                             </tbody>
                         </table>
                     </div>
-                    {/*Phân trang*/}
-                    <nav
-                        aria-label="Page navigation example"
-                        className="d-flex justify-content-center"
-                    >
-                        <ul className="pagination">
-                            <li className="page-item">
-                                <a
-                                    className="page-link"
-                                    href="#"
-                                    style={{
-                                        border: "none",
-                                        backgroundColor: "#daeae9",
-                                        color: "#1d1d1c"
-                                    }}
-                                >
-                                    Trước
-                                </a>
-                            </li>
-                            <li className="page-item">
-                                <a
-                                    className="page-link"
-                                    href="#"
-                                    style={{
-                                        border: "none",
-                                        backgroundColor: "#daeae9",
-                                        color: "#1d1d1c"
-                                    }}
-                                >
-                                    1
-                                </a>
-                            </li>
-                            <li className="page-item">
-                                <a
-                                    className="page-link"
-                                    href="#"
-                                    style={{
-                                        border: "none",
-                                        backgroundColor: "#daeae9",
-                                        color: "#1d1d1c"
-                                    }}
-                                >
-                                    2
-                                </a>
-                            </li>
-                            <li className="page-item">
-                                <a
-                                    className="page-link"
-                                    href="#"
-                                    style={{
-                                        border: "none",
-                                        backgroundColor: "#daeae9",
-                                        color: "#1d1d1c"
-                                    }}
-                                >
-                                    3
-                                </a>
-                            </li>
-                            <li className="page-item">
-                                <a
-                                    className="page-link"
-                                    href="#"
-                                    style={{
-                                        border: "none",
-                                        backgroundColor: "#daeae9",
-                                        color: "#1d1d1c"
-                                    }}
-                                >
-                                    Sau
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
                 </div>
             </div>
 
@@ -313,7 +266,27 @@ function List() {
                     </div>
                 </div>
             </div>
-
+            <div className=" d-flex justify-content-center">
+                <ReactPaginate
+                    previousLabel="Trước"
+                    nextLabel="Sau"
+                    pageCount={totalPages}
+                    onPageChange={handleClickPage}
+                    onClick={handleChangePage}
+                    containerClassName="pagination"
+                    previousClassName="page-item"
+                    previousLinkClassName="page-link"
+                    nextClassName="page-item"
+                    nextLinkClassName="page-link"
+                    pageClassName="page-item"
+                    pageLinkClassName="page-link"
+                    activeClassName="active"
+                    activeLinkClassName="page-link"
+                    forcePage={currentPage}
+                    pageRangeDisplayed={2} // Hiển thị 3 trang trên mỗi lần render
+                    marginPagesDisplayed={1} // Hiển thị 1 trang ở đầu và cuối danh sách trang
+                />
+            </div>
         </div>
     );
 }
