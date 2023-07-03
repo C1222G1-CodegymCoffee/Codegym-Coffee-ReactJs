@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import { storage } from "../../Firebase";
-import React, {useEffect, useState} from "react";
+import React, {AllHTMLAttributes as e, useEffect, useState} from "react";
 import {useNavigate} from "react-router";
 import "../feedback/feedback.css"
 import {Header} from "../Homepage/Header";
@@ -16,6 +16,11 @@ export function CreateFeedback() {
     const [firebaseImg, setImg] = useState(null);
     const [progress, setProgress] = useState(0);
     const [currentDate, setCurrentDate] = useState(new Date());
+    const randomNum = Math.floor(Math.random() * 1000) + 1;
+
+    useEffect(() => {
+        document.title = 'Gửi phản hồi';
+    }, []);
 
     const handleFileSelect = (event) => {
         const file = event.target.files[0];
@@ -24,6 +29,7 @@ export function CreateFeedback() {
             setSelectedFile(file);
         }
     };
+
 
     const handleSubmitAsync = async () => {
         return new Promise((resolve, reject) => {
@@ -58,12 +64,13 @@ export function CreateFeedback() {
             <Header/>
             <Formik
                 initialValues={{
-                    codeFeedback: "",
+                    codeFeedback: "F"+ randomNum,
+                    dayOfFeedback:"",
                     creator: "",
                     email: "",
                     content: "",
                     image: "",
-                    dayOfFeedback: ""
+
                 }}
                 validationSchema={Yup.object({
                     creator: Yup.string().required("Khong duoc bo trong Ho va Ten").trim()
@@ -91,7 +98,8 @@ export function CreateFeedback() {
                         const newValue = {
                             ...values,
                             image: firebaseImg,
-                            dayOfFeedback: currentDate
+                            dayOfFeedback: currentDate,
+
 
                         };
                         newValue.image = await handleSubmitAsync();
@@ -118,7 +126,6 @@ export function CreateFeedback() {
                                             <h3 className="title">Phản hồi</h3>
                                             <p className="title-p">Điền đầy đủ thông tin ở bên dưới.</p>
                                             <Form>
-
                                                 <div className="col-md-12">
                                                     <Field className="input-feedback" type="text" name="creator"
                                                            placeholder="Họ và Tên" required=""/>

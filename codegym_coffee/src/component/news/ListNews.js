@@ -1,22 +1,13 @@
 import React, {useEffect, useState} from "react";
-import {findAllNews, findByIdNews} from "../../service/news/news";
-import {Header} from "../Homepage/Header";
-import {Link, useParams} from "react-router-dom";
-import ReactPaginate from "react-paginate";
+import {findAllNews} from "../../service/news/newsService";
+import {Carousel} from "react-bootstrap";
+import moment from 'moment';
 import "../news/News.css"
+import {Link} from "react-router-dom";
 
 
 export function ListNews() {
     const [listNews, setListNews] = useState([]);
-    const [detailNews, SetDetailNews] = useState([]);
-    const [pageCount, setPageCount] = useState(0);
-    const [request, setRequest] = useState({
-        page: 0,
-        title: "",
-        idNews: 0
-    })
-
-    const param = useParams();
 
 
     useEffect(() => {
@@ -28,75 +19,38 @@ export function ListNews() {
         fetchApiListNews();
     }, []);
 
-
-    useEffect(() => {
-        const data = async () => {
-            const detailNewsApi = await findByIdNews(param.id);
-            SetDetailNews(detailNewsApi);
-        };
-        data();
-    }, [param.id]);
-
-
-    const handlePageOnclick = (event) => {
-        setRequest((prev) => ({...prev, page: event.selected}))
-    }
-
-
     if (!listNews) {
         return null
     }
 
     return (
         <>
-
-
-            <div id="formList">
-                {listNews.map((news) => (
-                    <div id="list">
-                        <div className="item">
-                            <Link to={"/news/detail/" + news.idNews}>
-                                <img class="avatar" src={news.image} alt={news.title}/>
-                            </Link>
-                            <div className="content">
-                                <div>
-                                    <span className="nameGroup">
-                                        <Link to={"/news/detail/" + news.idNews}>
-                                            <h3 className="card-title">{news.title}</h3>
-                                        </Link>
-                                    </span>
+            <div className="container container_news">
+                <Carousel interval={1500} controls>
+                    {listNews.map((news, index) => (
+                        <Carousel.Item key={index}>
+                            <div className="row">
+                                <div className="col-lg-6">
+                                    <Link to={"/detail-news/" + news.idNews}>
+                                        <img className="d-block w-100 foodImg"
+                                             src={news.image} alt={news.title}
+                                        />
+                                    </Link>
                                 </div>
-                                <div>
-                                    <h5>
+                                <div className="col-lg-6 title-news">
+                                    <Link className="link-title" to={"/detail-news/" + news.idNews}>
+                                        <h1 className="titleService">{news.title}</h1>
+                                    </Link>
+                                    <p>
                                         {news.content}
-                                    </h5>
-                                </div>
-                                <div>
-                                    {news.dayPost}
+                                    </p>
+                                    <p id="day-post">
+                                        <span>Ngày đăng:</span> {moment(news.dayPost).format('DD-MM-YYYY')}</p>
                                 </div>
                             </div>
-                        </div>
-
-
-                        {listNews && (
-                            <div className="d-grid">
-                                <ReactPaginate
-                                    breakLabel="..."
-                                    nextLabel=">"
-                                    onPageChange={handlePageOnclick}
-                                    pageCount={pageCount}
-                                    previousLabel="<"
-                                    containerClassName="pagination"
-                                    pageLinkClassName="page-num"
-                                    nextLinkClassName="page-num"
-                                    previousLinkClassName="page-num"
-                                    activeClassName="active"
-                                    disabledClassName="d-none"
-                                />
-                            </div>
-                        )}
-                    </div>
-                ))}
+                        </Carousel.Item>
+                    ))}
+                </Carousel>
             </div>
         </>
     )

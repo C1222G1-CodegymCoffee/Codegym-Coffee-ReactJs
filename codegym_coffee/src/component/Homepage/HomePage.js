@@ -1,6 +1,7 @@
 import {Header} from "./Header";
 import {BackgroundHeader} from "./BackgroundHeader";
 import React from "react";
+import {ListNews} from "../news/ListNews";
 
 
 export const HomePage = () =>{
@@ -8,6 +9,7 @@ export const HomePage = () =>{
         <>
             <Header/>
             <BackgroundHeader/>
+            <ListNews/>
         </>
 
     )
