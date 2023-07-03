@@ -10,12 +10,25 @@ export const postLogin = async (request) => {
     }
 }
 
-export const getEmail = async (email) => {
+export const getEmail = async (genericRequest) => {
     try {
-        const res = await axios.get(`http://localhost:8080/reset_password?email=${email}`);
+        const res = await axios.post(`http://localhost:8080/forgot_password`, genericRequest);
         console.log(res);
+        return res;
         // return res;
     } catch(error){
         console.error("loi hien thi");
     }
 }
+
+export const postResetPassword = async (genericRequest) => {
+    try {
+        const res = await axios.post(`http://localhost:8080/reset_password`, genericRequest);
+        console.log(res);
+        return res;
+        // return res;
+    } catch(error){
+        console.error("loi hien thi");
+    }
+}
+

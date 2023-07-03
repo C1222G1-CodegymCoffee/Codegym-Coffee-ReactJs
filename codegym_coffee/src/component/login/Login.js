@@ -2,20 +2,20 @@ import "../../css/login/login.css";
 import { Formik, Form, Field } from "formik";
 import { getEmail, postLogin } from "../../service/Service";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 function Login() {
-    const [email, setEmail] = useState("");
 
     const navigate = useNavigate();
 
-    const handleInputEmail = (e) => {
-      setEmail((prev) => prev = e.target.value);
-    }
-
-    const handleEmail = (email) => {
-      // let res = await getEmail(email)
-      console.log(email);
+    const handleEmail = async () => {
+      const email = document.querySelector(".email-password").value;
+      let genenicRequest = {
+        emailConfirm: email,
+        location: window.location.origin,
+      }
+      let res = await getEmail(genenicRequest);
+      document.cookie = "token=" + res.data.token;
+      console.log(res.data.token);
     }
 
     return (
@@ -72,14 +72,14 @@ function Login() {
                 <div className="modal-body">
                     <div className="mb-3">
                         <label htmlFor="exampleFormControlInput1" className="form-label text-secondary">Email <sup className="text-danger">*</sup></label>
-                        <input type="email" className="form-control text-dark email-password" id="exampleFormControlInput1" placeholder="name@example.com" value={email} onChange={(e)=> {setEmail(e.target.value)}}/>
+                        <input type="email" className="form-control text-dark email-password" id="exampleFormControlInput1" placeholder="name@example.com"/>
                         {/* <span className="text-danger fs-15">Email sai định dạng</span> */}
                         <div id="emailHelp" className="form-text">Chúng tôi sẽ gửi mật khẩu qua email của bạn.</div>
                       </div>
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn button btn-secondary bg-secondary text-capitalize" data-bs-dismiss="modal">Hủy</button>
-                  <button type="button" className="btn button btn-success text-capitalize" onClick={handleEmail(email)}>Gửi</button>
+                  <button type="button" className="btn button btn-success text-capitalize" onClick={() => {handleEmail()}}>Gửi</button>
                 </div>
               </div>
             </div>

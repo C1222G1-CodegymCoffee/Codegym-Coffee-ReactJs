@@ -5,6 +5,7 @@ import {Routes, Route} from 'react-router-dom'
 import {BackgroundHeader} from "./component/Homepage/BackgroundHeader";
 import {HomePage} from "./component/Homepage/HomePage";
 import Login from "./component/login/Login";
+import ResetPassword from "./component/login/ResetPassword";
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
             <Routes>
                 <Route path="/login" element={<Login/>}></Route>
                 <Route path="/" element={<HomePage/>}></Route>
+                <Route path="/reset_password" element={<ResetPassword/>}></Route>
             </Routes>
       </>
   );
