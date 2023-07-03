@@ -2,16 +2,16 @@ import React, {useEffect, useState} from 'react';
 import "../../css/Homepage/TopProduct.css"
 import * as topProductService from "../../service/Homepage/HomePageService"
 
-export const TopProduct = () => {
-    const [topProduct, setTopProduct] = useState([]);
+export const NewProduct = () => {
+    const [newProduct, setNewProduct] = useState([]);
     const [currentSlide, setCurrentSlide] = useState(0);
 
     useEffect(() => {
-        displayTopProduct()
+        displayNewProduct()
     }, [])
-    const displayTopProduct = async () => {
-        const res = await topProductService.getTopProduct()
-        setTopProduct(res)
+    const displayNewProduct = async () => {
+        const res = await topProductService.getNewProduct()
+        setNewProduct(res)
 
     }
     const handleSlideClick = (index) => {
@@ -21,17 +21,17 @@ export const TopProduct = () => {
     return (
         <div className="slide-container">
             <h1 className='h1_TopP'>
-                <strong className="h1_strongP">BEST SELLER</strong>
+                <strong className="h1_strongP">NEW</strong>
             </h1>
             <div className="slide-wrapper">
-                {topProduct?.map((product, index) => (
+                {newProduct?.map((product, index) => (
                     <div
                         key={product.idProduct}
                         className={`slide ${index === currentSlide ? 'active' : ''}`}
                         onClick={() => handleSlideClick(index)} // Xử lý sự kiện chạm vào hình ảnh
                     >
                         <img src={`/Homepage/${product.image}`} className="slide_img"/>
-                        {/*<img src='/Homepage/new.png' />*/}
+                        <img src='/Homepage/new.png' className="news_label" />
                         <div className="slide-content">
                             <div className="div_slide_a">
                                 <a className="slide_a"><span>Đặt món</span></a>

@@ -11,7 +11,8 @@ export const BackgroundHeader = () => {
                 <h1 className='h1_content'>
                     <strong className="h1_strong">CODEGYM</strong> <span className='span_content'>COFFEE</span>
                 </h1>
-                <a className="btn_a btn_primary_a text_uppercase_a" href="#topProduct">Best seller</a>
+                <a className="btn_a_top btn_primary_a text_uppercase_a" href="#topProduct">Best seller</a>
+                <a className="btn_a_new btn_primary_a text_uppercase_a" href="#newProduct">Món mới</a>
             </div>
         </div>
     );
