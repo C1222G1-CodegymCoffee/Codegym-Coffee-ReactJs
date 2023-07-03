@@ -8,25 +8,34 @@ export const findAllPosition = async () => {
     const res = await axios.get(`http://localhost:8080/home/admin/employee/position`);
     return res.data
 }
-const findAllAccount = async () => {
-    const res = await axios.get(`http://localhost:8080/home/admin/employee/account`)
-    return res.data
-}
+
 
 const addEmployee = async (value) => {
-    await  axios.post(`http://localhost:8080/home/admin/employee`,{ ...value })
+    await axios.post(`http://localhost:8080/home/admin/employee`, {...value})
 }
 const findByName = async (nameSearch) => {
-    const res = await axios.get(`http://localhost:8080/home/admin/employee/${nameSearch}`,)
-    return res.data;
+    try {
+        const res = await axios.get(`http://localhost:8080/home/admin/employee/${nameSearch}`)
+        return res.data;
+    } catch (e) {
+        console.log(e)
+    }
 }
+export const getEmployees = async (page, size) => {
+    try {
+        const result = await axios.get(`http://localhost:8080/home/admin/employee/?page=${page}&size=${size}`);
+        console.log(result)
+        return result.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
 export const employeeService = {
     findByName,
     findAll,
     addEmployee,
     findAllPosition,
-    findAllAccount
-
+    getEmployees
 }
 
 

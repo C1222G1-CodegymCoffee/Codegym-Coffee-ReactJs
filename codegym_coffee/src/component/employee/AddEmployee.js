@@ -3,6 +3,7 @@ import {employeeService} from "../service/EmployeeService";
 import {Field, Form, Formik} from "formik";
 import "../../css/Employee/createEmployee.css"
 import {useNavigate} from "react-router";
+import {accountService} from "../service/AccountService";
 
 
 export function AddEmployee() {
@@ -16,8 +17,8 @@ export function AddEmployee() {
         setPositions(res);
     }
     const findAllAccount = async () => {
-        const res = await employeeService.findAllAccount()
-        setAccount(res)
+        const result = await accountService.findAllAccount()
+        setAccount(result)
     }
     const [gender, setGender] = useState(false);
 
@@ -47,13 +48,15 @@ export function AddEmployee() {
                         idPosition: 1,
                     },
                     account: {
-                        idAccount: 1,
+                        nameAccount: ""
 
-                    }
+                    },
+                    idAccount: ""
                 }}
                         onSubmit={values => {
-                            employeeService.addEmployee(values);
-                            navigate("/employee")
+                            employeeService.addEmployee(values.nameEmployee, values.gender, values.dateOfBirth, values.salary, values.image, values.address, values.phoneNumber, values.email,values.account);
+                            // console.log(res)
+                            // navigate("/employee")
                         }}>
                     <Form>
                         <>
@@ -66,16 +69,10 @@ export function AddEmployee() {
 
                             <div className="form-group">
                                 <label htmlFor="account.idAccount">
-                                    Vai trò <span style={{color: "red"}}>*</span>:
+                                    Tên tài khoản <span style={{color: "red"}}>*</span>:
                                 </label>
-                                <Field as="select" id="account.idAccount" name="account.idAccount" type="number">
-                                    {
-                                        accounts.map((account, index) => (
-                                            <option key={index}
-                                                    value={parseInt(account.idAccount)}>{account.nameAccount}</option>
-                                        ))
-                                    }
-                                </Field>
+                                <Field type="text" id="account.nameAccount" name="account.nameAccount"/>
+
 
                             </div>
                             <div className="form-group">
@@ -100,7 +97,7 @@ export function AddEmployee() {
                                 />
                             </div>
                             <div className="radio-container">
-                                <label htmlFor="gender">Gender</label>
+                                <label htmlFor="gender">Giới tính</label>
                                 <Field
                                     id="female"
                                     name="gender"
