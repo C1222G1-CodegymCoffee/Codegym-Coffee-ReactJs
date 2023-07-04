@@ -3,11 +3,11 @@ import "../../css/Homepage/BackgroundHeader.css";
 
 export const BackgroundHeader = () => {
     return (
-        <div className="container">
+        <div className="container_bgHeader">
             <div className="banner_image ">
-                <img src="/Homepage/img_01.png" alt="Banner Image" className="body_wrap" />
+                <img src="/Homepage/img_01.png" alt="Banner Image"  />
             </div>
-            <div className="content">
+            <div className="content_bgHeader">
                 <h1 className='h1_content'>
                     <strong className="h1_strong">CODEGYM</strong> <span className='span_content'>COFFEE</span>
                 </h1>

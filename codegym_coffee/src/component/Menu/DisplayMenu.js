@@ -132,7 +132,7 @@ export function DisplayMenu() {
                         {items.map((item, index) => (
                             <li key={index} className="li_menu">
                                 <div className="div_menu_card">
-                                    <img className="img_card" src={`/Homepage/${item.image}`}/>
+                                    <img className="img_card" src={item.image}/>
                                 </div>
                                 <div>{item.nameProduct}</div>
                                 <div className="div_menu_card">{item.price}</div>
