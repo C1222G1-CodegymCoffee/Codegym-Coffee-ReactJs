@@ -397,8 +397,16 @@ export default function EmployeeInformation() {
                                                         <div className="col-6">
                                                             <button
                                                                 type="button"
-                                                                className="button-movie"
-                                                                style={{ backgroundColor: "#B29A81" }}
+                                                                style={{
+                                                                    backgroundColor: "#8C6842",
+                                                                    width: 80,
+                                                                    color: "#ffffff",
+                                                                    padding: 5,
+                                                                    textAlign: "center",
+                                                                    marginRight: 10,
+                                                                    paddingRight: 5,
+                                                                    borderRadius: 10
+                                                                }}
                                                             >
                                                                 Quay về
                                                             </button>
@@ -406,8 +414,16 @@ export default function EmployeeInformation() {
                                                         <div className="col-6">
                                                             <button
                                                                 type={avatarErr || !isAuth ? "button" : "submit"}
-                                                                className="button-movie"
-                                                                style={{ backgroundColor: "#8C6842" }}
+                                                                style={{
+                                                                    backgroundColor: "#B29A81",
+                                                                    width: 80,
+                                                                    color: "#ffffff",
+                                                                    padding: 5,
+                                                                    textAlign: "center",
+                                                                    marginRight: 10,
+                                                                    paddingRight: 5,
+                                                                    borderRadius: 10
+                                                                }}
                                                             >
                                                                 Cập nhật
                                                             </button>

@@ -224,8 +224,16 @@ export default function ChangePassword() {
                                                 onClick={() => {
                                                     navigate('/')
                                                 }}
-                                                className="button-movie"
-                                                style={{background: "#B29A81"}}
+                                                style={{
+                                                    backgroundColor: "#B29A81",
+                                                    width: 80,
+                                                    color: "#ffffff",
+                                                    padding: 5,
+                                                    textAlign: "center",
+                                                    marginRight: 10,
+                                                    paddingRight: 5,
+                                                    borderRadius: 10
+                                                }}
                                             >
                                                 Quay về
                                             </buton>
@@ -233,8 +241,16 @@ export default function ChangePassword() {
                                         <div className="col-6">
                                             <button
                                                 type="submit"
-                                                className="button-movie"
-                                                style={{background: "#8C6842"}}
+                                                style={{
+                                                    backgroundColor: "#8C6842",
+                                                    width: 80,
+                                                    color: "#ffffff",
+                                                    padding: 5,
+                                                    textAlign: "center",
+                                                    marginRight: 10,
+                                                    paddingRight: 5,
+                                                    borderRadius: 10
+                                                }}
                                             >
                                                 Xác nhận
                                             </button>
