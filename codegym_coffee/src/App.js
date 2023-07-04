@@ -20,6 +20,9 @@ import ResetPassword from "./component/login/ResetPassword";
 import NewsCreate from "./component/News/NewsCreate";
 import {EmployeeList} from "./component/employee/EmployeeList";
 import {AddEmployee} from "./component/employee/AddEmployee";
+import { CreateProduct } from './component/product/CreateProduct';
+import { EditProduct } from './component/product/EditProduct';
+import { ToastContainer } from 'react-toastify';
 
 import { ToastContainer } from "react-toastify";
 
@@ -41,6 +44,8 @@ function App() {
                 <Route path="/login" element={<Login/>}></Route>
                 <Route path="/createNews" element={<NewsCreate/>}/>
                 <Route path="/statistical" element={<Example/>}/>
+                <Route path="/createProduct" element={<CreateProduct/>}></Route>
+                <Route path="/editProduct/:idProduct" element={<EditProduct/>}></Route>
             </Routes>
           <ToastContainer />
       </>
@@ -48,3 +53,4 @@ function App() {
 }
 
 export default App;
+
