@@ -1,8 +1,8 @@
 import axios from "axios";
-export const findProductById = async (id) => {
+export const findProductById = async (idProduct) => {
     try {
         const result = await axios.get(
-            `http://localhost:8080/api/product/${id}`
+            `http://localhost:8080/api/product/${idProduct}`
         );
         return result.data;
     } catch (e) {
