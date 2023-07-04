@@ -1,7 +1,9 @@
 import './App.css';
-import {Header} from "./component/Homepage/Header";
 import React from "react";
 import {Routes, Route} from 'react-router-dom'
+import {HomePage} from "./component/Homepage/HomePage";
+import ChangePassword from "./component/account/ChangePassword";
+import EmployeeInformation from "./component/employee/EmployeeInformation";
 import {HomePage} from "./component/Homepage/HomePage";
 import {Sale} from "./component/Sale/Sale";
 import {ListFeedback} from "./component/feedback/ListFeedback";
@@ -21,6 +23,8 @@ function App() {
                 <Route path="/employee" element={<EmployeeList/>}></Route>
                 <Route path="/employee_create" element={<AddEmployee/>}></Route>
                 <Route path="/bill" element={<List/>}></Route>
+                {<Route path="/account/change-password" element={<ChangePassword/>}/> }
+
             </Routes>
       </>
   );
