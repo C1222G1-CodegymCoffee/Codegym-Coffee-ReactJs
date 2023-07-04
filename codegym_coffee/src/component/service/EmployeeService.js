@@ -5,7 +5,7 @@ const findAll = async () => {
     return res.data
 }
 export const findAllPosition = async () => {
-    const res = await axios.get(`http://localhost:8080/api/admin/employee/position`);
+    const res = await axios.get(`http://localhost:8080/api/admin/position`);
     return res.data
 }
 

@@ -81,7 +81,6 @@ export function EditProduct() {
 
     return (
         <>
-            <Header></Header>
             <Formik initialValues={{
                 idProduct: product?.idProduct,
                 ingredient: product?.ingredient,

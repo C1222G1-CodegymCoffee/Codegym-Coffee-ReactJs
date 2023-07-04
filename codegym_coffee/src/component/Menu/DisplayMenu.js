@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {addToBill, getAllProduct, getAllProductByType, getAllTypeProduct} from "../../service/menu/MenuService";
 import "../../css/Menu/menu.css"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faShoppingCart} from "@fortawesome/free-solid-svg-icons";
 
 export function DisplayMenu() {
 
@@ -101,7 +103,8 @@ export function DisplayMenu() {
             <div className={`container_menu ${isActive ? 'active' : ''}`}>
                 <div className="header_menu">
                 <div className="shopping_menu" onClick={openShopping}>
-                    <img src="image/shopping.svg" alt="Shopping Cart"/>
+                    <FontAwesomeIcon icon={faShoppingCart} />
+                    {/*<img src="image/shopping.svg" alt="Shopping Cart"/>*/}
                     {/*<span className="quantity span_menu">{count}</span>*/}
                 </div>
                 </div>

@@ -3,11 +3,11 @@ import request from "../request";
 const detail = () => {
     const token = localStorage.getItem('token')
     try {
-        const res = request.get('/employee/detail',
+        const res = request.get('/v2/employee/detail',
             {
                 headers:
                     {
-                        'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmhxdWFuMTIzIiwiaXNzIjoiQ29kZUphdmEiLCJpYXQiOjE2ODg0NjI4NTMsImV4cCI6MTY4ODU0OTI1M30.m1Ucjy4iltn72-0HTr-j7ky3iGXbxH__aYswCVB-9kODJpAd6W7e-e1HW9zBs5fT8fZIN2E3wiK4P6yIfNMmPA'
+                        'Authorization': 'Bearer ' + sessionStorage.getItem("TOKEN")
                     }
             }
         )
@@ -19,12 +19,12 @@ const detail = () => {
 const update = (value) => {
     const token = localStorage.getItem('token')
     try {
-        const res = request.patch('/employee/update',{...value}
+        const res = request.patch('/v2/employee/update',{...value}
         ,
             {
                 headers:
                     {
-                        'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmhxdWFuMTIzIiwiaXNzIjoiQ29kZUphdmEiLCJpYXQiOjE2ODg0NjI4NTMsImV4cCI6MTY4ODU0OTI1M30.m1Ucjy4iltn72-0HTr-j7ky3iGXbxH__aYswCVB-9kODJpAd6W7e-e1HW9zBs5fT8fZIN2E3wiK4P6yIfNMmPA'
+                        'Authorization': 'Bearer ' +  sessionStorage.getItem("TOKEN")
                     }
             }
         )
@@ -36,12 +36,12 @@ const update = (value) => {
 const updatePassword = (value) => {
     const token = localStorage.getItem('token')
     try {
-        const res = request.put('/account/change-password',{...value}
+        const res = request.put('/v2/account/change-password',{...value}
         ,
             {
                 headers:
                     {
-                        'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmhxdWFuMTIzIiwiaXNzIjoiQ29kZUphdmEiLCJpYXQiOjE2ODg0NjI4NTMsImV4cCI6MTY4ODU0OTI1M30.m1Ucjy4iltn72-0HTr-j7ky3iGXbxH__aYswCVB-9kODJpAd6W7e-e1HW9zBs5fT8fZIN2E3wiK4P6yIfNMmPA'
+                        'Authorization': 'Bearer ' +  sessionStorage.getItem("TOKEN")
                     }
             }
         )

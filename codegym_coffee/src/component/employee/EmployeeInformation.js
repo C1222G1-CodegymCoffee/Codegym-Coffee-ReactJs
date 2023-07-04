@@ -1,15 +1,15 @@
-import { Header } from "../Homepage/Header";
-import React, { useContext, useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {NavLink, useNavigate} from "react-router-dom";
 import employeeInformationService from "../../service/employeeInformationService"
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from 'yup'
 import Swal from "sweetalert2";
 import '../account/accountStyle.css'
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { storage } from "../../firebase";
+import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
+import {storage} from "../../firebase";
 import positionService from "../../service/positionService"
-import { RotatingLines } from "react-loader-spinner";
+import {RotatingLines} from "react-loader-spinner";
+
 export default function EmployeeInformation() {
     const [employeeDetail, setEmployeeDetail] = useState()
     const navigate = useNavigate()
@@ -119,7 +119,6 @@ export default function EmployeeInformation() {
     console.log(employeeDetail);
     return (
         <>
-            <Header />
             <Formik
                 initialValues={{
                     idEmployee: employeeDetail?.idEmployee,

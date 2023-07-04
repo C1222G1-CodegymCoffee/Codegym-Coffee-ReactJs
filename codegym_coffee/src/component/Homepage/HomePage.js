@@ -11,12 +11,12 @@ import {NewProduct} from "./NewProduct";
 export const HomePage = () =>{
     return(
         <>
-            <Header/>
+            {/*<Header/>*/}
             <BackgroundHeader/>
             <section id="topProduct"><TopProduct/></section>
             <section id="newProduct"><NewProduct/></section>
             <News/>
-            <Footer/>
+            {/*<Footer/>*/}
         </>
 
     )

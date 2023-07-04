@@ -4,19 +4,19 @@ import {Field, Form, Formik} from "formik";
 import "../../css/Employee/employee.css"
 import {Link} from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import {Axios as axios} from "axios";
+import axios from "axios";
 import {Header} from "../Homepage/Header";
 
 export function EmployeeList() {
-    const [employeeList, setEmployeeList] = useState([])
+    const [employeeList, setEmployeeList] = useState(null)
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPage, setTotalPage] = useState(0);
-    const [data, setData] = useState([]);
-    const [totalElements, setTotalElements] = useState(0);
-    const [itemsPerPage, setItemsPerPage] = useState(10);
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const currentEmployee = employeeList?.slice(startIndex, endIndex);
+    // const [data, setData] = useState([]);
+    // const [totalElements, setTotalElements] = useState(0);
+    // const [itemsPerPage, setItemsPerPage] = useState(10);
+    // const startIndex = (currentPage - 1) * itemsPerPage;
+    // const endIndex = startIndex + itemsPerPage;
+    // const currentEmployee = employeeList?.slice(startIndex, endIndex);
     const pageSize = 10;
     const [idDelete, setIdDelete] = useState(null);
     const [nameDelete, setNameDelete] = useState(null);
@@ -34,14 +34,14 @@ export function EmployeeList() {
         await employeeService.deleteByIdEmployee(idDelete)
         findAll()
     }
-    useEffect(() => {
-        findAll()
-    }, [])
-    let state = {
-        pagedResponse: {},
-        users: [],
-        showLoading: false
-    };
+    // useEffect(() => {
+    //     findAll()
+    // }, [])
+    // let state = {
+    //     pagedResponse: {},
+    //     users: [],
+    //     showLoading: false
+    // };
     const getListEmployee = async () => {
         const listEmployee = await employeeService.getEmployees(currentPage, pageSize);
         setTotalPage(listEmployee.totalPages)
@@ -62,21 +62,32 @@ export function EmployeeList() {
     }
 
     useEffect(() => {
-        getListEmployee()
+        // getListEmployee()
+        fetchData(0);
+    }, []);
+
+
+    useEffect(() => {
+        // getListEmployee()
         fetchData(currentPage);
     }, [currentPage]);
 
 
     const fetchData = async (page) => {
         try {
-            const result = await axios.get(`http://localhost:8080/api/admin/employee?page=${page}&size=${itemsPerPage}`);
-            setData(result.data.content);
+            const result = await axios.get(`http://localhost:8080/api/admin/employee?page=${page}`);
+            // setData(result.data.content);
             setTotalPage(result.data.totalPages);
-            setTotalElements(result.data.totalElements);
+            setEmployeeList(result.data.content);
+            // setTotalElements(result.data.totalElements);
         } catch (error) {
             console.log(error);
         }
     };
+
+    if (!employeeList) {
+        return null;
+    }
 
     return (
         <>
@@ -131,7 +142,7 @@ export function EmployeeList() {
                                                 placeholder="Nhập số điện thoại tìm kiếm"
                                             />
                                             <button className="btn btn-primary long-button" type="submit">
-                                                <i className="fa-solid fa-magnifying-glass "/>
+                                                Search
                                             </button>
                                         </div>
                                     </Form>
@@ -140,8 +151,10 @@ export function EmployeeList() {
                         </div>
 
                         <Link to="/employee_create"
-                              className="btn btn-primary long-button"><i className="fa-solid fa-user-plus"></i>
+                              className="btn btn-primary long-button">
+                            Create
                         </Link>
+
                         <table className="table table-striped mt-2 ">
                             <thead>
                             <tr>
@@ -160,33 +173,40 @@ export function EmployeeList() {
                             </tr>
                             </thead>
                             <tbody>
-
                             {
-                                employeeList.map((employee, index) => (
-                                    <tr key={index}>
-                                        <td>{index + 1}</td>
-                                        <td>{employee.account.nameAccount}</td>
-                                        <td>{employee.nameEmployee}</td>
-                                        <td>{employee.address}</td>
-                                        <td>{employee.phoneNumber}</td>
-                                        <td>{employee.email}</td>
-                                        <td>{employee.gender ? "Nam" : "Nữ"}</td>
-                                        <td>{employee.dateOfBirth}</td>
-                                        <td>{employee.salary}</td>
-                                        <td>{employee.position.name}</td>
-                                        <td>
-                                            <button
-                                                type="button"
-                                                className="btn btn-danger"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal"
-                                                onClick={() => getProps(employee.idEmployee, employee.nameEmployee)}
-                                            ><i
-                                                className="fa-regular fa-trash-can"/>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))
+                                employeeList && employeeList.length > 0 ? (
+                                    <>
+                                        {
+                                            employeeList.map((employee, index) => (
+                                                <tr key={index}>
+                                                    <td>{index + 1}</td>
+                                                    <td>{employee.account.nameAccount}</td>
+                                                    <td>{employee.nameEmployee}</td>
+                                                    <td>{employee.address}</td>
+                                                    <td>{employee.phoneNumber}</td>
+                                                    <td>{employee.email}</td>
+                                                    <td>{employee.gender ? "Nam" : "Nữ"}</td>
+                                                    <td>{employee.dateOfBirth}</td>
+                                                    <td>{employee.salary}</td>
+                                                    <td>{employee.position.name}</td>
+                                                    <td>
+                                                        <button
+                                                            type="button"
+                                                            className="btn btn-danger"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#exampleModal"
+                                                            onClick={() => getProps(employee.idEmployee, employee.nameEmployee)}
+                                                        ><i
+                                                            className="fa-regular fa-trash-can"/>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        }
+                                    </>
+                                ) : (
+                                    <tr className="text-center">Khong tim thay nhan vien</tr>
+                                )
                             }
                             </tbody>
                         </table>
@@ -225,28 +245,31 @@ export function EmployeeList() {
                     </div>
                 </div>
             </div>
-            <div className=" d-flex justify-content-center">
-                <ReactPaginate
-                    previousLabel="Trước"
-                    nextLabel="Sau"
-                    pageCount={totalPage}
-                    onPageChange={handleClickPage}
-                    onClick={handleChangePage}
-                    containerClassName="pagination"
-                    previousClassName="page-item"
-                    previousLinkClassName="page-link"
-                    nextClassName="page-item"
-                    nextLinkClassName="page-link"
-                    pageClassName="page-item"
-                    pageLinkClassName="page-link"
-                    activeClassName="active"
-                    activeLinkClassName="page-link"
-                    forcePage={currentPage}
-                    pageRangeDisplayed={2} // Hiển thị 3 trang trên mỗi lần render
-                    marginPagesDisplayed={1} // Hiển thị 1 trang ở đầu và cuối danh sách trang
-                />
-            </div>
-
+            {
+                totalPage > 0 && (
+                    <div className=" d-flex justify-content-center">
+                        <ReactPaginate
+                            previousLabel="Trước"
+                            nextLabel="Sau"
+                            pageCount={totalPage}
+                            onPageChange={handleClickPage}
+                            onClick={handleChangePage}
+                            containerClassName="pagination"
+                            previousClassName="page-item"
+                            previousLinkClassName="page-link"
+                            nextClassName="page-item"
+                            nextLinkClassName="page-link"
+                            pageClassName="page-item"
+                            pageLinkClassName="page-link"
+                            activeClassName="active"
+                            activeLinkClassName="page-link"
+                            forcePage={currentPage}
+                            pageRangeDisplayed={2} // Hiển thị 3 trang trên mỗi lần render
+                            marginPagesDisplayed={1} // Hiển thị 1 trang ở đầu và cuối danh sách trang
+                        />
+                    </div>
+                )
+            }
         </>
 
     )

@@ -65,7 +65,6 @@ export function CreateProduct() {
 
     return (
         <>
-            <Header></Header>
             <Formik initialValues={{
                 ingredient: "",
                 nameProduct: "",
@@ -228,17 +227,17 @@ export function CreateProduct() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="row d-flex" style={{ paddingTop: 25, paddingBottom: 30 }}>
-                                            <div className="col-6" style={{ textAlign: "right" }}>
-                                                <button
-                                                    type="reset"
-                                                    className="btn btn-primary btn-block"
-                                                    style={{ background: "black", border: "none" }}
-                                                >
-                                                    Quay về
-                                                </button>
-                                            </div>
-                                            <div className="col-6">
+                                        <div className="row d-flex mx-auto" style={{ paddingTop: 25, paddingBottom: 30 }}>
+                                            {/*<div className="col-6" style={{ textAlign: "right" }}>*/}
+                                            {/*    <button*/}
+                                            {/*        type="reset"*/}
+                                            {/*        className="btn btn-primary btn-block"*/}
+                                            {/*        style={{ background: "black", border: "none" }}*/}
+                                            {/*    >*/}
+                                            {/*        Quay về*/}
+                                            {/*    </button>*/}
+                                            {/*</div>*/}
+                                            <div className="col-2 mx-auto">
                                                 {
                                                     isSubmitting ?
                                                         <ColorRing

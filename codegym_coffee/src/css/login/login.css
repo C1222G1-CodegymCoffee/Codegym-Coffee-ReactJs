@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,700;1,400&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,700;1,400&display=swap');*/
 
 
 *{
@@ -7,31 +7,31 @@
     box-sizing: border-box;
 }
 
-.text-forgot-password {
+#loginPage .text-forgot-password {
     color: #b6751b;
 }
 
-.bg-modal {
+#loginPage .bg-modal {
     background-color: #FDF0D3 !important;
 }
 
-.text-modal {
+#loginPage .text-modal {
     color: #AA803B;
 }
 
-.fs-15 {
+#loginPage .fs-15 {
     font-size: 14px !important;
 }
 
-.fs-10 {
+#loginPage .fs-10 {
     font-size: 10px !important;
 }
 
-.br-10 {
+#loginPage .br-10 {
     border-radius: 10px;
 }
 
-.content {
+#loginPage .content {
     background-color: #181A1B;
     max-width: 80%;
     width: 80%;
@@ -45,31 +45,32 @@
     background-position: center center;
     position: relative;
 }
-.form-custom {
+#loginPage .form-custom {
     border-radius: 0px !important;
     border: none !important;
     border-bottom: 1px solid white !important;
     background-color: transparent!important;
     color: white !important;
 }
-.form-custom::placeholder { 
+#loginPage .form-custom::placeholder {
     color: white !important;
-    opacity: 1; 
+    opacity: 1;
 }
-.form-custom:focus {
+#loginPage .form-custom:focus {
     color: white;
     background-color: #fff;
     border-color: transparent;
     outline: 0;
     box-shadow: none !important;
 }
-h1 {
+#loginPage h1 {
     font-weight: 700 !important;
+    color: white;
 }
-form {
+#loginPage form {
     margin: 0 40px;
 }
-.modal-header {
+#loginPage .modal-header {
     border-bottom: none !important;
 }
 
@@ -81,7 +82,12 @@ form {
     padding: 0 1rem !important;
 }
 
-.button {
+#loginPage span.password-icon {
+    color: white !important;
+}
+
+
+#loginPage .button {
     padding: 10px 25px;
     border-radius: 50px !important;
     border: 0;
@@ -93,19 +99,19 @@ form {
     font-weight: bold;
     transition: all .5s ease;
     color: #454B4B;
-   }
-   
-   .button:hover {
+}
+
+#loginPage .button:hover {
     background-color: #b6751b;
     color: hsl(0, 0%, 100%);
-   }
-   
-   .button:active {
+}
+
+#loginPage .button:active {
     letter-spacing: 3px;
     background-color: #b6751b;
     color: hsl(0, 0%, 100%);
-   }
-   .icon-custom{
-        margin-top: 5px;
-        border-bottom: 1px solid white;
-   }
+}
+#loginPage .icon-custom{
+    margin-top: 5px;
+    border-bottom: 1px solid white;
+}
