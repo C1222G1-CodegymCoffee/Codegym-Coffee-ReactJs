@@ -19,17 +19,6 @@ body {
     animation: flicker 4s ease-in-out infinite;
 }
 
-/*@keyframes flicker {*/
-/*    0%, 60% {*/
-/*        background-color: #000;*/
-/*        opacity: 0.9;*/
-/*    }*/
-/*    40% {*/
-/*        background-color: #000;*/
-/*        opacity: 0.9;*/
-/*    }*/
-/*}*/
-
 
 th.content-title {
     animation-name: color-change;
@@ -38,7 +27,7 @@ th.content-title {
     font-size: 1.2rem;
 }
 
-td.content-feedback {
+td.content-bill {
     font-size: 1rem;
 }
 

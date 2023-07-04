@@ -22,7 +22,6 @@ function List() {
     const [totalPages, setTotalPages] = useState(0);
     const [totalElements, setTotalElements] = useState(0);
 
-
     const fetchData = async (page) => {
         try {
             const result = await axios.get(`http://localhost:8080/api/admin/bill?page=${page}&size=${itemsPerPage}`);
@@ -33,7 +32,6 @@ function List() {
             console.log(error);
         }
     };
-
 
     const getListBills = async () => {
         const listBill = await getBills(currentPage, pageSize);
@@ -115,17 +113,14 @@ function List() {
                                 <Form>
                                     <div className="input-group mb-4">
         <span className="input-group-text">
-        <svg className="bi bi-search-heart" fill="currentColor"
-             viewBox="0 0 16 16"
-             xmlns="http://www.w3.org/2000/svg">
-        <path d="M6.5 4.482c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.69 0-5.018Z"/>
-        <path
-            d="M13 6.5a6.471 6.471 0 0 1-1.258 3.844c.04.03.078.062.115.098l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1.007 1.007 0 0 1-.1-.115h.002A6.5 6.5 0 1 1 13 6.5ZM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11Z"/>
-        </svg>
+            <img width="25" height="25" src="https://img.icons8.com/windows/32/password-book.png" alt="password-book"/>
         </span>
                                         <Field className="form-control" placeholder="Mã hoá đơn" type="text"
                                                name='searchTerm'/>
-                                        <Field aria-label="Ngày feedback" className="form-control"
+                                        <span className="input-group-text">
+            <img width="25" height="25" src="https://img.icons8.com/ios/50/calendar-app.png" alt="calendar-app"/>
+        </span>
+                                        <Field aria-label="Ngày tạo" className="form-control"
                                                type="date" name='dayOfBill'/>
                                         <button className="btn btn-light"
                                                 type="submit">
@@ -158,12 +153,12 @@ function List() {
                             {bill &&
                                 bill.map((bills, index) => (
                                     <tr key={index}>
-                                        <td className="content-feedback" scope="row">{index + 1}</td>
-                                        <td className="content-feedback">{bills.codeBill}</td>
-                                        <td className="content-feedback">{moment(bills.dayOfBill).format('DD/MM/YYYY')}</td>
-                                        <td className="content-feedback">{bills.employee.nameEmployee}</td>
-                                        <td className="content-feedback">{bills.feedback.email}</td>
-                                        <td className="content-feedback">{new Intl.NumberFormat().format(bills.employee.salary)}</td>
+                                        <td className="content-bill" scope="row">{index + 1}</td>
+                                        <td className="content-bill">{bills.codeBill}</td>
+                                        <td className="content-bill">{moment(bills.dayOfBill).format('DD/MM/YYYY')}</td>
+                                        <td className="content-bill">{bills.employee.nameEmployee}</td>
+                                        <td className="content-bill">{bills.feedback.email}</td>
+                                        <td className="content-bill">{new Intl.NumberFormat().format(bills.employee.salary)}</td>
 
                                         <td>
                                             <button type="button" className="btn btn-light" data-bs-toggle="modal"
@@ -202,7 +197,7 @@ function List() {
                 <div className="modal-dialog">
                     <div className="modal-content bg-light">
                         <div className="modal-header">
-                            <h5 className="modal-title text-primary" id="staticBackdropLabel">
+                            <h5 className="modal-title text-danger" id="staticBackdropLabel">
                                 Chi tiết
                             </h5>
                             <button
