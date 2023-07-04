@@ -17,11 +17,21 @@ export function EmployeeList() {
     const endIndex = startIndex + itemsPerPage;
     const currentEmployee = employeeList?.slice(startIndex, endIndex);
     const pageSize = 10;
+    const [idDelete,setIdDelete] = useState(null);
+    const [nameDelete,setNameDelete] = useState(null);
 
     const findAll = async () => {
         const res = await employeeService.findAll()
         console.log(res)
         setEmployeeList(res.content)
+    }
+    const getProps = (id,name) => {
+        setIdDelete(id)
+        setNameDelete(name)
+    }
+    const handleDelete = async () => {
+        await employeeService.deleteByIdEmployee(idDelete)
+        findAll()
     }
     useEffect(() => {
         findAll()
@@ -69,10 +79,10 @@ export function EmployeeList() {
 
     return (
         <>
-            <Formik initialValues={{nameAccount:"",nameSearch: "",phoneNumber:""}}
-                    onSubmit={ async (values) => {
+            <Formik initialValues={{nameAccount: "", nameSearch: "", phoneNumber: ""}}
+                    onSubmit={async (values) => {
                         console.log(values)
-                        const res = await employeeService.findByEmployee(values.nameSearch,values.nameAccount,values.phoneNumber)
+                        const res = await employeeService.findByEmployee(values.nameSearch, values.nameAccount, values.phoneNumber)
                         if (res.length === 0) {
                             alert("khong thay")
                         } else {
@@ -151,17 +161,54 @@ export function EmployeeList() {
                             <td>{employee.salary}</td>
                             <td>{employee.position.name}</td>
                             <td>
-                                <button className="btn btn-primary"><i className="fa-regular fa-pen-to-square"></i>
+                                <button
+                                    type="button"
+                                    className="btn btn-danger"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal"
+                                    onClick={() => getProps(employee.idEmployee, employee.nameEmployee)}
+                                ><i
+                                    className="fa-regular fa-trash-can"/>
                                 </button>
-                                <button className="btn btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal"><i
-                                    className="fa-regular fa-trash-can"></i></button>
+
+
                             </td>
                         </tr>
                     ))
                 }
                 </tbody>
             </table>
+            <div className="modal" tabIndex={-1} id={"exampleModal"}>
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title text-danger">Bảng xóa khách hàng</h5>
+                            <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            />
+                        </div>
+                        <div className="modal-body">
+                            <div>Bạn có muốn xóa <h5 className={"text-danger"}>{nameDelete}</h5></div>
+                        </div>
+                        <div className="modal-footer">
+                            <button
+                                type="button"
+                                className="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                            >
+                                Close
+                            </button>
+                            <button type="button" data-bs-dismiss="modal"
+                                    className="btn btn-danger" onClick={() => handleDelete(idDelete)}>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div className=" d-flex justify-content-center">
                 <ReactPaginate
                     previousLabel="Trước"

@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {employeeService} from "../service/EmployeeService";
-import {Field, Form, Formik} from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import "../../css/Employee/createEmployee.css"
 import {useNavigate} from "react-router";
+import * as Yup from "yup"
 import {accountService} from "../service/AccountService";
+import {object} from "yup";
 
 
 export function AddEmployee() {
@@ -33,7 +35,7 @@ export function AddEmployee() {
                     nameEmployee: "",
                     gender: false,
                     dateOfBirth: "",
-                    salary: 0,
+                    salary: "",
                     image: "",
                     address: "",
                     phoneNumber: "",
@@ -45,7 +47,30 @@ export function AddEmployee() {
                         nameAccount: ""
 
                     },
-                }}
+                }
+                }
+                        validationSchema={Yup.object({
+                            nameEmployee: Yup.string()
+                                .required('Không được để trống').min(2, 'độ dài ký tự phải từ 2 trở lên'),
+                            gender: Yup.string()
+                                .required('Không được để trống'),
+                            dateOfBirth: Yup.string()
+                                .required('Không được để trống'),
+                            salary: Yup.number()
+                                .required('Không được để trống'),
+                            phoneNumber: Yup.string()
+                                .required('Không được để trống').min(10, 'số điện thoại phải dài ít nhất 10 số và nhiều nhất 12 số')
+                                .max(12, 'số điện thoại phải dài ít nhất 10 số và nhiều nhất 12 số'),
+                            address: Yup.string()
+                                .required('Không được để trống'),
+                            email: Yup.string()
+                                .required('Không được để trống'),
+                            account: Yup.object()
+                                .required('Không được để trống'),
+                            image: Yup.string()
+                                .required('Không được để trống'),
+
+                        })}
                         onSubmit={values => {
                             employeeService.addEmployee(values);
                             navigate("/employee")
@@ -57,15 +82,16 @@ export function AddEmployee() {
                                     Hình Ảnh <span style={{color: "red"}}>*</span>:
                                 </label>
                                 <Field type="file" name="image" id="image" className="form-control"/>
+                                <ErrorMessage name='image' component='span' className='form-err' />
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="account.idAccount">
+                                <label htmlFor="account.nameAccount">
                                     Tên tài khoản <span style={{color: "red"}}>*</span>:
                                 </label>
-                                <Field type="text" id="account.nameAccount" name="account.nameAccount" placeholder={"Nhập tên tài khoản"}/>
-
-
+                                <Field type="text" id="account.nameAccount" name="account.nameAccount"
+                                       placeholder={"Nhập tên tài khoản"}/>
+                                <ErrorMessage name='account' component='span' className='form-err' />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="nameEmployee">
@@ -78,6 +104,8 @@ export function AddEmployee() {
                                     required=""
                                     placeholder="Nhập tên"
                                 />
+                                <ErrorMessage name='nameEmployee' component='span' className='form-err' />
+
                             </div>
                             <div className="form-group">
                                 <label htmlFor="dateOfBirth">Ngày sinh:</label>
@@ -87,6 +115,8 @@ export function AddEmployee() {
                                     id="dateOfBirth"
                                     name="dateOfBirth"
                                 />
+                                <ErrorMessage name='dateOfBirth' component='span' className='form-err'/>
+
                             </div>
                             <div className="radio-container">
                                 <label htmlFor="gender">Giới tính:</label>
@@ -119,6 +149,8 @@ export function AddEmployee() {
                                     name="email"
                                     placeholder="Nhập email"
                                 />
+                                <ErrorMessage name='email' component='span' className='form-err' />
+
                             </div>
                             <div className="form-group">
                                 <label htmlFor="phoneNumber">
@@ -130,6 +162,8 @@ export function AddEmployee() {
                                     name="phoneNumber"
                                     placeholder="Nhập số điện thoại"
                                 />
+                                <ErrorMessage name='phoneNumber' component='span' className='form-err' />
+
                             </div>
                             <div className="form-group">
                                 <label htmlFor="address">
@@ -141,6 +175,8 @@ export function AddEmployee() {
                                     name="address"
                                     placeholder="Nhập địa chỉ"
                                 />
+                                <ErrorMessage name='address' component='span' className='form-err' />
+
                             </div>
                             <div className="form-group">
                                 <label htmlFor="role">
@@ -163,11 +199,10 @@ export function AddEmployee() {
                                 </label>
                                 <Field
                                     type="text"
-                                    id="salary"
                                     name="salary"
-                                    required=""
                                     placeholder="Nhập lương"
                                 />
+                                <ErrorMessage name='salary' component='span' className='form-err'/>
                             </div>
                             <div className="" style={{textAlign: "center"}}>
                                 <a className="cancel-button"
