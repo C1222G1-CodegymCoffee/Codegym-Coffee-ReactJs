@@ -5,7 +5,6 @@ import moment from 'moment';
 import "../news/News.css"
 import {Link} from "react-router-dom";
 
-
 export function ListNews() {
     const [listNews, setListNews] = useState([]);
 
@@ -19,6 +18,7 @@ export function ListNews() {
         fetchApiListNews();
     }, []);
 
+
     if (!listNews) {
         return null
     }
@@ -26,12 +26,13 @@ export function ListNews() {
     return (
         <>
             <div className="container container_news">
-                <Carousel interval={1500} controls>
+                <Carousel interval={2500} controls>
                     {listNews.map((news, index) => (
                         <Carousel.Item key={index}>
                             <div className="row">
                                 <div className="col-lg-6">
                                     <Link to={"/detail-news/" + news.idNews}>
+
                                         <img className="d-block w-100 foodImg"
                                              src={news.image} alt={news.title}
                                         />

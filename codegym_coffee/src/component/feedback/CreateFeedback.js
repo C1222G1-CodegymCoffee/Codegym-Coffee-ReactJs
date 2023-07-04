@@ -99,8 +99,6 @@ export function CreateFeedback() {
                             ...values,
                             image: firebaseImg,
                             dayOfFeedback: currentDate,
-
-
                         };
                         newValue.image = await handleSubmitAsync();
                         await feedbackService.saveFeedback(newValue);
@@ -161,7 +159,7 @@ export function CreateFeedback() {
                                                     <p>
                                                         <label htmlFor="image"
                                                                style={{display: "inline-block", padding: "6px 12px",
-                                                                   border: "1px solid", borderRadius: "4px",}}>
+                                                                   border: "1px solid", borderRadius: "4px"}}>
                                                             Chọn hình ảnh
                                                         </label>
                                                     </p>
