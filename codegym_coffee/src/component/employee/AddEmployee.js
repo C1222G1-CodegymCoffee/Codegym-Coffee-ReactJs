@@ -8,17 +8,12 @@ import {accountService} from "../service/AccountService";
 
 export function AddEmployee() {
     const [positions, setPositions] = useState([]);
-    const [accounts, setAccount] = useState([]);
     const navigate = useNavigate();
 
 
     const findAllPosition = async () => {
         const res = await employeeService.findAllPosition();
         setPositions(res);
-    }
-    const findAllAccount = async () => {
-        const result = await accountService.findAllAccount()
-        setAccount(result)
     }
     const [gender, setGender] = useState(false);
 
@@ -27,7 +22,6 @@ export function AddEmployee() {
     };
     useEffect(() => {
         findAllPosition()
-        findAllAccount()
     }, [])
 
     return (
@@ -45,18 +39,16 @@ export function AddEmployee() {
                     phoneNumber: "",
                     email: "",
                     position: {
-                        idPosition: 1,
+                        idPosition: ""
                     },
                     account: {
                         nameAccount: ""
 
                     },
-                    idAccount: ""
                 }}
                         onSubmit={values => {
-                            employeeService.addEmployee(values.nameEmployee, values.gender, values.dateOfBirth, values.salary, values.image, values.address, values.phoneNumber, values.email,values.account);
-                            // console.log(res)
-                            // navigate("/employee")
+                            employeeService.addEmployee(values);
+                            navigate("/employee")
                         }}>
                     <Form>
                         <>
@@ -64,14 +56,14 @@ export function AddEmployee() {
                                 <label htmlFor="image">
                                     Hình Ảnh <span style={{color: "red"}}>*</span>:
                                 </label>
-                                <Field type="file" name="image" id="image"/>
+                                <Field type="file" name="image" id="image" className="form-control"/>
                             </div>
 
                             <div className="form-group">
                                 <label htmlFor="account.idAccount">
                                     Tên tài khoản <span style={{color: "red"}}>*</span>:
                                 </label>
-                                <Field type="text" id="account.nameAccount" name="account.nameAccount"/>
+                                <Field type="text" id="account.nameAccount" name="account.nameAccount" placeholder={"Nhập tên tài khoản"}/>
 
 
                             </div>
@@ -97,7 +89,7 @@ export function AddEmployee() {
                                 />
                             </div>
                             <div className="radio-container">
-                                <label htmlFor="gender">Giới tính</label>
+                                <label htmlFor="gender">Giới tính:</label>
                                 <Field
                                     id="female"
                                     name="gender"
@@ -133,6 +125,7 @@ export function AddEmployee() {
                                     Số điện thoại <span style={{color: "red"}}>*</span> :
                                 </label>
                                 <Field
+                                    type="text"
                                     id="phoneNumber"
                                     name="phoneNumber"
                                     placeholder="Nhập số điện thoại"
@@ -146,7 +139,6 @@ export function AddEmployee() {
                                     type="text"
                                     id="address"
                                     name="address"
-                                    required=""
                                     placeholder="Nhập địa chỉ"
                                 />
                             </div>
@@ -170,7 +162,7 @@ export function AddEmployee() {
                                     Lương(VND)<span style={{color: "red"}}>*</span>:
                                 </label>
                                 <Field
-                                    type="number"
+                                    type="text"
                                     id="salary"
                                     name="salary"
                                     required=""

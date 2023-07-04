@@ -69,9 +69,10 @@ export function EmployeeList() {
 
     return (
         <>
-            <Formik initialValues={{nameSearch: ""}}
+            <Formik initialValues={{nameAccount:"",nameSearch: "",phoneNumber:""}}
                     onSubmit={ async (values) => {
-                        const res = await employeeService.findByName(values.nameSearch)
+                        console.log(values)
+                        const res = await employeeService.findByEmployee(values.nameSearch,values.nameAccount,values.phoneNumber)
                         if (res.length === 0) {
                             alert("khong thay")
                         } else {
@@ -81,16 +82,16 @@ export function EmployeeList() {
                     }}>
                 <Form style={{marginLeft: 150}}>
                     <div>
-                        {/*<label htmlFor="username" className="label">*/}
-                        {/*    Tên tài khoản:{" "}*/}
-                        {/*</label>*/}
-                        {/*<input*/}
-                        {/*    id="username"*/}
-                        {/*    name="username"*/}
-                        {/*    className="inputEmployee form-control-sm"*/}
-                        {/*    placeholder="Nhập tài khoản tìm kiếm"*/}
-                        {/*/>*/}
-                        <label htmlFor="name" className="label">
+                        <label htmlFor="nameAccount" className="label">
+                            Tên tài khoản:{" "}
+                        </label>
+                        <Field
+                            id="nameAccount"
+                            name="nameAccount"
+                            className="inputEmployee form-control-sm"
+                            placeholder="Nhập tài khoản tìm kiếm"
+                        />
+                        <label htmlFor="nameSearch" className="label">
                             Họ và tên:
                         </label>
                         <Field
@@ -99,15 +100,15 @@ export function EmployeeList() {
                             className="inputEmployee form-control-sm"
                             placeholder="Nhập họ và tên tìm kiếm"
                         />
-                        {/*<label htmlFor="tel" className="label">*/}
-                        {/*    Số điện thoại:{" "}*/}
-                        {/*</label>*/}
-                        {/*<input*/}
-                        {/*    id="tel"*/}
-                        {/*    name="tel"*/}
-                        {/*    className="inputTel form-control-sm"*/}
-                        {/*    placeholder="Nhập số điện thoại tìm kiếm"*/}
-                        {/*/>*/}
+                        <label htmlFor="phoneNumber" className="label">
+                            Số điện thoại:
+                        </label>
+                        <Field
+                            id="phoneNumber"
+                            name="phoneNumber"
+                            className="inputTel form-control-sm"
+                            placeholder="Nhập số điện thoại tìm kiếm"
+                        />
                         <button className="btn btn-primary button-search" type="submit">
                             <i className="fa-solid fa-magnifying-glass "/>
                         </button>
