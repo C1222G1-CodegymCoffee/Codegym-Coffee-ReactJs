@@ -5,8 +5,13 @@
 
 .footer__title {
     text-align: center;
-    color: black;
     font-size: 77px;
-    margin-bottom: 10px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    color: black;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    text-shadow: 4px 4px 0px white, 7px 7px 0px rgba(0, 0, 0, 0.2);
 }
 

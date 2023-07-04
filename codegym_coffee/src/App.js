@@ -5,6 +5,7 @@ import {Routes, Route} from 'react-router-dom'
 import {BackgroundHeader} from "./component/Homepage/BackgroundHeader";
 import {HomePage} from "./component/Homepage/HomePage";
 import {DisplayMenu} from "./component/Menu/DisplayMenu";
+import {Menu} from "./component/Menu/Menu";
 
 
 function App() {
