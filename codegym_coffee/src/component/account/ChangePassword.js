@@ -35,7 +35,7 @@ export default function ChangePassword() {
         <>
             <Header/>
             {
-                <div className="container" style={{ marginTop: "16%",paddingBottom: 30}}>
+                <div className="container" style={{ marginTop: "10%",paddingBottom: 30}}>
                 <div className="row row-no-gutters col-xs-12 col-md-12 pt-5">
                     <div className="col-xs-4 col-md-4" id="a">
                         <p className="text-center" style={{ marginTop: 10 }}>
@@ -69,7 +69,7 @@ export default function ChangePassword() {
                         initialValues={{
                             oldPassword: '',
                             newPassword: '',
-                            confirmPasswore: ''
+                            confirmPassword: ''
                         }}
                         onSubmit={(value) => {
                             const changePassword = async () => {
@@ -232,7 +232,8 @@ export default function ChangePassword() {
                                                     textAlign: "center",
                                                     marginRight: 10,
                                                     paddingRight: 5,
-                                                    borderRadius: 10
+                                                    borderRadius: 10,
+                                                    border: "none"
                                                 }}
                                             >
                                                 Quay về
@@ -249,7 +250,8 @@ export default function ChangePassword() {
                                                     textAlign: "center",
                                                     marginRight: 10,
                                                     paddingRight: 5,
-                                                    borderRadius: 10
+                                                    borderRadius: 10,
+                                                    border: "none"
                                                 }}
                                             >
                                                 Xác nhận

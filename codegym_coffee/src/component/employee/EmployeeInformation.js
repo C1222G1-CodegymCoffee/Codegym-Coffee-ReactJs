@@ -379,7 +379,7 @@ export default function EmployeeInformation() {
                                                 <ErrorMessage component='span' className="text-danger" name="address" />
                                             </div>
                                         </div>
-                                        <div className="row" style={{ float: "right", paddingRight: "7%" }}>
+                                        <div className="row">
                                             {
                                                 isSubmitting
                                                     ?
@@ -394,7 +394,7 @@ export default function EmployeeInformation() {
                                                     </div>
                                                     :
                                                     <>
-                                                        <div className="col-6">
+                                                        <div className="col-12" style={{textAlign: "center"}}>
                                                             <button
                                                                 type="button"
                                                                 style={{
@@ -405,13 +405,12 @@ export default function EmployeeInformation() {
                                                                     textAlign: "center",
                                                                     marginRight: 10,
                                                                     paddingRight: 5,
-                                                                    borderRadius: 10
+                                                                    borderRadius: 10,
+                                                                    border: "none"
                                                                 }}
                                                             >
                                                                 Quay về
                                                             </button>
-                                                        </div>
-                                                        <div className="col-6">
                                                             <button
                                                                 type={avatarErr || !isAuth ? "button" : "submit"}
                                                                 style={{
@@ -422,7 +421,8 @@ export default function EmployeeInformation() {
                                                                     textAlign: "center",
                                                                     marginRight: 10,
                                                                     paddingRight: 5,
-                                                                    borderRadius: 10
+                                                                    borderRadius: 10,
+                                                                    border: "none"
                                                                 }}
                                                             >
                                                                 Cập nhật
