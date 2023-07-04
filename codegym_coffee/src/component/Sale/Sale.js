@@ -2,7 +2,6 @@ import "./sale.css";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import saleAPI from "../service_API/sale";
-import {Header} from "../Homepage/Header";
 import {Modal} from "reactstrap";
 
 const positionStatus = {
@@ -78,7 +77,6 @@ export function Sale() {
         if (listSelecting.length > 0) {
             const seatId = listSelecting[0];
             console.log("Payment confirmation for seatId:", seatId);
-
             try {
                 const response = await axios.patch(`http://localhost:8080/api/sale/update/${seatId}`);
                 console.log(response.data);
@@ -87,6 +85,7 @@ export function Sale() {
                 // Fetch updated seat data
                 const result = await saleAPI.findAll();
                 setSeatList(result);
+                window.location.reload();
 
                 // Set paymentSuccess to true
                 setPaymentSuccess(true);
@@ -102,12 +101,8 @@ export function Sale() {
     };
 
     console.log(data)
-    const handleCancelPayment = () => {
-        setShowModal(false); // Close the modal
-    };
-    const handleConfirmPayment = async () => {
-        setShowModal(false); // Close the modal
-        await handleUpdateSale();
+    const handleCancelPayment = async () => {
+        setShowModal(false);
     };
 
     return (
@@ -201,7 +196,7 @@ export function Sale() {
                                     )}
                                 {data.map((dataList, index) => (
                                     index === 0 && (
-                                        <tr style={{textAlign: "center", fontSize: 18}}>
+                                        <tr style={{textAlign: "center", fontSize: 18}} key={dataList.idBillDetail}>
                                             <td colSpan={6} style={{textAlign: "right", fontWeight: "bold"}}>
                                                 Tổng cộng: <span
                                                 style={{fontWeight: "normal"}}>{dataList.totalAmount}đ</span>

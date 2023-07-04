@@ -1,4 +1,4 @@
-import request from '../config/http'
+
 import axios from "axios";
 const findAll = async  () => {
     try {
