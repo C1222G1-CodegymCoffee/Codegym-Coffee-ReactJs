@@ -46,6 +46,18 @@
     background-repeat: no-repeat;
     background-position: center center;
     background-image: url("shape_02.png");
+    margin-top: 28%;
+}
+.body_wrap, ::after,::before{
+    z-index: 1;
+    min-height: 100vh;
+    position: relative;
+    background-size: cover;
+    background-color: #eceae3;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center center;
+    overflow: hidden;
 }
 
 .banner_image {
@@ -83,7 +95,7 @@
     .container {
         flex-direction: row;
         justify-content: center;
-        text-align: center;
+        text-align: left;
         margin-top: 9%;
     }
 

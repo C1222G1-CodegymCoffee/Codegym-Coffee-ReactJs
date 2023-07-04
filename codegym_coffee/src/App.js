@@ -13,6 +13,10 @@ import List from "./component/bill/List";
 
 import {DisplayMenu} from "./component/Menu/DisplayMenu";
 import {Menu} from "./component/Menu/Menu";
+import {BackgroundHeader} from "./component/Homepage/BackgroundHeader";
+import {HomePage} from "./component/Homepage/HomePage";
+import Login from "./component/login/Login";
+import ResetPassword from "./component/login/ResetPassword";
 
 
 function App() {
@@ -27,6 +31,9 @@ function App() {
                 <Route path="/bill" element={<List/>}></Route>
                 <Route path="/account/change-password" element={<ChangePassword/>}/>
                 <Route path="/menu" element={<DisplayMenu/>}></Route>
+                <Route path="/reset_password" element={<ResetPassword/>}></Route>
+                <Route path="/login" element={<Login/>}></Route>
+
             </Routes>
         </>
     );
