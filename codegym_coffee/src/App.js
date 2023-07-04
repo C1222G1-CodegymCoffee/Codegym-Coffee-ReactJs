@@ -1,26 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
-import {ListFeedback} from "./components/feedback/ListFeedback";
+import {Header} from "./component/Homepage/Header";
 import React from "react";
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {Routes, Route} from 'react-router-dom'
+import {HomePage} from "./component/Homepage/HomePage";
+import {Sale} from "./component/Sale/Sale";
+import {ListFeedback} from "./component/feedback/ListFeedback";
+import {EmployeeList} from "./component/employee/EmployeeList";
+import {AddEmployee} from "./component/employee/AddEmployee";
+import List from "./component/bill/List";
 
-const router = createBrowserRouter([
-  {
-    path: "/admin/feedback",
-    element: <ListFeedback />,
 
-  }
-]);
 
 function App() {
   return (
       <>
-        <RouterProvider
-            router={router}
-        />
+            <Routes>
+                <Route path="/" element={<HomePage/>}></Route>
+                <Route path="/sale" element={<Sale/>}></Route>
+                <Route path="/feedback" element={<ListFeedback/>}></Route>
+                <Route path="/employee" element={<EmployeeList/>}></Route>
+                <Route path="/employee_create" element={<AddEmployee/>}></Route>
+                <Route path="/bill" element={<List/>}></Route>
+            </Routes>
       </>
   );
 }
-
 
 export default App;

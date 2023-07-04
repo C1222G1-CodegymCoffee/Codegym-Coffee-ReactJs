@@ -1,0 +1,84 @@
+.tx {
+    text-align: center;
+    font-size: 48px;
+}
+
+body {
+    font-family: Roboto, serif;
+}
+
+label {
+    margin-left: 20px;
+}
+
+.button-search {
+    width: 9%;
+    height: 34px;
+
+}
+
+.inputEmployee {
+    width: 12%;
+    height: 5%;
+}
+
+.inputTel {
+    width: 12%;
+    height: 5%;
+    margin-right: 5px;
+
+}
+
+.long-button {
+    width: 9%;
+    margin-bottom: 1px;
+}
+.tb{
+    text-align: center
+}
+.a {
+    /*background-color: #4c566a;*/
+    text-decoration: none;
+}
+
+.color:hover {
+    background-color: #61dafb;
+    color: #61dafb;
+    box-shadow: #61dafb;
+    box-suppress: discard;
+
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .inputEmployee, .inputTel {
+        width: 100%;
+        padding: 5px;
+    }
+
+    .button-search {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .long-button {
+        margin-top: 10px;
+        width: 100%;
+        display: block;
+        text-align: center;
+    }
+
+    .table {
+        width: 100%;
+    }
+
+}
