@@ -17,8 +17,12 @@ import {BackgroundHeader} from "./component/Homepage/BackgroundHeader";
 import {HomePage} from "./component/Homepage/HomePage";
 import Login from "./component/login/Login";
 import ResetPassword from "./component/login/ResetPassword";
+import NewsCreate from "./component/News/NewsCreate";
+
+import { ToastContainer } from "react-toastify";
 
 
+import Example from "./component/Statistical/BarChart";
 function App() {
     return (
         <>
@@ -33,10 +37,12 @@ function App() {
                 <Route path="/menu" element={<DisplayMenu/>}></Route>
                 <Route path="/reset_password" element={<ResetPassword/>}></Route>
                 <Route path="/login" element={<Login/>}></Route>
-
+                <Route path="/createNews" element={<NewsCreate/>}/>
+                <Route path="/statistical" element={<Example/>}/>
             </Routes>
-        </>
-    );
+          <ToastContainer />
+      </>
+  );
 }
 
 export default App;
