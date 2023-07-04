@@ -51,7 +51,7 @@ export default function EmployeeInformation() {
             try {
                 const res = await employeeInformationService.detail()
                 setEmployeeDetail(res.data)
-                if(res.data.account.accountRoles[0].role.roleName === 'ROLE_ADMIN'){
+                if(res.data.account.accountRoles[0].role.nameRole === 'ROLE_ADMIN'){
                     setIsAuth(true)
                 }
             } catch (error) {
@@ -78,6 +78,7 @@ export default function EmployeeInformation() {
             console.error('Invalid file or blob');
         }
     };
+    console.log(isAuth)
     const handleSubmitAsync = async () => {
         return new Promise((resolve, reject) => {
             const file = selectedFile;
@@ -205,15 +206,16 @@ export default function EmployeeInformation() {
                                                         className="border-avatar rounded-circle" width='200px' height='200px' alt="image" />
                                                 </div>
                                         }
-                                        <div className={!avatarErr && "border-camera"} >
-                                            <label htmlFor="avatar" type='button' className="bi bi-camera-fill fs-2"></label>
-                                            <input disabled={isAuth ? true : false}
-                                                type="file"
-                                                onChange={isAuth ? ()=>{} : ()=>handleFileSelect()}
-                                                className='d-none' id='avatar' name='image'
-
-                                            />
-                                        </div>
+                                        {
+                                            isAuth && <div className={!avatarErr && "border-camera"} >
+                                                <label htmlFor="avatar" type='button' className="bi bi-camera-fill fs-2"></label>
+                                                <input
+                                                    type="file"
+                                                    onChange={handleFileSelect}
+                                                    className='d-none' id='avatar' name='image'/>
+                                            </div>
+                                        }
+                                        
                                     </p>
                                     <h3 style={{ textAlign: "center" }}>{employeeDetail?.account.nameAccount}</h3>
                                     <div className="mt-3" style={{ textAlign: "center" }}>
@@ -245,7 +247,7 @@ export default function EmployeeInformation() {
                                             </div>
                                             <div className="col-7">
                                                 <Field
-                                                    disabled={isAuth ? true : false}
+                                                    disabled={isAuth ? false : true}
                                                     type="text"
                                                     style={{ width: "100%" }} className="form-control" name="nameEmployee" id="nameEmployee"
                                                 />
@@ -261,13 +263,13 @@ export default function EmployeeInformation() {
                                             <div className="col-7">
                                                 <div className="col-4">
                                                     <Field
-                                                        disabled={isAuth ? true : false}
+                                                        disabled={isAuth ? false : true}
                                                         type="radio" name="gender" id="inlineRadio1" value="false"
                                                         checked={values.gender === false ? true : null}
                                                     />
                                                     &nbsp; <label htmlFor="inlineRadio1">Nam</label>
                                                     <Field
-                                                        disabled={isAuth ? true : false}
+                                                        disabled={isAuth ? false : true}
                                                         type="radio" name="gender" className='ms-3' id="inlineRadio2" value="true"
                                                         checked={values.gender === true ? true : null}
                                                     />
@@ -285,7 +287,7 @@ export default function EmployeeInformation() {
                                             </div>
                                             <div className="col-7">
                                                 <Field
-                                                    disabled={isAuth ? true : false}
+                                                    disabled={isAuth ? false : true}
                                                     type="text" name="phoneNumber" className="form-control" id="phoneNumber"
                                                     style={{ width: "100%" }}
                                                 />
@@ -300,7 +302,7 @@ export default function EmployeeInformation() {
                                             </div>
                                             <div className="col-7">
                                                 <Field
-                                                    disabled={isAuth ? true : false}
+                                                    disabled={isAuth ? false : true}
                                                     type="text" name="email" className="form-control" id="email"
                                                     style={{ width: "100%" }}
                                                 />
@@ -317,7 +319,7 @@ export default function EmployeeInformation() {
                                             </div>
                                             <div className="col-7">
                                                 <Field
-                                                    disabled={isAuth ? true : false}
+                                                    disabled={isAuth ? false : true}
                                                     type="date" className="input-login form-control" name="dateOfBirth" id="dateOfBirth"
                                                     style={{ width: "100%" }}
                                                 />
@@ -332,7 +334,7 @@ export default function EmployeeInformation() {
                                             </div>
                                             <div className="col-7">
                                                 <Field
-                                                    disabled={isAuth ? true : false}
+                                                    disabled={isAuth ? false : true}
                                                     type="text" name="salary"
                                                     className="form-control" id="salary"
                                                     style={{ width: "100%" }}
@@ -348,7 +350,7 @@ export default function EmployeeInformation() {
                                             </div>
                                             <div className="col-7">
                                                 <Field
-                                                    disabled={isAuth ? true : false}
+                                                    disabled={isAuth ? false : true}
                                                     as="select"
                                                     name="positionDTO"
                                                     id="positionDTO"
@@ -370,7 +372,7 @@ export default function EmployeeInformation() {
                                                 </label>
                                             </div>
                                             <div className="col-7">
-                                                <Field disabled={isAuth ? true : false}
+                                                <Field disabled={isAuth ? false : true}
                                                     as="textarea" type="text" className="form-control" name="address" id="address"
                                                     style={{ width: "100%" }}
                                                 />
@@ -403,7 +405,7 @@ export default function EmployeeInformation() {
                                                         </div>
                                                         <div className="col-6">
                                                             <button
-                                                                type={avatarErr || isAuth ? "button" : "submit"}
+                                                                type={avatarErr || !isAuth ? "button" : "submit"}
                                                                 className="button-movie"
                                                                 style={{ backgroundColor: "#8C6842" }}
                                                             >
