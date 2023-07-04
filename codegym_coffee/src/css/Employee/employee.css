@@ -1,84 +1,171 @@
-.tx {
-    text-align: center;
-    font-size: 48px;
+* {
+    font-family: Roboto;
 }
+tr{
+    text-align: center;
+}
+/*th{*/
+/*    color: white;*/
+/*}*/
 
 body {
-    font-family: Roboto, serif;
+    background-size: cover;
+    background-attachment: fixed;
+    animation: flicker 4s ease-in-out infinite;
 }
 
-label {
-    margin-left: 20px;
+@keyframes flicker {
+    0%, 60% {
+        background-color: #000;
+        opacity: 0.9;
+    }
+    40% {
+        background-color: #000;
+        opacity: 0.9;
+    }
 }
 
-.button-search {
-    width: 9%;
-    height: 34px;
 
+th.content-title {
+    animation-name: color-change;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    font-size: 1.2rem;
 }
 
-.inputEmployee {
-    width: 12%;
-    height: 5%;
+td.content-feedback {
+    font-size: 1rem;
 }
 
-.inputTel {
-    width: 12%;
-    height: 5%;
-    margin-right: 5px;
 
+h2.text-center.pt-4 {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 2%;
+    margin-top: 5%;
 }
 
-.long-button {
+div.input-group.mb-4 {
+    width: 45%;
+}
+
+svg {
+    height: 16px;
+    width: 16px;
+}
+
+button.btn.btn-light {
+    margin-left: 1%;
+    background-color: white;
+    border: 0.1rem solid gray;
+}
+
+
+div.modal.fade {
+    margin-top: 5%;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+
+div.modal-content {
+    background-size: 100% 100%;
+}
+
+div.modal-dialog {
+    max-width: 55%;
+}
+
+h5.modal-title {
+    font-weight: bold;
+}
+
+span.name-title {
+    color: red;
+}
+
+label.fs-5 {
+    padding-right: 5rem;
+    padding-left: 5rem;
+    width: 20rem;
+    color: mediumblue;
+}
+
+p.content,td.content {
+    padding-right: 4rem;
+    font-size: 1.2rem;
+}
+
+img.content-img {
+    width: 70%;
+}
+
+button {
+    padding: 17px 40px;
+    border-radius: 50px;
+    border: 0;
+    background-color: white;
+    box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 15px;
+    transition: all .5s ease;
+}
+
+button:hover {
+    letter-spacing: 3px;
+    background-color: hsl(261deg 80% 48%);
+    color: hsl(0, 0%, 100%);
+    box-shadow: rgb(93 24 220) 0px 7px 29px 0px;
+}
+
+button:active {
+    letter-spacing: 3px;
+    background-color: hsl(261deg 80% 48%);
+    color: hsl(0, 0%, 100%);
+    box-shadow: rgb(93 24 220) 0px 0px 0px 0px;
+    transform: translateY(10px);
+    transition: 100ms;
+}
+
+.table {
+    margin-top: 2%;
+}
+
+/*@keyframes color-change-border {*/
+/*    0% {*/
+/*        border-color: plum;*/
+/*    }*/
+/*    25% {*/
+/*        border-color: yellow;*/
+/*    }*/
+/*    50% {*/
+/*        border-color: navy;*/
+/*    }*/
+/*    75% {*/
+/*        border-color: blueviolet;*/
+/*    }*/
+/*    100% {*/
+/*        border-color: #61dafb;*/
+/*    }*/
+/*}*/
+
+.table.table-striped {
+    border: 0.1rem solid;
+    animation: color-change-border 5s infinite;
+}
+.long-button{
     width: 9%;
     margin-bottom: 1px;
 }
-.tb{
-    text-align: center
-}
-.a {
-    /*background-color: #4c566a;*/
-    text-decoration: none;
+
+
+
+@media only screen and (max-width: 559px) {
 }
 
-.color:hover {
-    background-color: #61dafb;
-    color: #61dafb;
-    box-shadow: #61dafb;
-    box-suppress: discard;
-
+@media only screen and (min-width: 560px) and (max-width: 900px) {
 }
 
-@media only screen and (max-width: 600px) {
-    .container {
-        width: 100%;
-        margin: 0 auto;
-    }
-
-    .label {
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    .inputEmployee, .inputTel {
-        width: 100%;
-        padding: 5px;
-    }
-
-    .button-search {
-        margin-top: 10px;
-        width: 100%;
-    }
-
-    .long-button {
-        margin-top: 10px;
-        width: 100%;
-        display: block;
-        text-align: center;
-    }
-
-    .table {
-        width: 100%;
-    }
-
+@media only screen and (min-width: 901px) {
 }
+

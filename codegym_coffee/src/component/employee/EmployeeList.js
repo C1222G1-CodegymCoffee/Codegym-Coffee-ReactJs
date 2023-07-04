@@ -1,10 +1,11 @@
 import React, {useEffect, useRef, useState} from "react";
-import {employeeService, getEmployees} from "../service_API/employee/EmployeeService";
+import {employeeService, getEmployees} from "../service/EmployeeService";
 import {Field, Form, Formik} from "formik";
 import "../../css/Employee/employee.css"
 import {Link} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import {Axios as axios} from "axios";
+import {Header} from "../Homepage/Header";
 
 export function EmployeeList() {
     const [employeeList, setEmployeeList] = useState([])
@@ -17,11 +18,21 @@ export function EmployeeList() {
     const endIndex = startIndex + itemsPerPage;
     const currentEmployee = employeeList?.slice(startIndex, endIndex);
     const pageSize = 10;
+    const [idDelete, setIdDelete] = useState(null);
+    const [nameDelete, setNameDelete] = useState(null);
 
     const findAll = async () => {
         const res = await employeeService.findAll()
         console.log(res)
         setEmployeeList(res.content)
+    }
+    const getProps = (id, name) => {
+        setIdDelete(id)
+        setNameDelete(name)
+    }
+    const handleDelete = async () => {
+        await employeeService.deleteByIdEmployee(idDelete)
+        findAll()
     }
     useEffect(() => {
         findAll()
@@ -58,7 +69,7 @@ export function EmployeeList() {
 
     const fetchData = async (page) => {
         try {
-            const result = await axios.get(`http://localhost:8080/home/admin/employee?page=${page}&size=${itemsPerPage}`);
+            const result = await axios.get(`http://localhost:8080/api/admin/employee?page=${page}&size=${itemsPerPage}`);
             setData(result.data.content);
             setTotalPage(result.data.totalPages);
             setTotalElements(result.data.totalElements);
@@ -69,99 +80,151 @@ export function EmployeeList() {
 
     return (
         <>
-            <Formik initialValues={{nameAccount:"",nameSearch: "",phoneNumber:""}}
-                    onSubmit={ async (values) => {
-                        console.log(values)
-                        const res = await employeeService.findByEmployee(values.nameSearch,values.nameAccount,values.phoneNumber)
-                        if (res.length === 0) {
-                            alert("khong thay")
-                        } else {
-                            setEmployeeList(res.content)
-
-                        }
-                    }}>
-                <Form style={{marginLeft: 150}}>
-                    <div>
-                        <label htmlFor="nameAccount" className="label">
-                            Tên tài khoản:{" "}
-                        </label>
-                        <Field
-                            id="nameAccount"
-                            name="nameAccount"
-                            className="inputEmployee form-control-sm"
-                            placeholder="Nhập tài khoản tìm kiếm"
-                        />
-                        <label htmlFor="nameSearch" className="label">
-                            Họ và tên:
-                        </label>
-                        <Field
-                            id="nameSearch"
-                            name="nameSearch"
-                            className="inputEmployee form-control-sm"
-                            placeholder="Nhập họ và tên tìm kiếm"
-                        />
-                        <label htmlFor="phoneNumber" className="label">
-                            Số điện thoại:
-                        </label>
-                        <Field
-                            id="phoneNumber"
-                            name="phoneNumber"
-                            className="inputTel form-control-sm"
-                            placeholder="Nhập số điện thoại tìm kiếm"
-                        />
-                        <button className="btn btn-primary button-search" type="submit">
-                            <i className="fa-solid fa-magnifying-glass "/>
-                        </button>
+            <div className="container">
+                <div className="element">
+                    <div className="">
+                        <h2 className="text-center">DANH SÁCH NHÂN VIÊN</h2>
+                        <br/>
                     </div>
-                </Form>
+                    <div className="row">
+                        <div className="col-md-1"/>
+                        <div className="col-md-10">
+                            <div className="table-responsive">
+                                <Formik initialValues={{nameAccount: "", nameSearch: "", phoneNumber: ""}}
+                                        onSubmit={async (values) => {
+                                            console.log(values)
+                                            const res = await employeeService.findByEmployee(values.nameSearch, values.nameAccount, values.phoneNumber)
+                                            if (res.length === 0) {
+                                                alert("khong thay")
+                                            } else {
+                                                setEmployeeList(res.content)
 
-            </Formik>
+                                            }
+                                        }}>
+                                    <Form style={{marginLeft: 150}}>
+                                        <div>
+                                            <label htmlFor="nameAccount" className="label">
+                                                Tên tài khoản:{" "}
+                                            </label>
+                                            <Field
+                                                id="nameAccount"
+                                                name="nameAccount"
+                                                className="inputEmployee form-control-sm"
+                                                placeholder="Nhập tài khoản tìm kiếm"
+                                            />
+                                            <label htmlFor="nameSearch" className="label">
+                                                Họ và tên:
+                                            </label>
+                                            <Field
+                                                id="nameSearch"
+                                                name="nameSearch"
+                                                className="inputEmployee form-control-sm"
+                                                placeholder="Nhập họ và tên tìm kiếm"
+                                            />
+                                            <label htmlFor="phoneNumber" className="label">
+                                                Số điện thoại:
+                                            </label>
+                                            <Field
+                                                id="phoneNumber"
+                                                name="phoneNumber"
+                                                className="inputTel form-control-sm"
+                                                placeholder="Nhập số điện thoại tìm kiếm"
+                                            />
+                                            <button className="btn btn-primary long-button" type="submit">
+                                                <i className="fa-solid fa-magnifying-glass "/>
+                                            </button>
+                                        </div>
+                                    </Form>
+                                </Formik>
+                            </div>
+                        </div>
 
-            <Link to={"/employee/addEmployee"}
-                  className="btn btn-primary long-button"><i className="fa-solid fa-user-plus"></i></Link>
-            <table className="table table-striped a tb">
-                <thead className="table-danger">
-                <tr>
-                    <th>#</th>
-                    <th>Tên tài khoản a</th>
-                    <th>Họ và tên</th>
-                    <th>Địa chỉ</th>
-                    <th>Số điện thoại</th>
-                    <th>Email</th>
-                    <th>Giới tính</th>
-                    <th>Ngày sinh</th>
-                    <th>Lương</th>
-                    <th>Vị trí</th>
-                    <th>Hành động</th>
-                </tr>
-                </thead>
-                <tbody>
+                        <Link to="/employee_create"
+                              className="btn btn-primary long-button"><i className="fa-solid fa-user-plus"></i>
+                        </Link>
+                        <table className="table table-striped mt-2 ">
+                            <thead>
+                            <tr>
 
-                {
-                    employeeList.map((employee, index) => (
-                        <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{employee.account.nameAccount}</td>
-                            <td>{employee.nameEmployee}</td>
-                            <td>{employee.address}</td>
-                            <td>{employee.phoneNumber}</td>
-                            <td>{employee.email}</td>
-                            <td>{employee.gender ? "Nam" : "Nữ"}</td>
-                            <td>{employee.dateOfBirth}</td>
-                            <td>{employee.salary}</td>
-                            <td>{employee.position.name}</td>
-                            <td>
-                                <button className="btn btn-primary"><i className="fa-regular fa-pen-to-square"></i>
-                                </button>
-                                <button className="btn btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal"><i
-                                    className="fa-regular fa-trash-can"></i></button>
-                            </td>
-                        </tr>
-                    ))
-                }
-                </tbody>
-            </table>
+                                <th className="content-title">#</th>
+                                <th className="content-title">Tên tài khoản a</th>
+                                <th className="content-title">Họ và tên</th>
+                                <th className="content-title">Địa chỉ</th>
+                                <th className="content-title">Số điện thoại</th>
+                                <th className="content-title">Email</th>
+                                <th className="content-title">Giới tính</th>
+                                <th className="content-title">Ngày sinh</th>
+                                <th className="content-title">Lương</th>
+                                <th className="content-title">Vị trí</th>
+                                <th className="content-title">Hành động</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {
+                                employeeList.map((employee, index) => (
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>{employee.account.nameAccount}</td>
+                                        <td>{employee.nameEmployee}</td>
+                                        <td>{employee.address}</td>
+                                        <td>{employee.phoneNumber}</td>
+                                        <td>{employee.email}</td>
+                                        <td>{employee.gender ? "Nam" : "Nữ"}</td>
+                                        <td>{employee.dateOfBirth}</td>
+                                        <td>{employee.salary}</td>
+                                        <td>{employee.position.name}</td>
+                                        <td>
+                                            <button
+                                                type="button"
+                                                className="btn btn-danger"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal"
+                                                onClick={() => getProps(employee.idEmployee, employee.nameEmployee)}
+                                            ><i
+                                                className="fa-regular fa-trash-can"/>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div className="modal" tabIndex={-1} id={"exampleModal"}>
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title text-danger">Bảng xóa khách hàng</h5>
+                            <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            />
+                        </div>
+                        <div className="modal-body">
+                            <div>Bạn có muốn xóa <h5 className={"text-danger"}>{nameDelete}</h5></div>
+                        </div>
+                        <div className="modal-footer">
+                            <button
+                                type="button"
+                                className="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                            >
+                                Không
+                            </button>
+                            <button type="button" data-bs-dismiss="modal"
+                                    className="btn btn-danger" onClick={() => handleDelete(idDelete)}>
+                                Xóa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div className=" d-flex justify-content-center">
                 <ReactPaginate
                     previousLabel="Trước"

@@ -18,6 +18,8 @@ import {HomePage} from "./component/Homepage/HomePage";
 import Login from "./component/login/Login";
 import ResetPassword from "./component/login/ResetPassword";
 import NewsCreate from "./component/News/NewsCreate";
+import {EmployeeList} from "./component/employee/EmployeeList";
+import {AddEmployee} from "./component/employee/AddEmployee";
 
 import { ToastContainer } from "react-toastify";
 

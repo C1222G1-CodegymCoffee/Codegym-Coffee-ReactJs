@@ -66,7 +66,7 @@ export const Header = () => {
                     <li><a href="#">Sản phẩm</a></li>
                     <li><a href="#">Phản hồi</a></li>
                     <li><a href="#">Thu nhập</a></li>
-                    <li><a href="#">Quản lí nhân viên</a></li>
+                    <li><a href="/employee">Quản lí nhân viên</a></li>
                 </ul>
                 <div className="menu-toggle" onClick={toggleMenu}>
                     <div className="bar"></div>
