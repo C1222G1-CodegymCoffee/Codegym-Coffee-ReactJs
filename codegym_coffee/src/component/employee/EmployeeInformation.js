@@ -20,6 +20,7 @@ export default function EmployeeInformation() {
     const [avatarErr, setAvatarErr] = useState(false)
     const [position, setPosition] = useState([]);
     const [showErr, setShowErr] = useState(false)
+    const [isAuth,setIsAuth] = useState(false);
     const findAllPosition = async () => {
         const res = await positionService.findAll();
         setPosition(res.data);
@@ -50,6 +51,9 @@ export default function EmployeeInformation() {
             try {
                 const res = await employeeInformationService.detail()
                 setEmployeeDetail(res.data)
+                if(res.data.account.accountRoles[0].role.roleName === 'ROLE_ADMIN'){
+                    setIsAuth(true)
+                }
             } catch (error) {
                 console.log(error)
             }
@@ -196,15 +200,19 @@ export default function EmployeeInformation() {
                                                 <h5 className="text-danger" width='100%' height='100%'>Sai định dạng ảnh, phải có dạng đuôi .jpg, .jpeg, .png</h5>
                                             </div> :
                                                 <div>
-                                                    <img src={avatarDetail}
+                                                    <img
+                                                        src={avatarDetail}
                                                         className="border-avatar rounded-circle" width='200px' height='200px' alt="image" />
                                                 </div>
                                         }
                                         <div className={!avatarErr && "border-camera"} >
                                             <label htmlFor="avatar" type='button' className="bi bi-camera-fill fs-2"></label>
-                                            <input type="file"
-                                                onChange={handleFileSelect}
-                                                className='d-none' id='avatar' name='image' />
+                                            <input disabled={isAuth ? true : false}
+                                                type="file"
+                                                onChange={isAuth ? ()=>{} : ()=>handleFileSelect()}
+                                                className='d-none' id='avatar' name='image'
+
+                                            />
                                         </div>
                                     </p>
                                     <h3 style={{ textAlign: "center" }}>{employeeDetail?.account.nameAccount}</h3>
@@ -215,8 +223,8 @@ export default function EmployeeInformation() {
                                     <hr />
                                     <div className="col-12">
                                         <ul className="quynh-app-menu">
-                                            <li>
-                                                <NavLink to={'/account/change-password'} className="quynh-app-menu__item " href="ChangePassword.html">
+                                            <li className="quynh-li">
+                                                <NavLink to={`/account/change-password`} className="quynh-app-menu__item " href="ChangePassword.html">
                                                     <i className="bi bi-file-lock" />
                                                     <span className="quynh-app-menu__label">Đổi mật khẩu</span>
                                                 </NavLink>
@@ -237,6 +245,7 @@ export default function EmployeeInformation() {
                                             </div>
                                             <div className="col-7">
                                                 <Field
+                                                    disabled={isAuth ? true : false}
                                                     type="text"
                                                     style={{ width: "100%" }} className="form-control" name="nameEmployee" id="nameEmployee"
                                                 />
@@ -252,11 +261,13 @@ export default function EmployeeInformation() {
                                             <div className="col-7">
                                                 <div className="col-4">
                                                     <Field
+                                                        disabled={isAuth ? true : false}
                                                         type="radio" name="gender" id="inlineRadio1" value="false"
                                                         checked={values.gender === false ? true : null}
                                                     />
                                                     &nbsp; <label htmlFor="inlineRadio1">Nam</label>
                                                     <Field
+                                                        disabled={isAuth ? true : false}
                                                         type="radio" name="gender" className='ms-3' id="inlineRadio2" value="true"
                                                         checked={values.gender === true ? true : null}
                                                     />
@@ -273,7 +284,9 @@ export default function EmployeeInformation() {
                                                 </label>
                                             </div>
                                             <div className="col-7">
-                                                <Field type="text" name="phoneNumber" className="form-control" id="phoneNumber"
+                                                <Field
+                                                    disabled={isAuth ? true : false}
+                                                    type="text" name="phoneNumber" className="form-control" id="phoneNumber"
                                                     style={{ width: "100%" }}
                                                 />
                                                 <ErrorMessage component='span' className="text-danger" name="phoneNumber" />
@@ -286,7 +299,9 @@ export default function EmployeeInformation() {
                                                 </label>
                                             </div>
                                             <div className="col-7">
-                                                <Field type="text" name="email" className="form-control" id="email"
+                                                <Field
+                                                    disabled={isAuth ? true : false}
+                                                    type="text" name="email" className="form-control" id="email"
                                                     style={{ width: "100%" }}
                                                 />
                                                 {
@@ -301,7 +316,9 @@ export default function EmployeeInformation() {
                                                 </label>
                                             </div>
                                             <div className="col-7">
-                                                <Field type="date" className="input-login form-control" name="dateOfBirth" id="dateOfBirth"
+                                                <Field
+                                                    disabled={isAuth ? true : false}
+                                                    type="date" className="input-login form-control" name="dateOfBirth" id="dateOfBirth"
                                                     style={{ width: "100%" }}
                                                 />
                                                 <ErrorMessage component='span' className="text-danger" name="dateOfBirth" />
@@ -314,7 +331,9 @@ export default function EmployeeInformation() {
                                                 </label>
                                             </div>
                                             <div className="col-7">
-                                                <Field type="text" name="salary"
+                                                <Field
+                                                    disabled={isAuth ? true : false}
+                                                    type="text" name="salary"
                                                     className="form-control" id="salary"
                                                     style={{ width: "100%" }}
                                                 />
@@ -329,6 +348,7 @@ export default function EmployeeInformation() {
                                             </div>
                                             <div className="col-7">
                                                 <Field
+                                                    disabled={isAuth ? true : false}
                                                     as="select"
                                                     name="positionDTO"
                                                     id="positionDTO"
@@ -350,7 +370,8 @@ export default function EmployeeInformation() {
                                                 </label>
                                             </div>
                                             <div className="col-7">
-                                                <Field as="textarea" type="text" className="form-control" name="address" id="address"
+                                                <Field disabled={isAuth ? true : false}
+                                                    as="textarea" type="text" className="form-control" name="address" id="address"
                                                     style={{ width: "100%" }}
                                                 />
                                                 <ErrorMessage component='span' className="text-danger" name="address" />
@@ -382,7 +403,7 @@ export default function EmployeeInformation() {
                                                         </div>
                                                         <div className="col-6">
                                                             <button
-                                                                type={avatarErr ? "button" : "submit"}
+                                                                type={avatarErr || isAuth ? "button" : "submit"}
                                                                 className="button-movie"
                                                                 style={{ backgroundColor: "#8C6842" }}
                                                             >

@@ -1,22 +1,70 @@
 import "./accountStyle.css"
-import { Header } from "../Homepage/Header";
-import React, { useState } from "react";
-import { Field, Form, Formik } from "formik";
+import {Header} from "../Homepage/Header";
+import React, {useEffect, useState} from "react";
+import {Field, Form, Formik} from "formik";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router";
+import {useNavigate, useParams} from "react-router";
 import employeeInformationService from "../../service/employeeInformationService";
-import { NavLink } from "react-router-dom";
+import {NavLink} from "react-router-dom";
+
 export default function ChangePassword() {
     const [showPassword, setShowPassword] = useState(false)
     const [showNewPassword, setShowNewPassword] = useState(false)
     const [showPasswordConfirm, setShowPasswordConfirm] = useState(false)
-
     const navigate = useNavigate()
+    const params = useParams();
+    const [employeeDetail,setEmployeeDetail] = useState()
+    useEffect(() => {
+        document.title = "Đổi mật khẩu";
+    }, [])
+    useEffect(() => {
+        const detail = async () => {
+            try {
+                const res = await employeeInformationService.detail()
+                setEmployeeDetail(res.data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        detail()
+    }, [])
+    if(!employeeDetail){
+        return null
+    }
     return (
         <>
-            <Header />
+            <Header/>
             {
+                <div className="container" style={{ marginTop: "16%",paddingBottom: 30}}>
                 <div className="row row-no-gutters col-xs-12 col-md-12 pt-5">
+                    <div className="col-xs-4 col-md-4" id="a">
+                        <p className="text-center" style={{ marginTop: 10 }}>
+                            <img
+                                src={employeeDetail?.image}
+                                className="rounded-circle avatar"
+                                style={{ width: 200 }}
+                                height="200px"
+                            />
+                        </p>
+                        <h3 style={{ textAlign: "center" }}>{employeeDetail?.account.nameAccount}</h3>
+                        <div className="mt-3" style={{ textAlign: "center" }}>
+                            <i className="bi bi-emoji-smile" />
+                            Chào mừng bạn trở lại
+                        </div>
+                        <hr />
+                        <div className="col-12">
+                            <ul className="quynh-app-menu">
+                                <li className="quynh-li">
+                                    <NavLink to={`/`} className="quynh-app-menu__item " href="AccountInformation.html">
+                                        <i className="bi bi-person-bounding-box" />
+                                        <span className="quynh-app-menu__label">Thông tin tài khoản</span>
+                                    </NavLink>
+                                </li>
+                                {/*                    <li><a class="quynh-app-menu__item " href="ChangePassword.html"><i class="bi bi-file-lock"></i><span*/}
+                                {/*                          class="quynh-app-menu__label">Đổi mật khẩu</span></a></li>*/}
+                            </ul>
+                        </div>
+                    </div>
                     <Formik
                         initialValues={{
                             oldPassword: '',
@@ -74,81 +122,95 @@ export default function ChangePassword() {
                             changePassword()
                         }}
                     >
-                        <Form className="container">
-                            <div className=" col-7" id="b">
-                                <div>
-                                    <h2 style={{ textAlign: "center" }} className="bg-coffe py-2 text-white">Thay đổi mật khẩu</h2>
-                                    <br />
-                                    <div className="row" >
-                                        <div className="col-3 m-auto" style={{ textAlign: "left" }}>
-                                            <label className="fw-bold" style={{ marginRight: "2%" }}>
-                                                Mật khẩu cũ <span style={{ color: "red" }}>(*)</span>:
+                        {/*<Form className="container">*/}
+                            <Form className="col-xs-7 col-sm-7 col-md-7" id="b">
+                                <div className="border-form">
+                                    <h2 style={{textAlign: "center"}} className="bg-coffe py-2 text-white">Thay đổi mật
+                                        khẩu</h2>
+                                    <br/>
+                                    <div className="row" style={{marginBottom: "3%"}}>
+                                        <div className="col-4" style={{textAlign: "left"}}>
+                                            <label className="fw-bold" style={{marginRight: "2%"}}>
+                                                Mật khẩu cũ <span style={{color: "red"}}>(*)</span>:
                                             </label>
                                         </div>
-                                        <div className="col-5 m-auto position-relative">
+                                        <div className="col-7 m-auto position-relative">
                                             <Field
                                                 type={showPassword ? "text" : "password"}
-                                                placeholder="Nhập mật khẩu hiện tại" className="form-control" name="oldPassword" />
+                                                 className="form-control"
+                                                name="oldPassword"/>
                                             {
-                                                showPassword ? <span type='button' onClick={() => { setShowPassword(!showPassword) }}
-                                                    className="bi bi-eye-slash me-2 eye-password"></span> :
-                                                    <span type='button' onClick={() => { setShowPassword(!showPassword) }}
-                                                        className="bi bi-eye me-2 eye-password"></span>
+                                                showPassword ? <span type='button' onClick={() => {
+                                                        setShowPassword(!showPassword)
+                                                    }}
+                                                                     className="bi bi-eye-slash me-2 eye-password"></span> :
+                                                    <span type='button' onClick={() => {
+                                                        setShowPassword(!showPassword)
+                                                    }}
+                                                          className="bi bi-eye me-2 eye-password"></span>
                                             }
                                         </div>
-                                        <div className="row">
-                                            <div className="col-3 m-auto"></div>
-                                            <div className="col-5 m-auto">
-                                                <span className="text-danger fs-6" id="oldPasswordErr"></span>
-                                            </div>
-                                        </div>
+                                        {/*<div className="row">*/}
+                                        {/*    <div className="col-3 m-auto"></div>*/}
+                                        {/*    <div className="col-7 m-auto">*/}
+                                        {/*        <span className="text-danger fs-6" id="oldPasswordErr"></span>*/}
+                                        {/*    </div>*/}
+                                        {/*</div>*/}
                                     </div>
-                                    <div className="row mt-4" >
-                                        <div className="col-3 m-auto" style={{ textAlign: "left" }}>
-                                            <label className="fw-bold" style={{ marginRight: "2%" }}>
-                                                Mật khẩu mới <span style={{ color: "red" }}>(*)</span>:
+                                    <div className="row" style={{marginBottom: "3%"}}>
+                                        <div className="col-4" style={{textAlign: "left"}}>
+                                            <label className="fw-bold" style={{marginRight: "2%"}}>
+                                                Mật khẩu mới <span style={{color: "red"}}>(*)</span>:
                                             </label>
                                         </div>
-                                        <div className="col-5 m-auto position-relative">
+                                        <div className="col-7 m-auto position-relative">
                                             <Field
                                                 type={showNewPassword ? "text" : "password"}
-                                                placeholder="Nhập mật khẩu mới" className="form-control" name="newPassword" />
+                                                 className="form-control"
+                                                name="newPassword"/>
                                             {
-                                                showNewPassword ? <span type='button' onClick={() => { setShowNewPassword(!showNewPassword) }}
-                                                    className="bi bi-eye-slash me-2 eye-password"></span> :
-                                                    <span type='button' onClick={() => { setShowNewPassword(!showNewPassword) }}
-                                                        className="bi bi-eye me-2 eye-password"></span>
+                                                showNewPassword ? <span type='button' onClick={() => {
+                                                        setShowNewPassword(!showNewPassword)
+                                                    }}
+                                                                        className="bi bi-eye-slash me-2 eye-password"></span> :
+                                                    <span type='button' onClick={() => {
+                                                        setShowNewPassword(!showNewPassword)
+                                                    }}
+                                                          className="bi bi-eye me-2 eye-password"></span>
                                             }
-
                                         </div>
                                         <div className="row">
                                             <div className="col-3 m-auto"></div>
-                                            <div className="col-5 m-auto">
+                                            <div className="col-7 m-auto">
                                                 <span className="text-danger fs-6" id="newPasswordErr"></span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="row mt-4">
-                                        <div className="col-3 m-auto" style={{ textAlign: "left" }}>
-                                            <label className="fw-bold" style={{ marginRight: "2%" }}>
-                                                Mật khẩu xác nhận <span style={{ color: "red" }}>(*)</span>:
+                                    <div className="row" style={{marginBottom: "3%"}}>
+                                        <div className="col-4" style={{textAlign: "left"}}>
+                                            <label className="fw-bold" style={{marginRight: "2%"}}>
+                                                Mật khẩu xác nhận <span style={{color: "red"}}>(*)</span>:
                                             </label>
                                         </div>
-                                        <div className="col-5 m-auto position-relative" style={{ marginRight: "2%" }}>
+                                        <div className="col-7 m-auto position-relative">
                                             <Field
                                                 type={showPasswordConfirm ? "text" : "password"}
-                                                placeholder="Nhập mật khẩu xác nhận" className="form-control" name="confirmPassword" />
+                                                className="form-control"
+                                                name="confirmPassword"/>
                                             {
-                                                showPasswordConfirm ? <span type='button' onClick={() => { setShowPasswordConfirm(!showPasswordConfirm) }}
-                                                    className="bi bi-eye-slash me-2 eye-password"></span> :
-                                                    <span type='button' onClick={() => { setShowPasswordConfirm(!showPasswordConfirm) }}
-                                                        className="bi bi-eye me-2 eye-password"></span>
+                                                showPasswordConfirm ? <span type='button' onClick={() => {
+                                                        setShowPasswordConfirm(!showPasswordConfirm)
+                                                    }}
+                                                                            className="bi bi-eye-slash me-2 eye-password"></span> :
+                                                    <span type='button' onClick={() => {
+                                                        setShowPasswordConfirm(!showPasswordConfirm)
+                                                    }}
+                                                          className="bi bi-eye me-2 eye-password"></span>
                                             }
-
                                         </div>
                                         <div className="row">
                                             <div className="col-3 m-auto"></div>
-                                            <div className="col-5 m-auto">
+                                            <div className="col-7 m-auto">
                                                 <span className="text-danger fs-6" id="confirmPasswordErr"></span>
                                             </div>
                                         </div>
@@ -159,9 +221,11 @@ export default function ChangePassword() {
                                         <div className="col-6 text-end">
                                             <buton
                                                 type="button"
-                                                onClick={()=>{navigate('/')}}
+                                                onClick={() => {
+                                                    navigate('/')
+                                                }}
                                                 className="button-movie"
-                                                style={{ background: "#B29A81" }}
+                                                style={{background: "#B29A81"}}
                                             >
                                                 Quay về
                                             </buton>
@@ -170,16 +234,16 @@ export default function ChangePassword() {
                                             <button
                                                 type="submit"
                                                 className="button-movie"
-                                                style={{ background: "#8C6842" }}
+                                                style={{background: "#8C6842"}}
                                             >
                                                 Xác nhận
                                             </button>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </Form>
+                            </Form>
                     </Formik>
+                </div>
                 </div>
             }
         </>

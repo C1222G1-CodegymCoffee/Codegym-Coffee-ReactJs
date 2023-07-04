@@ -7,7 +7,7 @@ const detail = () => {
             {
                 headers:
                     {
-                        'Authorization': 'Bearer ' + 'token'
+                        'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmhxdWFuMTIzIiwiaXNzIjoiQ29kZUphdmEiLCJpYXQiOjE2ODgzNzU5ODksImV4cCI6MTY4ODQ2MjM4OX0.EHjQE9XPgRV6VLbpgoLlUW0F0Siw7_BMAFjdAjmcGJ3IDeR21l8l0Fi9HEluqYc3XO9Em7DNUTUEeO2ucqjpmA'
                     }
             }
         )
@@ -24,7 +24,7 @@ const update = (value) => {
             {
                 headers:
                     {
-                        'Authorization': 'Bearer ' + 'token'
+                        'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmhxdWFuMTIzIiwiaXNzIjoiQ29kZUphdmEiLCJpYXQiOjE2ODgzNzU5ODksImV4cCI6MTY4ODQ2MjM4OX0.EHjQE9XPgRV6VLbpgoLlUW0F0Siw7_BMAFjdAjmcGJ3IDeR21l8l0Fi9HEluqYc3XO9Em7DNUTUEeO2ucqjpmA'
                     }
             }
         )
@@ -41,7 +41,7 @@ const updatePassword = (value) => {
             {
                 headers:
                     {
-                        'Authorization': 'Bearer ' + 'token'
+                        'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmhxdWFuMTIzIiwiaXNzIjoiQ29kZUphdmEiLCJpYXQiOjE2ODg0NTQyMTksImV4cCI6MTY4ODU0MDYxOX0.-0n-XGTkwJAkrNn1Tq5hhfonyLJsScd1QJMYAtnm-RXcQRRj3Al4lZNZyzSKjIwBi6dJNSllerGa1XyapqcJ2A'
                     }
             }
         )
