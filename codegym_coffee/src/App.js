@@ -11,11 +11,13 @@ import {EmployeeList} from "./component/employee/EmployeeList";
 import {AddEmployee} from "./component/employee/AddEmployee";
 import List from "./component/bill/List";
 
+import {DisplayMenu} from "./component/Menu/DisplayMenu";
+import {Menu} from "./component/Menu/Menu";
 
 
 function App() {
-  return (
-      <>
+    return (
+        <>
             <Routes>
                 <Route path="/" element={<HomePage/>}></Route>
                 <Route path="/sale" element={<Sale/>}></Route>
@@ -23,11 +25,11 @@ function App() {
                 <Route path="/employee" element={<EmployeeList/>}></Route>
                 <Route path="/employee_create" element={<AddEmployee/>}></Route>
                 <Route path="/bill" element={<List/>}></Route>
-                {<Route path="/account/change-password" element={<ChangePassword/>}/> }
-
+                <Route path="/account/change-password" element={<ChangePassword/>}/>
+                <Route path="/menu" element={<DisplayMenu/>}></Route>
             </Routes>
-      </>
-  );
+        </>
+    );
 }
 
 export default App;

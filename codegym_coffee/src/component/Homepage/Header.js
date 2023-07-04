@@ -57,7 +57,7 @@ export const Header = () => {
 
     return (
         <header className={isMenuOpen ? "open" : ""}>
-            <a href="# " className="logo"><img src="/Homepage/logo2.png"/></a>
+            <a href="# " className="logo"><img src="/Homepage/logo.png"/></a>
             <nav className="menu">
                 <ul className={isMenuOpen ? "open" : ""}>
                     <li><a href="#">Bán hàng</a></li>
