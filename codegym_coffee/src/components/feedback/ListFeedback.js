@@ -6,6 +6,7 @@ import {Field, Form, Formik} from "formik";
 import ReactPaginate from "react-paginate";
 import {Header} from "../Homepage/Header";
 import "../../css/feedback/listFeedback.css";
+import { format } from 'date-fns';
 
 
 export const ListFeedback = () => {
@@ -77,6 +78,7 @@ export const ListFeedback = () => {
         setCurrentPage(page.selected)
     }
 
+
     function handleChangePage(pageable) {
         if (currentPage + 1 === totalPage && pageable.isNext === true) return false
         if (pageable.isNext === true) {
@@ -95,6 +97,7 @@ export const ListFeedback = () => {
                     <div>
                         <h2 className="text-center pt-4">DANH SÁCH PHẢN HỒI </h2>
                     </div>
+
                     <div className="table-responsive">
                         <Formik
                             initialValues={{
@@ -125,9 +128,14 @@ export const ListFeedback = () => {
                                     <Field aria-label="Ngày feedback" className="form-control"
                                            placeholder="Ngày feedback"
                                            type="date" name='dayOfFeedback'/>
-                                    <button className="btn btn-success"
+                                    <button className="btn btn-light"
                                             type="submit">
-                                        Tìm kiếm
+                                        <img
+                                            width={20}
+                                            height={20}
+                                            src="https://img.icons8.com/ios-filled/50/search--v1.png"
+                                            alt="search--v1"
+                                        />
                                     </button>
                                 </div>
                             </Form>
@@ -147,28 +155,25 @@ export const ListFeedback = () => {
                             </thead>
                             <tbody>
                             {feedbacks?.map((feedback, index) => {
+                                const date = new Date(feedback.dayOfFeedback);
+                                const formattedDate = date.toLocaleDateString('vi-VN');
                                 return (
                                     <tr key={feedback.idFeedback}>
                                         <td className="content-feedback" scope="row">{index + 1}</td>
                                         <td className="content-feedback">{feedback.codeFeedback}</td>
-                                        <td className="content-feedback">{feedback.dayOfFeedback}</td>
+                                        <td className="content-feedback">{formattedDate}</td>
                                         <td className="content-feedback">{feedback.creator}</td>
                                         <td className="content-feedback">{feedback.email}</td>
                                         <td className="content-feedback">{feedback.content.length > 30 ? feedback.content.slice(0, 30) + "..." : feedback.content}</td>
                                         <td>
-                                            <button className="btn btn-primary d-none d-sm-table-cell"
+                                            <button className="btn btn-light d-none d-sm-table-cell"
                                                     onClick={() => handleShowModal(feedback.id, feedback.codeFeedback, feedback.dayOfFeedback, feedback.creator, feedback.email, feedback.content, feedback.image)}
                                                     data-bs-target="#exampleModal" data-bs-toggle="modal" type="button">
-                                                <svg className="bi bi-eye-fill" fill="currentColor"
-                                                     viewBox="0 0 16 16"
-                                                     xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-                                                    <path
-                                                        d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
-                                                </svg>
+                                                <img width="20" height="20"
+                                                     src="https://img.icons8.com/color/48/bulleted-list.png"
+                                                     alt="bulleted-list"/>
                                             </button>
                                         </td>
-
                                     </tr>
                                 )
                             })}
