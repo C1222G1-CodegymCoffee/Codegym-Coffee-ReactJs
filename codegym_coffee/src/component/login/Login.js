@@ -1,11 +1,27 @@
 import "../../css/login/login.css";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import { getEmail, postLogin } from "../../service/Service";
+import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
 
     const navigate = useNavigate();
+    
+    const eye = document.querySelector(".bi");
+    const formPw = document.querySelector(".form-pw");
+
+    const handlePassword = () => {
+      if(eye.classList.contains("bi-eye-slash")) {
+        eye.classList.remove("bi-eye-slash");
+        eye.classList.add("bi-eye");
+        formPw.setAttribute("type", "text");
+    } else {
+        eye.classList.remove("bi-eye");
+        eye.classList.add("bi-eye-slash");
+        formPw.setAttribute("type", "password");
+    };  
+    }
 
     const handleEmail = async () => {
       const email = document.querySelector(".email-password").value;
@@ -31,6 +47,14 @@ function Login() {
                             password: ""
                         }}
 
+                        validationSchema={Yup.object().shape({
+                          nameAccount: Yup.string().required("trường này không được để trống"),
+                                          
+                          password: Yup.string()
+                                      .required("trường này không được để trống")
+                                      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$/, "mật khẩu phải có ít nhất 1 chữ hoa,ít nhất 1 chữ thường, có 1 ký tự và số"),
+                        })}
+
                         onSubmit={(values) => {
                             const login = async () => {
                                 await postLogin(values);
@@ -44,11 +68,13 @@ function Login() {
                         <Form>
                             <div className="mb-3">
                                 <Field type="text" className="form-control form-custom" placeholder="Tên đăng nhập" name="nameAccount"/>
+                                <ErrorMessage name="nameAccount" className="text-danger" component="span" />
                                 {/* <div id="emailHelp" className="form-text text-danger fs-15">Trường này không được để trống</div> */}
                             </div>
                             <div className="mb-3 my-5 input-group">
                               <Field type="password" className="form-control form-custom form-pw" placeholder="Mật khẩu" name="password"/>
-                              <i className="bi bi-eye-slash float-end icon-custom"></i>
+                              <i className="bi bi-eye-slash float-end icon-custom" onClick={() => {handlePassword()}}></i>
+                              <ErrorMessage name="password" className="text-danger col-12" component="span" />
                               {/* <div id="emailHelp" className="form-text text-danger col-12 fs-15">Trường này không được để trống</div> */}
     
                             </div>
