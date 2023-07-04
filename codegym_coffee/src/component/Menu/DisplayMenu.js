@@ -8,7 +8,16 @@ export function DisplayMenu() {
     const [total, setTotal] = useState(0);
     const [listProduct, setListProduct] = useState([])
     const [listTypeProduct, setListTypeProduct] = useState([])
-    // const [listProductByType, setListProductByType] = useState([])
+    const [isActive, setIsActive] = useState(false);
+    const [count, setCount] = useState(0);
+
+    const openShopping = () => {
+        setIsActive(true);
+    };
+
+    const closeShopping = () => {
+        setIsActive(false);
+    };
 
     const displayListProduct = async () => {
         const res = await getAllProduct()
@@ -19,14 +28,14 @@ export function DisplayMenu() {
         setListTypeProduct(res)
     }
     const addToCart = (item) => {
-        const existingItem = items.find((value) => value.id === item.id);
+        const existingItem = items.find((value) => value.idProduct === item.idProduct);
         if (existingItem) {
             const updatedItems = items.map((i) =>
-                i.id === item.id ? {...i, quantity: i.quantity + 1} : i
+                i.idProduct === item.idProduct ? {...i, quantityOfProduct: i.quantityOfProduct + 1} : i
             );
             setItems(updatedItems);
         } else {
-            setItems([...items, {...item, quantity: 1}]);
+            setItems([...items, {...item, quantityOfProduct: 1}]);
         }
     };
 
@@ -39,30 +48,30 @@ export function DisplayMenu() {
 
     const increaseQuantity = (index) => {
         const updatedItems = [...items];
-        updatedItems[index].quantity += 1;
+        updatedItems[index].quantityOfProduct += 1;
         setItems(updatedItems);
     };
 
     const decreaseQuantity = (index) => {
         const updatedItems = [...items];
-        if (updatedItems[index].quantity > 1) {
-            updatedItems[index].quantity -= 1;
+        if (updatedItems[index].quantityOfProduct = 1) {
+            updatedItems[index].quantityOfProduct -= 1;
             setItems(updatedItems);
         }
     };
 
     const calculateTotal = (cartItems) => {
-        const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        const total = cartItems.reduce((sum, item) => sum + item.price * item.quantityOfProduct, 0);
         setTotal(total);
     };
     const handleAddToBill = async (value) => {
         console.log(value)
-       await addToBill(value)
+        await addToBill(value)
     }
-    // const handleDisplayByType = async (type) => {
-    //     const res = await getAllProductByType(type)
-    //     setListProduct(res)
-    // }
+    const handleDisplayByType = async (type) => {
+        const res = await getAllProductByType(type)
+        setListProduct(res)
+    }
 
     useEffect(() => {
         displayTypeProduct()
@@ -82,70 +91,66 @@ export function DisplayMenu() {
                 listTypeProduct.map(value => {
                     return (
                         <ul>
-                            {/*<button onClick={() => handleDisplayByType(value.nameType)} name="type">*/}
-                            {/*    {value.nameType}*/}
-                            {/*</button>*/}
+                            <button onClick={() => handleDisplayByType(value.nameType)} name="type">
+                                {value.nameType}
+                            </button>
                         </ul>
                     )
                 })
             }
-            <div>
-                {
-                    listProduct.map(value => {
-                        return (
-                            <div className="card" style={{width: "18rem"}} key={value}>
-                                <img src={value.image} className="card-img-top" alt="..."/>
-                                <div className="card-body">
-                                    <h5 className="card-title">{value.nameProduct}</h5>
-                                    <p className="card-text">{value.price} đ</p>
-                                    <button onClick={() => addToCart({
-                                        id: value.idProduct,
-                                        name: value.nameProduct,
-                                        price: value.price
+            <div className={`container_menu ${isActive ? 'active' : ''}`}>
+                <div className="header_menu">
+                <div className="shopping_menu" onClick={openShopping}>
+                    <img src="image/shopping.svg" alt="Shopping Cart"/>
+                    {/*<span className="quantity span_menu">{count}</span>*/}
+                </div>
+                </div>
+                <div className="list">
+                    {
+                        listProduct.map(value => {
+                            return (
+                                <div className="item" key={value}>
+                                    <img className="img_list_menu" src={`/Homepage/${value.image}`}/>
+                                    <div className="title_menu">{value.nameProduct}</div>
+                                    <div className="price_menu">{value.price}</div>
+                                    <button className="button_menu" onClick={() => addToCart({
+                                        idProduct: value.idProduct,
+                                        nameProduct: value.nameProduct,
+                                        price: value.price,
+                                        tableOfBill: 2
                                     })}>
                                         Thêm vào giỏ hàng
                                     </button>
                                 </div>
-                            </div>
-                        )
-                    })
-                }
-                <h1>Giỏ hàng</h1>
-                <table>
-                    <thead>
-                    <tr>
-                        <th className="">STT</th>
-                        <th>Tên món</th>
-                        <th>Số lượng</th>
-                        <th>Giá</th>
-                        <th>Thời gian chờ</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        items.map((item, index) => (
-                            <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>{item.name} </td>
-                                <td>
-                                    <button onClick={() => decreaseQuantity(index)}>-</button>
-                                    {item.quantity}
-                                    <button onClick={() => increaseQuantity(index)}>+</button>
-                                </td>
-                                <td>{item.price}</td>
-                                <td></td>
-                                <button onClick={() => removeFromCart(index)}>Xóa</button>
-                            </tr>
+                            )
+                        })
+                    }
+                </div>
+                <div className="card_menu">
+                    <h1 className="h1_menu">Card</h1>
+                    <ul className="listCard">
+                        {items.map((item, index) => (
+                            <li key={index} className="li_menu">
+                                <div className="div_menu_card">
+                                    <img className="img_card" src={`/Homepage/${item.image}`}/>
+                                </div>
+                                <div>{item.nameProduct}</div>
+                                <div className="div_menu_card">{item.price}</div>
+                                <div className="div_menu_card">
+                                    <button className="button_card" onClick={() => decreaseQuantity(index)}>-</button>
+                                    <div className="count">{item.quantityOfProduct}</div>
+                                    <button className="button_card" onClick={() => increaseQuantity(index)}>+</button>
+                                    <button className="button_card" onClick={()=>removeFromCart(index)}>X</button>
+                                </div>
+                            </li>
                         ))}
-                    <tr>
-                        <div><h3>Tổng cộng: {total} đ</h3></div>
-                    </tr>
-                    <tr>
+                    </ul>
+                    <div className="checkOut">
+                        <div className="total div_menu">{total}</div>
+                        <div className="closeShopping div_menu" onClick={closeShopping}>Close</div>
                         <button onClick={() => handleAddToBill(items)}>Thanh toán</button>
-                    </tr>
-                    </tbody>
-                </table>
-
+                    </div>
+                </div>
             </div>
         </>
     );

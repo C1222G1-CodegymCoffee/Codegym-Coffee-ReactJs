@@ -11,7 +11,7 @@ export const getAllTypeProduct = async () => {
 }
 
 export const getAllProductByType = async (type) => {
-    const res = await axios.get(`http://localhost:8080/menu/type-product?type=${type}`)
+    const res = await axios.get(`http://localhost:8080/menu/product-by-type?type=${type}`)
     return res.data;
 }
 export const addToBill = async (products) => {
