@@ -155,13 +155,13 @@ button:active {
     animation: color-change-border 5s infinite;
 }
 
-@media only screen and (max-width: 559px) {
+@media only screen and (max-width: 767px) {
 }
 
-@media only screen and (min-width: 560px) and (max-width: 900px) {
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
 }
 
-@media only screen and (min-width: 901px) {
+@media only screen and (min-width: 1024px) {
 }
 
 

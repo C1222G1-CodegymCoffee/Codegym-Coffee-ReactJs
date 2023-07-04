@@ -6,7 +6,6 @@ import {Field, Form, Formik} from "formik";
 import ReactPaginate from "react-paginate";
 import {Header} from "../Homepage/Header";
 import "../../css/feedback/listFeedback.css";
-import { format } from 'date-fns';
 
 
 export const ListFeedback = () => {
@@ -182,85 +181,87 @@ export const ListFeedback = () => {
                             </h5>}
                             </tbody>
                         </table>
-                        <div aria-hidden="true" aria-labelledby="exampleModalLabel" className="modal fade"
-                             id="exampleModal"
-                             tabIndex="-1">
-                            <div className="modal-dialog">
-                                <div className="modal-content">
-                                    <div className="modal-header">
-                                        <h5 className="modal-title" id="exampleModalLabel">Thông tin
-                                            phản hồi của <span className="name-title">{people}</span></h5>
-                                        <button aria-label="Close" className="btn-close" data-bs-dismiss="modal"
-                                                type="button"></button>
-                                    </div>
-                                    <div className="modal-body">
-                                        <div className="d-flex justify-content-center mt-3">
-                                            <form action="">
-                                                <table className="">
-                                                    <tr>
-                                                        <th>
-                                                            <label className="fs-5" htmlFor="">Mã số phản
-                                                                hồi: </label>
-                                                        </th>
-                                                        <td className="content">
-                                                            {code}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>
-                                                            <label className="fs-5"
-                                                                   htmlFor="">Ngày phản
-                                                                hồi: </label>
-                                                        </th>
-                                                        <td className="content">
-                                                            {day}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>
-                                                            <label className="fs-5"
-                                                                   htmlFor="">Người tạo: </label>
-                                                        </th>
-                                                        <td className="content">
-                                                            {people}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>
-                                                            <label className="fs-5"
-                                                                   htmlFor="">Email: </label>
-                                                        </th>
-                                                        <td className="content">
-                                                            {email}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>
-                                                            <label className="fs-5"
-                                                                   htmlFor="">Phản hồi: </label>
-                                                        </th>
-                                                        <td className="content">
-                                                            {content}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>
-                                                            <label className="fs-5"
-                                                                   htmlFor="">Hình ảnh: </label>
-                                                        </th>
-                                                        <td>
-                                                            {img ? <img className="content-img" src={img}/> :
-                                                                <p className="content">Không có hình ảnh</p>}
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </form>
+                        <div className="table-responsive">
+                            <div aria-hidden="true" aria-labelledby="exampleModalLabel" className="modal fade"
+                                 id="exampleModal"
+                                 tabIndex="-1">
+                                <div className="modal-dialog">
+                                    <div className="modal-content">
+                                        <div className="modal-header">
+                                            <h5 className="modal-title" id="exampleModalLabel">Thông tin
+                                                phản hồi của <span className="name-title">{people}</span></h5>
+                                            <button aria-label="Close" className="btn-close" data-bs-dismiss="modal"
+                                                    type="button"></button>
                                         </div>
-                                    </div>
-                                    <div className="modal-footer">
-                                        <button className="btn btn-secondary" data-bs-dismiss="modal"
-                                                type="button">Đóng
-                                        </button>
+                                        <div className="modal-body">
+                                            <div className="d-flex justify-content-center mt-3">
+                                                <form action="">
+                                                    <table className="">
+                                                        <tr>
+                                                            <th>
+                                                                <label className="fs-5" htmlFor="">Mã số phản
+                                                                    hồi: </label>
+                                                            </th>
+                                                            <td className="content">
+                                                                {code}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                <label className="fs-5"
+                                                                       htmlFor="">Ngày phản
+                                                                    hồi: </label>
+                                                            </th>
+                                                            <td className="content">
+                                                                {day}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                <label className="fs-5"
+                                                                       htmlFor="">Người tạo: </label>
+                                                            </th>
+                                                            <td className="content">
+                                                                {people}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                <label className="fs-5"
+                                                                       htmlFor="">Email: </label>
+                                                            </th>
+                                                            <td className="content">
+                                                                {email}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                <label className="fs-5"
+                                                                       htmlFor="">Phản hồi: </label>
+                                                            </th>
+                                                            <td className="content">
+                                                                {content}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                                <label className="fs-5"
+                                                                       htmlFor="">Hình ảnh: </label>
+                                                            </th>
+                                                            <td>
+                                                                {img ? <img className="content-img" src={img}/> :
+                                                                    <p className="content">Không có hình ảnh</p>}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div className="modal-footer">
+                                            <button className="btn btn-secondary" data-bs-dismiss="modal"
+                                                    type="button">Đóng
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
