@@ -134,7 +134,7 @@ export default function ChangePassword() {
                                                 Mật khẩu xác nhận <span style={{ color: "red" }}>(*)</span>:
                                             </label>
                                         </div>
-                                        <div className="col-5 m-auto position-relative">
+                                        <div className="col-5 m-auto position-relative" style={{ marginRight: "2%" }}>
                                             <Field
                                                 type={showPasswordConfirm ? "text" : "password"}
                                                 placeholder="Nhập mật khẩu xác nhận" className="form-control" name="confirmPassword" />

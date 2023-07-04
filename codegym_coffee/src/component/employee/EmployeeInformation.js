@@ -197,7 +197,7 @@ export default function EmployeeInformation() {
                                             </div> :
                                                 <div>
                                                     <img src={avatarDetail}
-                                                        className="border-avatar rounded-circle" width='300px' height='300px' alt="image" />
+                                                        className="border-avatar rounded-circle" width='200px' height='200px' alt="image" />
                                                 </div>
                                         }
                                         <div className={!avatarErr && "border-camera"} >
@@ -213,7 +213,7 @@ export default function EmployeeInformation() {
                                         Chào mừng bạn trở lại
                                     </div>
                                     <hr />
-                                    <div className="col-9">
+                                    <div className="col-12">
                                         <ul className="quynh-app-menu">
                                             <li>
                                                 <NavLink to={'/account/change-password'} className="quynh-app-menu__item " href="ChangePassword.html">
