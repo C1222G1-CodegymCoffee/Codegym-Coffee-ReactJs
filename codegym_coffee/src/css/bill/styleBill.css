@@ -16,7 +16,7 @@
 body {
     background-size: cover;
     background-attachment: fixed;
-    animation: flicker 4s ease-in-out infinite;
+    /* animation: flicker 4s ease-in-out infinite; */
 }
 
 
