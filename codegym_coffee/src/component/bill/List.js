@@ -28,6 +28,7 @@ function List() {
         try {
             const result = await axios.get(`http://localhost:8080/api/admin/bill?page=${page}&size=${itemsPerPage}`);
             setData(result.data.content);
+            console.log("fdfd", result.data)
             setTotalPages(result.data.totalPages);
             setTotalElements(result.data.totalElements);
         } catch (error) {
@@ -37,10 +38,12 @@ function List() {
 
     const getListBills = async () => {
         const listBill = await getBills(currentPage, pageSize);
-
-        setTotalPages(listBill.totalPages)
-        setBill(listBill.content);
+        if (listBill) {
+            setTotalPages(listBill.totalPages)
+            setBill(listBill.content);
+        }
     }
+
 
     let state = {
         pagedResponse: {},
@@ -73,12 +76,6 @@ function List() {
     }
 
     useEffect(() => {
-        // if (formRef.current.values.dayOfBill !== "" || formRef.current.values.searchTerm !== ""){
-        //     search(formRef.current.values.dayOfBill, formRef.current.values.searchTerm)
-        // }else {
-        //
-        // }
-        // fetchData(currentPage);
         getListBills();
 
     }, [currentPage])
@@ -88,18 +85,18 @@ function List() {
     const [table, setTable] = useState('')
     const [content, setContent] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
-    const [price, setPrice] = useState('')
+    const [salary, setSalary] = useState('')
     const [emailFeedback, setEmailFeedback] = useState('')
 
-    const formattedPrice = new Intl.NumberFormat().format(price);
+    const formattedPrice = new Intl.NumberFormat().format(salary);
 
 // *
-    function handleShowModal(nameCreator, tableBill, contentBill, priceDetailBill, phoneNumberBill, emailFeedback) {
+    function handleShowModal(nameCreator, tableBill, contentBill, salary, phoneNumberBill, emailFeedback) {
         setCreator(nameCreator);
         setTable(tableBill);
         setContent(contentBill);
         setPhoneNumber(phoneNumberBill);
-        setPrice(priceDetailBill);
+        setSalary(salary);
         setEmailFeedback(emailFeedback);
 
     }
@@ -107,9 +104,8 @@ function List() {
     return (
         <div>
             <div className="element">
-                <div className="">
-                    <h2 className="text-center">DANH SÁCH HOÁ ĐƠN</h2>
-                    <br/>
+                <div>
+                    <h2 className="text-center pt-4">DANH SÁCH HOÁ ĐƠN </h2>
                 </div>
                 <div className="row">
                     <div className="col-md-1"/>
@@ -183,7 +179,7 @@ function List() {
                                                     bills.feedback.creator,
                                                     bills.tableCoffee.nameTable,
                                                     bills.feedback.content,
-                                                    bills.billDetail.quantityOfProduct,
+                                                    bills.employee.salary,
                                                     bills.employee.phoneNumber,
                                                     bills.feedback.email
                                                 )}>
