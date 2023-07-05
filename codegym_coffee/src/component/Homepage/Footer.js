@@ -3,22 +3,25 @@ import '../../css/Homepage/footer.css';
 
 export const Footer = () => {
     return (
+        <div id="footer">
         <footer className="footer">
             <div className="container">
                 <div className="row">
                     <div className="col-md-6">
-                        <h3>Về chúng tôi</h3>
-                        <p>KHU NGHỈ DƯỠNG ĐẲNG CẤP THẾ GIỚI, FURAMA ĐÀ NẴNG, NỔI TIẾNG LÀ KHU NGHỈ DƯỠNG ẨM THỰC TẠI VIỆT NAM.</p>
+                        <h3>Lời cảm ơn</h3>
+                        <p>Với Coffee Shop của chúng tôi, chúng tôi hy vọng mang lại cho bạn trải nghiệm cà phê tuyệt vời nhất, và chúng tôi luôn sẵn sàng phục vụ bạn một cách tận tâm và chuyên nghiệp.
+                            Cảm ơn bạn đã lựa chọn Coffee Shop của chúng tôi. Hãy đến và tận hưởng niềm đam mê cà phê với chúng tôi!</p>
                     </div>
                     <div className="col-md-6">
                         <h3>Liên hệ</h3>
-                        <p>103 – 105 Đường Võ Nguyên Giáp</p>
-                        <p>Phường Khuê Mỹ, Quận Ngũ hành Sơn, Tp. Đà Nẵng, Việt Nam</p>
-                        <p>Email: reservation@furamavietnam.com</p>
-                        <p>Điện thoại: 84-236-3847 333/888</p>
+                        <p>Số 280 đường Trần Hưng Đạo</p>
+                        <p>Phường An Hải Tây, quận Sơn Trà, ĐN</p>
+                        <p>Email: codegymcoffee@gmail.com</p>
+                        <p>Điện thoại: 0123456789</p>
                     </div>
                 </div>
             </div>
         </footer>
+        </div>
     );
 };
