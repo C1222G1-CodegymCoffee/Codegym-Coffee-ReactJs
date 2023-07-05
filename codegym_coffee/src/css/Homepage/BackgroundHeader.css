@@ -53,7 +53,7 @@
     min-height: 100vh;
     position: relative;
     background-size: cover;
-    background-color: #eceae3;
+    /* background-color: #eceae3; */
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-position: center center;

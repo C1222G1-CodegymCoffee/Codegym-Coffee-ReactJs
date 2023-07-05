@@ -75,7 +75,7 @@ export function EmployeeList() {
 
     const fetchData = async (page) => {
         try {
-            const result = await axios.get(`http://localhost:8080/api/admin/employee?page=${page}`);
+            const result = await axios.get(`http://localhost:8080/employee?page=${page}`);
             // setData(result.data.content);
             setTotalPage(result.data.totalPages);
             setEmployeeList(result.data.content);
