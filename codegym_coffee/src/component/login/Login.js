@@ -6,31 +6,25 @@ import {useNavigate} from "react-router-dom";
 import React, {useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
+import Swal from "sweetalert2";
+
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
 
     const navigate = useNavigate();
-    //
-    // const eye = document.querySelector(".bi");
-    const formPw = document.querySelector(".form-pw");
 
     const [showPassword, setShowPassword] = useState(false);
+    const [failedAccount, setFailedAccount] = useState(null);
 
     const handlePassword = () => {
-        // if (eye.classList.contains("bi-eye-slash")) {
-        //     eye.classList.remove("bi-eye-slash");
-        //     eye.classList.add("bi-eye");
-
-        // } else {
-        //     eye.classList.remove("bi-eye");
-        //     eye.classList.add("bi-eye-slash");
-
-        // }
+        const formPw = document.querySelector(".form-pw");
 
         if (showPassword) {
-            formPw.setAttribute("type", "text");
-        } else {
             formPw.setAttribute("type", "password");
+        } else {
+            formPw.setAttribute("type", "text");
+            
         }
 
         setShowPassword((pre) => !pre);
@@ -42,9 +36,20 @@ function Login() {
             emailConfirm: email,
             location: window.location.origin,
         }
-        let res = await getEmail(genenicRequest);
-        document.cookie = "token=" + res.data.token;
-        console.log(res.data.token);
+        getEmail(genenicRequest)
+        .then((e) => {
+            document.cookie = "token=" + e.data.token;
+            console.log(e.data.token);
+            Swal.fire({
+                icon: 'success',
+                title: 'Gửi email thành công',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        })
+        .catch(() => {
+            setFailedAccount("Email không hợp lệ")
+        })
     }
 
     return (
@@ -69,11 +74,18 @@ function Login() {
                         })}
 
                         onSubmit={(values) => {
-                            const login = async () => {
-                                const data = await postLogin(values);
-                                sessionStorage.setItem('TOKEN', data.accessToken);
-                                sessionStorage.setItem('USERNAME', data.nameAccount)
+                            const login = () => {
+                               postLogin(values)
+                               .then((e) => {
+                                sessionStorage.setItem('TOKEN', e.accessToken);
+                                sessionStorage.setItem('USERNAME', e.nameAccount);
+                                sessionStorage.setItem('ROLES', e.roles[0].authority)
                                 navigate('/');
+                               })
+                               .catch(
+                                    setFailedAccount("tên tài khoản hoặc mật khẩu")
+                               );
+                                
                             }
                             login();
                         }}
@@ -82,20 +94,20 @@ function Login() {
                             <div className="mb-3 input-group">
                                 <Field type="text" className="form-control form-custom" placeholder="Tên đăng nhập"
                                        name="nameAccount"/>
-                                <ErrorMessage name="nameAccount" className="text-danger" component="span"/>
-                                {/* <div id="emailHelp" className="form-text text-danger fs-15">Trường này không được để trống</div> */}
+                                <ErrorMessage name="nameAccount" className="text-danger col-12" component="span"/>
+                                
                             </div>
                             <div className="mb-3 my-5 input-group">
                                 <Field type="password" className="form-control form-custom form-pw"
                                        placeholder="Mật khẩu" name="password"/>
 
                                 <span className="password-icon" onClick={() => handlePassword()}>
-                                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                                    <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
                                 </span>
-
                                 <ErrorMessage name="password" className="text-danger col-12" component="span"/>
-                                {/* <div id="emailHelp" className="form-text text-danger col-12 fs-15">Trường này không được để trống</div> */}
-
+                                {failedAccount && (
+                                    <span className="text-danger col-12">{failedAccount}</span>
+                                )}
                             </div>
                             <div className="mb-3 float-end">
                                 <a className="text-forgot-password text-decoration-none" data-bs-toggle="modal"
@@ -122,10 +134,12 @@ function Login() {
                                 <label htmlFor="exampleFormControlInput1"
                                        className="form-label text-secondary">Email <sup className="text-danger">*</sup></label>
                                 <input type="email" className="form-control text-dark email-password"
-                                       id="exampleFormControlInput1" placeholder="name@example.com"/>
-                                {/* <span className="text-danger fs-15">Email sai định dạng</span> */}
+                                       id="exampleFormControlInput1" placeholder="nhập email..."/>
                                 <div id="emailHelp" className="form-text">Chúng tôi sẽ gửi mật khẩu qua email của bạn.
                                 </div>
+                                {failedAccount && (
+                                    <span className="text-danger col-12">{failedAccount}</span>
+                                )}
                             </div>
                         </div>
                         <div className="modal-footer">

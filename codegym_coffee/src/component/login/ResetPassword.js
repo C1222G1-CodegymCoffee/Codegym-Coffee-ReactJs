@@ -1,9 +1,9 @@
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
 import { postResetPassword } from "../../service/Service";
+import * as Yup from "yup";
 
 function ResetPassword() {
-  let param = useParams();
   const navigate = useNavigate();
   let res = document.cookie;
   let arr = res.split("=");
@@ -19,7 +19,12 @@ function ResetPassword() {
                   password: ""
               }}
 
+              validationSchema={Yup.object().shape({
               
+                password: Yup.string()
+                    .required("trường này không được để trống")
+                    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$/, "mật khẩu phải có ít nhất 1 chữ hoa,ít nhất 1 chữ thường, có 1 ký tự và số"),
+            })}
 
               onSubmit={(values) => {
                 const login = async () => {
@@ -32,7 +37,7 @@ function ResetPassword() {
               }}
         >
               {
-                  <Form className="">
+                  <Form id="loginPage">
                   <div className="mb-3">
                       <Field
                       type="password"
@@ -40,17 +45,16 @@ function ResetPassword() {
                       placeholder="Nhập mật khẩu mới"
                       name="password"
                       />
-                      {/* <div id="emailHelp" className="form-text text-danger fs-15">Trường này không được để trống</div> */}
+                      <ErrorMessage name="nameAccount" className="text-danger col-12" component="span"/>
+                      
                   </div>
                   <div className="mb-3 input-group">
-                      <Field
+                      <input
                       type="password"
                       className="form-control form-pw"
                       placeholder="Xác nhận mật khẩu"
-                      name="password"
+                      name="confirmPassword"
                       />
-                      <i className="bi bi-eye-slash float-end icon-custom"></i>
-                  <div id="emailHelp" className="form-text text-danger col-12 fs-15">Trường này không được để trống</div>
                   </div>
                   <button type="submit" className="col-12 button my-4">
                       Đổi mật khẩu
