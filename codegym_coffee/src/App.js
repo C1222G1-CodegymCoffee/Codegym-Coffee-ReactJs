@@ -51,7 +51,7 @@ function App() {
                 <Route path="/profile" element={<EmployeeInformation />} />
                 <Route path="/accessDenied" element={<Page403 />} />
             </Routes>
-            {/*<Footer/>*/}
+            <Footer/>
           <ToastContainer />
       </>
   );
