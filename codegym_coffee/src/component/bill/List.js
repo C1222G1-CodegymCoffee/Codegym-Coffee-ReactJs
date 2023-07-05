@@ -190,7 +190,7 @@ function List() {
                                         </td>
                                     </tr>
                                 ))}
-                            {bill?.length === 0 && <h5>
+                            {bill?.length === 0 && <h5 className="text-center">
                                 Không có dữ liệu
                             </h5>}
                             </tbody>
@@ -261,27 +261,32 @@ function List() {
                     </div>
                 </div>
             </div>
-            <div className=" d-flex justify-content-center">
-                <ReactPaginate
-                    previousLabel="Trước"
-                    nextLabel="Sau"
-                    pageCount={totalPages}
-                    onPageChange={handleClickPage}
-                    onClick={handleChangePage}
-                    containerClassName="pagination"
-                    previousClassName="page-item"
-                    previousLinkClassName="page-link"
-                    nextClassName="page-item"
-                    nextLinkClassName="page-link"
-                    pageClassName="page-item"
-                    pageLinkClassName="page-link"
-                    activeClassName="active"
-                    activeLinkClassName="page-link"
-                    forcePage={currentPage}
-                    pageRangeDisplayed={2} // Hiển thị 3 trang trên mỗi lần render
-                    marginPagesDisplayed={1} // Hiển thị 1 trang ở đầu và cuối danh sách trang
-                />
-            </div>
+            {
+                totalPages > 0 && (
+                    <div className=" d-flex justify-content-center">
+                        <ReactPaginate
+                            previousLabel="Trước"
+                            nextLabel="Sau"
+                            pageCount={totalPages}
+                            onPageChange={handleClickPage}
+                            onClick={handleChangePage}
+                            containerClassName="pagination"
+                            previousClassName="page-item"
+                            previousLinkClassName="page-link"
+                            nextClassName="page-item"
+                            nextLinkClassName="page-link"
+                            pageClassName="page-item"
+                            pageLinkClassName="page-link"
+                            activeClassName="active"
+                            activeLinkClassName="page-link"
+                            forcePage={currentPage}
+                            pageRangeDisplayed={2} // Hiển thị 3 trang trên mỗi lần render
+                            marginPagesDisplayed={1} // Hiển thị 1 trang ở đầu và cuối danh sách trang
+                        />
+                    </div>
+
+                )
+            }
         </div>
     );
 }
