@@ -25,6 +25,7 @@ import {Header} from "./component/Homepage/Header";
 import {Footer} from "./component/Homepage/Footer";
 import {CreateFeedback} from "./component/feedback/CreateFeedback";
 import EmployeeInformation from "./component/employee/EmployeeInformation";
+import Page403 from './component/login/Page403';
 
 function App() {
     return (
@@ -48,6 +49,7 @@ function App() {
                 <Route path="/createProduct" element={<CreateProduct/>}></Route>
                 <Route path="/editProduct/:idProduct" element={<EditProduct/>}></Route>
                 <Route path="/profile" element={<EmployeeInformation />} />
+                <Route path="/accessDenied" element={<Page403 />} />
             </Routes>
             {/*<Footer/>*/}
           <ToastContainer />

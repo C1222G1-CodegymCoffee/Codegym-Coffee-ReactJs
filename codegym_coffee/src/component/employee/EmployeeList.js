@@ -202,7 +202,7 @@ export function EmployeeList() {
                                                     </td>
                                                 </tr>
                                             ))}
-                                        }
+                            }
                                     </>
                                 ) : (
                                     <tr className="text-center">Khong tim thay nhan vien</tr>

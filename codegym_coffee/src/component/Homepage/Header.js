@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import '../../css/Homepage/header.css';
 import NavLink from "react-bootstrap/NavLink";
 
+import {useNavigate} from "react-router-dom";
+
 export const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isMediaQueryMatched, setIsMediaQueryMatched] = useState(false);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -56,6 +59,13 @@ export const Header = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
+    const handleLogout = () => {
+        sessionStorage.removeItem("TOKEN")
+        sessionStorage.removeItem("USERNAME")
+        sessionStorage.removeItem("ROLES")
+        navigate("/")
+    }
+
     return (
         <header className={isMenuOpen ? "open" : ""}>
             <a href="# " className="logo"><img src="/Homepage/logo.png"/></a>
@@ -73,6 +83,8 @@ export const Header = () => {
                             <li><NavLink href="/profile">{sessionStorage.getItem("USERNAME")}</NavLink></li>
                         )
                     }
+                    <li><NavLink href="/login">Logout</NavLink></li>
+
                 </ul>
                 <div className="menu-toggle" onClick={toggleMenu}>
                     <div className="bar"></div>
