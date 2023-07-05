@@ -6,6 +6,7 @@ import {Footer} from "./Footer";
 import {News} from "./News";
 import "../../css/Homepage/HomePage.css"
 import {NewProduct} from "./NewProduct";
+import {ListNews} from "../News/ListNews";
 
 
 export const HomePage = () =>{
@@ -15,7 +16,7 @@ export const HomePage = () =>{
             <BackgroundHeader/>
             <section id="topProduct"><TopProduct/></section>
             <section id="newProduct"><NewProduct/></section>
-            <News/>
+            <ListNews/>
             {/*<Footer/>*/}
         </>
 

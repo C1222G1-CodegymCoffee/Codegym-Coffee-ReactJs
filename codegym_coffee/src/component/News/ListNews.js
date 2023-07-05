@@ -25,8 +25,8 @@ export function ListNews() {
 
     return (
         <>
-            <div className="container container_news">
-                <Carousel interval={2500} controls>
+            <div className="container" id='news'>
+                <Carousel interval={10000} controls>
                     {listNews.map((news, index) => (
                         <Carousel.Item key={index}>
                             <div className="row">
