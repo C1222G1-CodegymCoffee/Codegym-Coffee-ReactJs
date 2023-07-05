@@ -1,22 +1,19 @@
 import * as Yup from 'yup';
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
-import React, {AllHTMLAttributes as e, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router";
 import "../../css/feedback/feedback.css"
-import {Header} from "../Homepage/Header";
-import {toast} from "react-toastify";
 import {storage} from "../../firebase";
 import {saveFeedback} from "../../service/feedback/FeedbackService";
-
+import Swal from "sweetalert2"
 
 export function CreateFeedback() {
     const navigate = useNavigate();
     const [selectedFile, setSelectedFile] = useState(null);
-    const [firebaseImg, setImg] = useState(null);
     const [progress, setProgress] = useState(0);
-    const [currentDate, setCurrentDate] = useState(new Date());
     const randomNum = Math.floor(Math.random() * 1000) + 1;
+    const currentDate = new Date()
 
     useEffect(() => {
         document.title = 'Gửi phản hồi';
@@ -24,12 +21,21 @@ export function CreateFeedback() {
 
     const handleFileSelect = (event) => {
         const file = event.target.files[0];
-        console.log(file);
         if (file) {
-            setSelectedFile(file);
+            const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+            if (allowedExtensions.test(file.name)) {
+                setSelectedFile(file);
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi',
+                    text: "File không hợp lệ. Vui lòng chọn file có đuôi là jpg, jpeg, png hoặc gif.",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
         }
     };
-
 
     const handleSubmitAsync = async () => {
         return new Promise((resolve, reject) => {
@@ -51,7 +57,6 @@ export function CreateFeedback() {
                 },
                 async () => {
                     const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-                    setImg(downloadURL);
                     resolve(downloadURL);
                 }
             );
@@ -63,13 +68,12 @@ export function CreateFeedback() {
         <>
             <Formik
                 initialValues={{
-                    codeFeedback: "F"+ randomNum,
-                    dayOfFeedback:"",
+                    codeFeedback: "F" + randomNum,
+                    dayOfFeedback: "",
                     creator: "",
                     email: "",
                     content: "",
-                    image: "",
-
+                    image: ""
                 }}
                 validationSchema={Yup.object({
                     creator: Yup.string().required("Khong duoc bo trong Ho va Ten").trim()
@@ -91,109 +95,144 @@ export function CreateFeedback() {
                         .min(5, "Noi dung phan hoi phai tu 5 ky tu")
                         .max(200, "Noi dung khong dai qua 200 ky tu"),
                 })}
-                onSubmit={(values, {setSubmitting}) => {
-                    debugger
-                    const create = async () => {
-                        const newValue = {
-                            ...values,
-                            image: firebaseImg,
-                            dayOfFeedback: currentDate,
-
-
-                        };
-                        newValue.image = await handleSubmitAsync();
-                        await saveFeedback(newValue);
-                        toast(`Thêm phản hồi thành công! `);
-                        navigate(`/`);
-                        setSubmitting(false);
+                onSubmit={async (values) => {
+                    const img = await handleSubmitAsync();
+                    const newValue = {
+                        ...values,
+                        image: img,
+                        dayOfFeedback: currentDate,
                     };
-                    create();
+                    await saveFeedback(newValue);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Gửi phản hồi thành công',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    navigate(`/`);
                 }}
             >
+                {formProps => {
+                    const handleReset = resetForm => {
+                        resetForm();
+                    };
 
-                <div className="form-body">
-                    <div className="container">
-                        <div className="banner_image">
-                            <img src="/Homepage/img_01.png"/>
-                        </div>
+                    return (
+                        <div className="form-body">
+                            <div className="container">
+                                <div className="banner_image_feedback">
+                                    <img src="/Homepage/img_01.png"/>
+                                </div>
+                                <div className="feedback-content">
+                                    <div className="form-items">
+                                        <h3 className="title">Phản hồi</h3>
+                                        <p className="title-p">Điền đầy đủ thông tin ở bên dưới.</p>
 
-                        <div className="content">
-                            <div className="row">
-                                <div className="form-holder">
-                                    <div className="form-content">
-                                        <div className="form-items">
-                                            <h3 className="title">Phản hồi</h3>
-                                            <p className="title-p">Điền đầy đủ thông tin ở bên dưới.</p>
-                                            <Form>
-                                                <div className="col-md-12">
-                                                    <Field className="input-feedback" type="text" name="creator"
-                                                           placeholder="Họ và Tên" required=""/>
-                                                    <div>
-                                                        <ErrorMessage name="creator" component={"p"}
-                                                                      style={{color: "red"}}/>
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-md-12">
-                                                    <Field className="input-feedback" type="email"
-                                                           name="email" placeholder="E-mail" required=""/>
-                                                    <div>
-                                                        <ErrorMessage name="email" component={"p"}
-                                                                      style={{color: "red"}}/>
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-md-12">
-                                                    <Field className="input-feedback" type="text"
-                                                           name="content" placeholder="Nội dung phản hồi"/>
-                                                    <div>
-                                                        <ErrorMessage name="content" component={"p"}
-                                                                      style={{color: "red"}}/>
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-md-12"
-                                                     style={{marginTop: "3%", marginBottom: "3%"}}>
-                                                    <Field type="file" onChange={(e) => handleFileSelect(e)}
-                                                           id="image" name={"image"}
-                                                           className="form-control-plaintext d-none "/>
-                                                    <p>
-                                                        <label htmlFor="image"
-                                                               style={{display: "inline-block", padding: "6px 12px",
-                                                                   border: "1px solid", borderRadius: "4px",}}>
-                                                            Chọn hình ảnh
-                                                        </label>
-                                                    </p>
-                                                    {!selectedFile && (
-                                                        <span>Chưa có hình ảnh được chọn</span>
-                                                    )}
-                                                    {selectedFile && (
-                                                        <img className={"mt-2"}
-                                                             src={URL.createObjectURL(selectedFile)}
-                                                             style={{width: "120px"}}/>
-                                                    )}
-                                                </div>
+                                        <Form>
+                                            <div className="col-md-12">
+                                                <Field className="input-feedback" type="text" name="creator"
+                                                       placeholder="Họ và Tên" required=""/>
                                                 <div>
-                                                    <ErrorMessage name="image" component={"p"} style={{color: "red"}}/>
+                                                    <ErrorMessage name="creator" component={"p"}
+                                                                  style={{color: "red"}}/>
                                                 </div>
+                                            </div>
 
-                                                <div className="form-button" id="button">
-                                                    <button id="cancel" type="cancel" className="button-cancel">
-                                                        Hủy
-                                                    </button>
-
-                                                    <button id="submit" type="submit" className="button-submit">
-                                                        Gửi phản hồi
-                                                    </button>
+                                            <div className="col-md-12">
+                                                <Field className="input-feedback" type="email"
+                                                       name="email" placeholder="E-mail" required=""/>
+                                                <div>
+                                                    <ErrorMessage name="email" component={"p"}
+                                                                  style={{color: "red"}}/>
                                                 </div>
-                                            </Form>
-                                        </div>
+                                            </div>
+
+                                            <div className="col-md-12">
+                                                <Field className="input-feedback" type="text"
+                                                       name="content" placeholder="Nội dung phản hồi"/>
+                                                <div>
+                                                    <ErrorMessage name="content" component={"p"}
+                                                                  style={{color: "red"}}/>
+                                                </div>
+                                            </div>
+
+                                            <div className="col-md-12"
+                                                 style={{marginTop: "3%", marginBottom: "3%"}}>
+                                                <Field type="file" onChange={(e) => handleFileSelect(e)}
+                                                       id="image" name={"image"}
+                                                       className="form-control-plaintext d-none "/>
+                                                <p>
+                                                    <label htmlFor="image"
+                                                           style={{
+                                                               display: "inline-block",
+                                                               padding: "6px 12px",
+                                                               border: "1px solid",
+                                                               borderRadius: "4px",
+                                                               cursor: "pointer"
+                                                           }}>
+                                                        Chọn hình ảnh
+                                                    </label>
+                                                </p>
+                                                {!selectedFile && (
+                                                    <span>Chưa có hình ảnh được chọn</span>
+                                                )}
+                                                {selectedFile && (
+                                                    <img className={"mt-2"}
+                                                         src={URL.createObjectURL(selectedFile)}
+                                                         style={{width: "30%"}}/>
+                                                )}
+                                            </div>
+                                            <div>
+                                                <ErrorMessage name="image" component={"p"} style={{color: "red"}}/>
+                                            </div>
+
+                                            <div>
+                                                <button
+                                                    type="button"
+                                                    className="btn-create-feedback"
+                                                    style={{
+                                                        backgroundColor: "#8C6842",
+                                                        width: "15%",
+                                                        color: "#ffffff",
+                                                        padding: 5,
+                                                        textAlign: "center",
+                                                        marginRight: 10,
+                                                        paddingRight: 5,
+                                                        borderRadius: 10,
+                                                        border: "none",
+                                                        letterSpacing: '0px'
+                                                    }}
+                                                    onClick={handleReset.bind(null, formProps.resetForm)}
+                                                >
+                                                    Hủy
+                                                </button>
+
+                                                <button
+                                                    type="submit"
+                                                    className="btn-create-feedback"
+                                                    style={{
+                                                        backgroundColor: "#8C6842",
+                                                        width: "26%",
+                                                        color: "#ffffff",
+                                                        padding: 5,
+                                                        textAlign: "center",
+                                                        marginRight: 10,
+                                                        paddingRight: 5,
+                                                        borderRadius: 10,
+                                                        border: "none",
+                                                        letterSpacing: '0px'
+                                                    }}
+                                                >
+                                                    Gửi phản hồi
+                                                </button>
+                                            </div>
+                                        </Form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    );
+                }}
             </Formik>
         </>
     )

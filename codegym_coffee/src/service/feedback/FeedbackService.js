@@ -39,7 +39,7 @@ export const getFeedbacks = async (page, size) => {
 
 export const saveFeedback = async (feedback) => {
     try {
-        await axios.post(`http://localhost:8080/api/public/create-feedback`, {...feedback});
+        await axios.post(`http://localhost:8080/api/create-feedback`, {...feedback});
     } catch (e) {
         console.log(e);
     }

@@ -19,10 +19,8 @@ import {ToastContainer} from 'react-toastify';
 
 
 import Example from "./component/Statistical/BarChart";
-import {News} from "./component/Homepage/News";
 import {ListNews} from "./component/News/ListNews";
 import {Header} from "./component/Homepage/Header";
-import {Footer} from "./component/Homepage/Footer";
 import {CreateFeedback} from "./component/feedback/CreateFeedback";
 import EmployeeInformation from "./component/employee/EmployeeInformation";
 
@@ -48,8 +46,8 @@ function App() {
                 <Route path="/createProduct" element={<CreateProduct/>}></Route>
                 <Route path="/editProduct/:idProduct" element={<EditProduct/>}></Route>
                 <Route path="/profile" element={<EmployeeInformation />} />
+                <Route path="/list-news" element={<ListNews/>} />
             </Routes>
-            {/*<Footer/>*/}
           <ToastContainer />
       </>
   );
