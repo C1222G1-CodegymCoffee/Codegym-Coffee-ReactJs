@@ -9,7 +9,7 @@ export const Footer = () => {
                 <div className="row">
                     <div className="col-md-6">
                         <h3>Lời cảm ơn</h3>
-                        <p>Với Coffee Shop của chúng tôi, chúng tôi hy vọng mang lại cho bạn trải nghiệm cà phê tuyệt vời nhất, và chúng tôi luôn sẵn sàng phục vụ bạn một cách tận tâm và chuyên nghiệp.
+                        <p>Với Codegym Coffee của chúng tôi, chúng tôi hy vọng mang lại cho bạn trải nghiệm cà phê tuyệt vời nhất, và chúng tôi luôn sẵn sàng phục vụ bạn một cách tận tâm và chuyên nghiệp.
                             Cảm ơn bạn đã lựa chọn Coffee Shop của chúng tôi. Hãy đến và tận hưởng niềm đam mê cà phê với chúng tôi!</p>
                     </div>
                     <div className="col-md-6">

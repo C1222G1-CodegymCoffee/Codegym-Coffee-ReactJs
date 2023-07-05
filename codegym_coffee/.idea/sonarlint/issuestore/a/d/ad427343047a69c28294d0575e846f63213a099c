@@ -1,0 +1,8 @@
+
+Rjavascript:S1481"6Remove the declaration of the unused 'count' variable.(¾¶Ëµ
+Ojavascript:S1854"3Remove this useless assignment to variable "count".(¾¶Ëµ
+Ujavascript:S1481"9Remove the declaration of the unused 'setCount' variable.(¾¶Ëµ
+Rjavascript:S1854"6Remove this useless assignment to variable "setCount".(¾¶Ëµ
+sjavascript:S11219"WExtract the assignment of "updatedItems[index].quantityOfProduct" from this expression.(é…¯
+Kjavascript:S6477]"*Missing "key" prop for element in iterator(‘è·óøÿÿÿÿ
+@javascript:S6479…"Do not use Array index in keys(™¢á¾şÿÿÿÿ

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import '../../css/Homepage/header.css';
+import {NavLink} from "react-router-dom";
 
 export const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -59,13 +60,26 @@ export const Header = () => {
             <a href="# " className="logo"><img src="/Homepage/logo.png"/></a>
             <nav className="menu">
                 <ul className={isMenuOpen ? "open" : ""}>
-                    <li><a href="#">Bán hàng</a></li>
-                    <li><a href="#">Hóa đơn</a></li>
-                    <li><a href="#">Bài đăng</a></li>
-                    <li><a href="#">Sản phẩm</a></li>
-                    <li><a href="#">Phản hồi</a></li>
-                    <li><a href="#">Thu nhập</a></li>
-                    <li><a href="#">Quản lí nhân viên</a></li>
+
+                    {
+                        sessionStorage.getItem("ROLES") === "" && (
+                            <li><NavLink href="/sale">Bán hàng</NavLink></li>,
+                                <li><NavLink href="/bill">Hóa đơn</NavLink></li>,
+                                <li><NavLink href="/news">Bài đăng</NavLink></li>,
+                                <li><NavLink href="/menu">Sản phẩm</NavLink></li>,
+                                <li><NavLink href="/createFeedback">Phản hồi</NavLink></li>,
+                                <li><NavLink href="/statistical">Thu nhập</NavLink></li>,
+                                <li><NavLink href="/employee">Quản lí nhân viên</NavLink></li>
+                        )
+                    }
+
+                    {
+                        sessionStorage.getItem("ROLES") === "ROLE_STAFF" && (
+                            <li><NavLink href="/sale">Bán hàng</NavLink></li>,
+                                <li><NavLink href="/news">Bài đăng</NavLink></li>
+                        )
+                    }
+
                 </ul>
                 <div className="menu-toggle" onClick={toggleMenu}>
                     <div className="bar"></div>

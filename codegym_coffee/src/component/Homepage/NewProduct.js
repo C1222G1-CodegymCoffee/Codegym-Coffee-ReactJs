@@ -20,6 +20,7 @@ export const NewProduct = () => {
 
     return (
         <div className="slide-container">
+
             <h1 className='h1_TopP'>
                 <strong className="h1_strongP">Món mới</strong>
             </h1>
