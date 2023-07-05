@@ -3,10 +3,11 @@ import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import * as Yup from "yup";
 import * as newsService from "../../service/NewsService/NewsService";
-import 'react-toastify/dist/ReactToastify.css';
-import {toast} from "react-toastify";
+// import 'react-toastify/dist/ReactToastify.css';
+// import {toast} from "react-toastify";
 import '../../css/News/News.css'
 import { Oval } from "react-loader-spinner";
+import Swal from "sweetalert2";
 import {
     ref,
     getDownloadURL,
@@ -59,23 +60,32 @@ function NewsCreate() {
     };
     return(
         <>
+            <div id="thong">
             <Formik initialValues={{title:"",content:"",image:""}}
                     validationSchema={Yup.object({
                         title:Yup.string().required("không được để trống"),
                         content:Yup.string().required("không được để trống"),
-                        image:Yup.string().required("không được để trống")
+                        // image:Yup.string().required("không được để trống")
                     })}
                     onSubmit={async (values, {resetForm, setSubmitting }) => {
                         try {
                             let img = await handleSubmitAsync();
                             let newValues = {...values, image: img, dayPost: currDate}
                             await newsService.save(newValues);
+                            console.log(newValues)
                             resetForm();
                             setSubmitting(false);
-                            toast("Thêm mới thành công");
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Thanh cong'
+                            })
                             // navigate("/");
                         } catch (e) {
-                            toast("Thêm mới thất bại");
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'That bai'
+                            });
+
                             setSubmitting(false);
                         }
                     }}
@@ -138,11 +148,11 @@ function NewsCreate() {
                                         id="image"
                                         name="img"
                                     />
-                                    <ErrorMessage
-                                        name="title"
-                                        component="div"
-                                        className="text-danger"
-                                    />
+                                    {/*<ErrorMessage*/}
+                                    {/*    name="title"*/}
+                                    {/*    component="div"*/}
+                                    {/*    className="text-danger"*/}
+                                    {/*/>*/}
                                     {selectedFile && (
                                         <img
                                             className={"mt-2"}
@@ -168,8 +178,8 @@ function NewsCreate() {
                                             strokeWidthSecondary={2}
                                         />
                                     ) : (
-                                        <div id="button">
-                                            <Link to="/" className="btn btn-primary" style={{ marginRight: "10px" }} onClick={() => window.location.reload()}>
+                                        <div>
+                                            <Link to="/" className="btn btn-primary" style={{ marginRight: "10px" }} >
                                                 Thoát
                                             </Link>
 
@@ -178,7 +188,7 @@ function NewsCreate() {
                                                 id='submit'
                                                 type="submit"
                                                 style={{ marginRight: "10px" }}
-                                                className="btn btn-success"
+                                              className='btn btn-primary'
                                             >
                                                 Thêm
                                             </button>
@@ -191,7 +201,7 @@ function NewsCreate() {
                     </Form>
                 )}
             </Formik>
-
+            </div>
             </>
     )
 }
