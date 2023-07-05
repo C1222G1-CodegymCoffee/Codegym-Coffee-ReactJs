@@ -8,7 +8,7 @@ tr{
 /*    color: white;*/
 /*}*/
 
-body {
+#listFeedback body {
     background-size: cover;
     background-attachment: fixed;
     animation: flicker 4s ease-in-out infinite;
@@ -26,85 +26,103 @@ body {
 }
 
 
-th.content-title {
+#listFeedback th.content-title {
     animation-name: color-change;
     animation-duration: 5s;
     animation-iteration-count: infinite;
     font-size: 1.2rem;
+    background: #f26b38;
+    color: white;
 }
 
-td.content-feedback {
+#listFeedback td.content-feedback {
     font-size: 1rem;
 }
 
+#listFeedback td.content{
+    padding-right: 1rem;
+    font-size: 1.2rem;
+}
 
-h2.text-center.pt-4 {
+#listFeedback h2.text-center.pt-4 {
     text-align: center;
     font-weight: bold;
     margin-bottom: 2%;
     margin-top: 5%;
 }
 
-div.input-group.mb-4 {
+#listFeedback div.input-group.mb-4 {
     width: 45%;
 }
 
-svg {
+#listFeedback svg {
     height: 16px;
     width: 16px;
 }
 
-button.btn.btn-light {
-    margin-left: 1%;
+#listFeedback button.btn.btn-light {
     background-color: white;
     border: 0.1rem solid gray;
 }
 
 
-div.modal.fade {
-    margin-top: 5%;
+#listFeedback div.modal.fade {
+    margin-top: 4%;
     margin-right: 5%;
     margin-left: 5%;
 }
 
-div.modal-content {
-    background-image: url('bg1.png');
+#listFeedback div.modal-content {
+    /*background-image: url('bg1.png');*/
     background-size: 100% 100%;
 }
 
-div.modal-dialog {
-    max-width: 55%;
+#listFeedback table.table.table-striped {
+    border: none;
 }
 
-h5.modal-title {
+#listFeedback table.table-detail {
+    background: none;
+}
+
+#listFeedback div.modal-dialog {
+    max-width: 70%;
+}
+
+#listFeedback h5.modal-title {
     font-weight: bold;
 }
 
-span.name-title {
+#listFeedback span.name-title {
     color: red;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+#listFeedback h5.error-message{
+    text-align: center;
+    font-weight: bold;
 }
 
-label.fs-5 {
+#listFeedback label.fs-5 {
     padding-right: 5rem;
     padding-left: 5rem;
     width: 20rem;
     color: mediumblue;
 }
 
-p.content,td.content {
-    padding-right: 4rem;
-    font-size: 1.2rem;
+#listFeedback img.content-img {
+    width: 45%;
 }
 
-img.content-img {
-    width: 70%;
+#listFeedback button.btn.btn-secondary {
+    background: #f26b38;
 }
 
-button {
-    padding: 17px 40px;
-    border-radius: 50px;
+#listFeedback button {
+    padding: 8px 11px;
+    border-radius: 8px;
     border: 0;
-    background-color: white;
+    /*background-color: white;*/
     box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
@@ -112,14 +130,14 @@ button {
     transition: all .5s ease;
 }
 
-button:hover {
+#listFeedback button:hover {
     letter-spacing: 3px;
     background-color: hsl(261deg 80% 48%);
     color: hsl(0, 0%, 100%);
     box-shadow: rgb(93 24 220) 0px 7px 29px 0px;
 }
 
-button:active {
+#listFeedback button:active {
     letter-spacing: 3px;
     background-color: hsl(261deg 80% 48%);
     color: hsl(0, 0%, 100%);
@@ -128,40 +146,37 @@ button:active {
     transition: 100ms;
 }
 
-.table {
+#listFeedback .table {
     margin-top: 2%;
 }
 
-/*@keyframes color-change-border {*/
-/*    0% {*/
-/*        border-color: plum;*/
-/*    }*/
-/*    25% {*/
-/*        border-color: yellow;*/
-/*    }*/
-/*    50% {*/
-/*        border-color: navy;*/
-/*    }*/
-/*    75% {*/
-/*        border-color: blueviolet;*/
-/*    }*/
-/*    100% {*/
-/*        border-color: #61dafb;*/
-/*    }*/
-/*}*/
 
-.table.table-striped {
+#listFeedback .table.table-striped {
     border: 0.1rem solid;
     animation: color-change-border 5s infinite;
 }
-
-@media only screen and (max-width: 767px) {
+#listFeedback  .pagination .disabled .page-link {
+    color: #000;
+    font-weight: bold;
+    border-radius: 8px;
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1023px) {
+#listFeedback  .pagination .page-item:not(.disabled) .page-link {
+    border-color: #007bff;
+    font-weight: bold;
+    border-radius: 8px;
+}
+#listFeedback .detail-content{
+    text-align: inherit;
 }
 
-@media only screen and (min-width: 1024px) {
+#listFeedback @media only screen and (max-width: 767px) {
+}
+
+#listFeedback @media only screen and (min-width: 768px) and (max-width: 1023px) {
+}
+
+#listFeedback @media only screen and (min-width: 1024px) {
 }
 
 

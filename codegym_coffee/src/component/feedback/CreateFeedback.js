@@ -63,7 +63,7 @@ export function CreateFeedback() {
         <>
             <Formik
                 initialValues={{
-                    codeFeedback: "F"+ randomNum,
+                    codeFeedback: ""+ randomNum,
                     dayOfFeedback:"",
                     creator: "",
                     email: "",

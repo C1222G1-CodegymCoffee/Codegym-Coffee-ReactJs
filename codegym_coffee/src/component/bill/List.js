@@ -1,12 +1,12 @@
 import {Field, Form, Formik} from "formik";
 import React, {useEffect, useRef, useState} from 'react';
-import {findAll, findBillCode, getBills, search} from "../service_API/bill/BillService";
+import {findAll, findBillCode, getBills, search} from "../../service/bill/BillService";
 import {useNavigate} from "react-router-dom";
 import moment from 'moment';
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 import "../../css/bill/styleBill.css";
-import * as BillService from "../service_API/bill/BillService";
+import * as BillService from "../../service/bill/BillService";
 
 function List() {
     const navigate = useNavigate();
@@ -194,7 +194,7 @@ function List() {
                                         </td>
                                     </tr>
                                 ))}
-                            {bill?.length === 0 && <h5>
+                            {bill?.length === 0 && <h5 className="error-message">
                                 Không có dữ liệu
                             </h5>}
                             </tbody>
