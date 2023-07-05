@@ -103,13 +103,13 @@ function List() {
 
     return (
         <div>
-            <div className="element">
+            <div className="element mx-0 mt- px-5 py-1">
                 <div>
                     <h2 className="text-center pt-4">DANH SÁCH HOÁ ĐƠN </h2>
                 </div>
-                <div className="row">
-                    <div className="col-md-1"/>
-                    <div className="col-md-10">
+                <div className="row" style={{paddingLeft:"0px"}}>
+                    {/*<div className="col-md-1"/>*/}
+                    <div className="col-md-12">
                         <div className="table-responsive">
                             <Formik
                                 initialValues={{
@@ -124,40 +124,50 @@ function List() {
                                 }}
                             >
                                 <Form>
-                                    <div className="input-group mb-4">
+                                    <div className="input-group mb-12" style={{margin: "0 auto"}}>
         <span className="input-group-text">
             <img width="25" height="25" src="https://img.icons8.com/windows/32/password-book.png" alt="password-book"/>
         </span>
                                         <Field className="form-control" placeholder="Mã hoá đơn" type="text"
                                                name='searchTerm'/>
-                                        <span className="input-group-text">
+                                        <span className="input-group-text" style={{marginLeft:"20px"}}>
             <img width="25" height="25" src="https://img.icons8.com/ios/50/calendar-app.png" alt="calendar-app"/>
         </span>
-                                        <Field aria-label="Ngày tạo" className="form-control"
-                                               type="date" name='dayOfBill'/>
-                                        <button className="btn btn-light"
-                                                type="submit">
-                                            <img
-                                                width={20}
-                                                height={20}
-                                                src="https://img.icons8.com/ios-filled/50/search--v1.png"
-                                                alt="search--v1"
-                                            />
-                                        </button>
+                                        <Field aria-label="Ngày tạo" className="form-control" type="date"
+                                               name='dayOfBill'/>
+                                        <div className="input-group-append">
+                                            <button className="btn btn-light" type="submit" style={{marginLeft: "20px"}}>
+                                                <img
+                                                    width={20}
+                                                    height={20}
+                                                    src="https://img.icons8.com/ios-filled/50/search--v1.png"
+                                                    alt="search--v1"
+                                                />
+                                            </button>
+                                        </div>
                                     </div>
                                 </Form>
+
                             </Formik>
                         </div>
-                        <table className="table table-striped mt-2">
+                        <table className="table table-striped mt-3" style={{border: "none"}}>
                             <thead>
                             <tr>
-                                <th className="content-title">STT</th>
-                                <th className="content-title">Mã hoá đơn</th>
-                                <th className="content-title">Ngày tạo</th>
-                                <th className="content-title">Tên Nhân Viên</th>
-                                <th className="content-title">Email</th>
-                                <th className="content-title">Tổng tiền</th>
-                                <th className="content-title">Chi tiết</th>
+                                <th className="content-title" style={{background: "#f26b38", color: "white"}}>STT</th>
+                                <th className="content-title" style={{background: "#f26b38", color: "white"}}>Mã hoá
+                                    đơn
+                                </th>
+                                <th className="content-title" style={{background: "#f26b38", color: "white"}}>Ngày tạo
+                                </th>
+                                <th className="content-title" style={{background: "#f26b38", color: "white"}}>Tên Nhân
+                                    Viên
+                                </th>
+                                <th className="content-title" style={{background: "#f26b38", color: "white"}}>Email</th>
+                                <th className="content-title" style={{background: "#f26b38", color: "white"}}>Tổng
+                                    tiền
+                                </th>
+                                <th className="content-title" style={{background: "#f26b38", color: "white"}}>Chi tiết
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -169,7 +179,7 @@ function List() {
                                         <td className="content-bill">{moment(bills.dayOfBill).format('DD/MM/YYYY')}</td>
                                         <td className="content-bill">{bills.employee.nameEmployee}</td>
                                         <td className="content-bill">{bills.feedback.email}</td>
-                                        <td className="content-bill">{new Intl.NumberFormat().format(bills.employee.salary)}</td>
+                                        <td className="content-bill">{new Intl.NumberFormat().format(bills.employee.salary)}<span>đ</span></td>
                                         <td>
                                             <button type="button" className="btn btn-light" data-bs-toggle="modal"
                                                     data-bs-target="#staticBackdrop" onClick={() =>
@@ -208,9 +218,10 @@ function List() {
                 aria-hidden="true"
             >
                 <div className="modal-dialog">
-                    <div className="modal-content bg-light">
+                    <div className="modal-content bg-light" style={{background: "none"}}>
                         <div className="modal-header">
-                            <h5 className="modal-title text-danger" id="staticBackdropLabel">
+                            <h5 className="modal-title text-danger" id="staticBackdropLabel"
+                                style={{background: "s#f26b38"}}>
                                 Chi tiết
                             </h5>
                             <button
@@ -223,7 +234,7 @@ function List() {
                         <div className="modal-body">
                             <div className="container-fluid">
                                 <div className="row">
-                                    <div className="col-md-12">
+                                    <div className="col-md-12" style={{display: "inline-block", marginTop: "20px"}}>
                                         <p className="text-muted">
                                             Tên khách hàng: <strong>{creatorr}</strong>
                                         </p>
@@ -252,6 +263,7 @@ function List() {
                                 type="button"
                                 className="btn btn-secondary"
                                 data-bs-dismiss="modal"
+                                style={{background: "#f26b38", border: "none"}}
                             >
                                 Quay về
                             </button>
