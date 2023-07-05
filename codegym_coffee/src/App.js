@@ -24,6 +24,7 @@ import {Header} from "./component/Homepage/Header";
 import {CreateFeedback} from "./component/feedback/CreateFeedback";
 import EmployeeInformation from "./component/employee/EmployeeInformation";
 import Page403 from './component/login/Page403';
+import {Footer} from "./component/Homepage/Footer";
 
 function App() {
     return (

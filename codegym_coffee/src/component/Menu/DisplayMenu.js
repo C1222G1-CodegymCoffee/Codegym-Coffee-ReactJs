@@ -11,6 +11,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faShoppingCart} from "@fortawesome/free-solid-svg-icons";
 import {toast} from "react-toastify";
 import {Field, Formik} from "formik";
+import {useNavigate} from "react-router";
 
 export function DisplayMenu() {
 
@@ -20,6 +21,7 @@ export function DisplayMenu() {
     const [listTypeProduct, setListTypeProduct] = useState([])
     const [isActive, setIsActive] = useState(false);
     const [count, setCount] = useState(0);
+    const navigate = useNavigate();
 
     const openShopping = () => {
         setIsActive(true);
@@ -85,7 +87,8 @@ export function DisplayMenu() {
         }else {
             await addToBill(value)
             toast("Đặt món thành công ")
-            setItems([])
+            sessionStorage.removeItem("cartItems");
+            navigate('/createFeedback');
         }
 
 
@@ -191,7 +194,6 @@ export function DisplayMenu() {
                                             nameProduct: value.nameProduct,
                                             price: value.price,
                                             image: value.image,
-                                            tableOfBill: 2
                                         })}>
                                             Thêm vào giỏ hàng
                                         </button>

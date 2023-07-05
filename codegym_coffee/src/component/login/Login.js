@@ -24,7 +24,7 @@ function Login() {
             formPw.setAttribute("type", "password");
         } else {
             formPw.setAttribute("type", "text");
-            
+
         }
 
         setShowPassword((pre) => !pre);
@@ -37,19 +37,19 @@ function Login() {
             location: window.location.origin,
         }
         getEmail(genenicRequest)
-        .then((e) => {
-            document.cookie = "token=" + e.data.token;
-            console.log(e.data.token);
-            Swal.fire({
-                icon: 'success',
-                title: 'Gửi email thành công',
-                showConfirmButton: false,
-                timer: 1500
+            .then((e) => {
+                document.cookie = "token=" + e.data.token;
+                console.log(e.data.token);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Gửi email thành công',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             })
-        })
-        .catch(() => {
-            setFailedAccount("Email không hợp lệ")
-        })
+            .catch(() => {
+                setFailedAccount("Email không hợp lệ")
+            })
     }
 
     return (
@@ -74,20 +74,17 @@ function Login() {
                         })}
 
                         onSubmit={(values) => {
-                            const login = () => {
-                               postLogin(values)
-                               .then((e) => {
-                                sessionStorage.setItem('TOKEN', e.accessToken);
-                                sessionStorage.setItem('USERNAME', e.nameAccount);
-                                sessionStorage.setItem('ROLES', e.roles[0].authority)
-                                navigate('/');
-                               })
-                               .catch(
-                                    setFailedAccount("tên tài khoản hoặc mật khẩu")
-                               );
-                                
-                            }
-                            login();
+                            postLogin(values)
+                                .then((e) => {
+                                    sessionStorage.setItem('TOKEN', e.accessToken);
+                                    sessionStorage.setItem('USERNAME', e.nameAccount);
+                                    sessionStorage.setItem('ROLES', e.roles[0].authority)
+                                    window.location.href = '/';
+                                })
+                                .catch(() => {
+                                        setFailedAccount("Tên tài khoản hoặc mật khẩu không đúng")
+                                    }
+                                );
                         }}
                     >
                         <Form>
@@ -95,15 +92,15 @@ function Login() {
                                 <Field type="text" className="form-control form-custom" placeholder="Tên đăng nhập"
                                        name="nameAccount"/>
                                 <ErrorMessage name="nameAccount" className="text-danger col-12" component="span"/>
-                                
+
                             </div>
                             <div className="mb-3 my-5 input-group">
                                 <Field type="password" className="form-control form-custom form-pw"
                                        placeholder="Mật khẩu" name="password"/>
-
                                 <span className="password-icon" onClick={() => handlePassword()}>
-                                    <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
-                                </span>
+                                        <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash}/>
+                                    </span>
+
                                 <ErrorMessage name="password" className="text-danger col-12" component="span"/>
                                 {failedAccount && (
                                     <span className="text-danger col-12">{failedAccount}</span>
@@ -127,7 +124,7 @@ function Login() {
                             <h5 className="modal-title text-dark" id="exampleModalLabel"><h3 className="text-modal">Lấy
                                 mật khẩu</h3></h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close" />
+                                    aria-label="Close"/>
                         </div>
                         <div className="modal-body">
                             <div className="mb-3">

@@ -1,10 +1,10 @@
 import {useNavigate} from "react-router";
 import React, {useEffect, useRef, useState} from "react";
 import * as FeedbackService from "../../service/feedback/FeedbackService";
+import {getFeedbacks} from "../../service/feedback/FeedbackService";
 import {Field, Form, Formik} from "formik";
 import ReactPaginate from "react-paginate";
 import "../../css/feedback/listFeedback.css";
-import {findAll, getFeedbacks} from "../../service/feedback/FeedbackService";
 
 
 export const ListFeedback = () => {

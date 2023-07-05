@@ -1,13 +1,8 @@
 import axios from 'axios';
 
 export const postLogin = async (request) => {
-    try {
-        const res = await axios.post("http://localhost:8080/api/login", request);
-        console.log(res.data)
-        return res.data;
-    } catch(error){
-        console.error("loi hien thi");
-    }
+    const res = await axios.post("http://localhost:8080/auth/login", request);
+    return res.data;
 }
 
 export const getEmail = async (genericRequest) => {

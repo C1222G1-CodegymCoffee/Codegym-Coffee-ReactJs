@@ -1,26 +1,26 @@
 import axios from 'axios'
 
-
-export const findAll = async () => {
-    const token = localStorage.getItem('token')
-    try {
-        const result = await axios.get('http://localhost:8080/api/admin/list-feedback',
-            {
-                headers:
-                    {
-                        'Authorization': 'Bearer ' + sessionStorage.getItem("TOKEN")
-                    }
-            })
-        return result.data
-    } catch (error) {
-        console.log(error);
-    }
-}
+//
+// const findAll = async () => {
+//     const token = localStorage.getItem('token')
+//     try {
+//         const result = await axios.get('http://localhost:8080/api/feedbacks',
+//             {
+//                 headers:
+//                     {
+//                         'Authorization': 'Bearer ' + sessionStorage.getItem("TOKEN")
+//                     }
+//             })
+//         return result.data
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
 
 export const find = async (id) => {
     const token = localStorage.getItem('token')
     try {
-        const res = await axios.get(`http://localhost:8080/api/admin/feedback/detail/${id}`,
+        const res = await axios.get(`http://localhost:8080/api/admin/feedbacks/detail/${id}`,
             {
                 headers:
                     {
@@ -35,7 +35,7 @@ export const find = async (id) => {
 export const search = async (searchTerm, dayOfFeedback, page, size) => {
     const token = localStorage.getItem('token')
     try {
-        const result = await axios.get(`http://localhost:8080/api/admin/list-feedback/search?searchTerm=${searchTerm}&dayOfFeedback=${dayOfFeedback}&page=${page}&size=${size}`,
+        const result = await axios.get(`http://localhost:8080/api/admin/feedbacks/search?searchTerm=${searchTerm}&dayOfFeedback=${dayOfFeedback}&page=${page}&size=${size}`,
             {
                 headers:
                     {
@@ -51,7 +51,7 @@ export const search = async (searchTerm, dayOfFeedback, page, size) => {
 export const getFeedbacks = async (page, size) => {
     const token = localStorage.getItem('token')
     try {
-        const result = await axios.get(`http://localhost:8080/api/admin/list-feedback/?page=${page}&size=${size}`,
+        const result = await axios.get(`http://localhost:8080/api/admin/feedbacks/?page=${page}&size=${size}`,
             {
                 headers:
                     {
@@ -68,7 +68,7 @@ export const getFeedbacks = async (page, size) => {
 export const saveFeedback = async (feedback) => {
     const token = localStorage.getItem('token')
     try {
-        await axios.post(`http://localhost:8080/api/public/create-feedback`, {...feedback},
+        await axios.post(`http://localhost:8080/api/feedbacks/create-feedback`, {...feedback},
             {
                 headers:
                     {

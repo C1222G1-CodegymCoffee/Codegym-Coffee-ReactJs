@@ -5,6 +5,10 @@ tr{
     text-align: center;
 }
 
+#employeePage .container {
+    margin-top: 120px;
+}
+
 
 @keyframes flicker {
     0%, 60% {

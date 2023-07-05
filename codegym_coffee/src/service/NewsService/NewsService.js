@@ -18,7 +18,7 @@ export const save = async (news)=>{
 
 export const findAllNews = async () =>{
     try{
-        const result = await axios.get(`http://localhost:8080/api/admin/list-news`)
+        const result = await axios.get(`http://localhost:8080/news/list`)
         return result.data
     }catch (error) {
         console.log(error)

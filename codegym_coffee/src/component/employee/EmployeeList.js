@@ -1,51 +1,34 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {employeeService, getEmployees} from "../service/EmployeeService";
 import {Field, Form, Formik} from "formik";
 import "../../css/Employee/employee.css"
 import {Link} from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import axios from "axios";
-import {Header} from "../Homepage/Header";
 
 export function EmployeeList() {
     const [employeeList, setEmployeeList] = useState(null)
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPage, setTotalPage] = useState(0);
-    // const [data, setData] = useState([]);
-    // const [totalElements, setTotalElements] = useState(0);
-    // const [itemsPerPage, setItemsPerPage] = useState(10);
-    // const startIndex = (currentPage - 1) * itemsPerPage;
-    // const endIndex = startIndex + itemsPerPage;
-    // const currentEmployee = employeeList?.slice(startIndex, endIndex);
     const pageSize = 10;
     const [idDelete, setIdDelete] = useState(null);
     const [nameDelete, setNameDelete] = useState(null);
 
-    const findAll = async () => {
-        const res = await employeeService.findAll()
-        console.log(res)
-        setEmployeeList(res.content)
-    }
+
     const getProps = (id, name) => {
         setIdDelete(id)
         setNameDelete(name)
     }
-    const handleDelete = async () => {
-        await employeeService.deleteByIdEmployee(idDelete)
-        findAll()
-    }
-    // useEffect(() => {
-    //     findAll()
-    // }, [])
-    // let state = {
-    //     pagedResponse: {},
-    //     users: [],
-    //     showLoading: false
-    // };
+
     const getListEmployee = async () => {
         const listEmployee = await employeeService.getEmployees(currentPage, pageSize);
         setTotalPage(listEmployee.totalPages)
         setEmployeeList(listEmployee.content);
+    }
+
+
+    const handleDelete = async () => {
+        await employeeService.deleteByIdEmployee(idDelete)
+        getListEmployee()
     }
 
     function handleClickPage(page) {
@@ -75,11 +58,9 @@ export function EmployeeList() {
 
     const fetchData = async (page) => {
         try {
-            const result = await axios.get(`http://localhost:8080/employee?page=${page}`);
-            // setData(result.data.content);
-            setTotalPage(result.data.totalPages);
-            setEmployeeList(result.data.content);
-            // setTotalElements(result.data.totalElements);
+            const result = await getEmployees(page);
+            setTotalPage(result.totalPages);
+            setEmployeeList(result.content);
         } catch (error) {
             console.log(error);
         }
@@ -90,7 +71,7 @@ export function EmployeeList() {
     }
 
     return (
-        <>
+        <div id="employeePage">
             <div className="container">
                 <div className="element">
                     <div className="">
@@ -160,7 +141,7 @@ export function EmployeeList() {
                             <tr>
 
                                 <th className="content-title">#</th>
-                                <th className="content-title">Tên tài khoản a</th>
+                                <th className="content-title">Tên tài khoản</th>
                                 <th className="content-title">Họ và tên</th>
                                 <th className="content-title">Địa chỉ</th>
                                 <th className="content-title">Số điện thoại</th>
@@ -202,7 +183,6 @@ export function EmployeeList() {
                                                     </td>
                                                 </tr>
                                             ))}
-                            }
                                     </>
                                 ) : (
                                     <tr className="text-center">Khong tim thay nhan vien</tr>
@@ -270,7 +250,7 @@ export function EmployeeList() {
                     </div>
                 )
             }
-        </>
+        </div>
 
     )
 }

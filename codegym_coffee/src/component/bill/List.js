@@ -1,12 +1,12 @@
 import {Field, Form, Formik} from "formik";
 import React, {useEffect, useRef, useState} from 'react';
-import {findAll, findBillCode, getBills, search} from "../../service/bill/BillService";
+import * as BillService from "../../service/bill/BillService";
+import {getBills} from "../../service/bill/BillService";
 import {useNavigate} from "react-router-dom";
 import moment from 'moment';
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 import "../../css/bill/styleBill.css";
-import * as BillService from "../../service/bill/BillService";
 
 function List() {
     const navigate = useNavigate();
@@ -24,17 +24,17 @@ function List() {
     const [totalPages, setTotalPages] = useState(0);
     const [totalElements, setTotalElements] = useState(0);
 
-    const fetchData = async (page) => {
-        try {
-            const result = await axios.get(`http://localhost:8080/api/admin/bill?page=${page}&size=${itemsPerPage}`);
-            setData(result.data.content);
-            console.log("fdfd", result.data)
-            setTotalPages(result.data.totalPages);
-            setTotalElements(result.data.totalElements);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    // const fetchData = async (page) => {
+    //     try {
+    //         const result = await axios.get(`http://localhost:8080/api/admin/bill?page=${page}&size=${itemsPerPage}`);
+    //         setData(result.data.content);
+    //         console.log("fdfd", result.data)
+    //         setTotalPages(result.data.totalPages);
+    //         setTotalElements(result.data.totalElements);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
 
     const getListBills = async () => {
         const listBill = await getBills(currentPage, pageSize);
@@ -45,11 +45,11 @@ function List() {
     }
 
 
-    let state = {
-        pagedResponse: {},
-        users: [],
-        showLoading: false
-    };
+    // let state = {
+    //     pagedResponse: {},
+    //     users: [],
+    //     showLoading: false
+    // };
 
     function handleClickPage(page) {
         setCurrentPage(page.selected)
@@ -74,6 +74,11 @@ function List() {
             setCurrentPage(pageable.selected - 1);
         }
     }
+
+    useEffect(() => {
+        getListBills();
+
+    }, [])
 
     useEffect(() => {
         getListBills();
@@ -177,9 +182,9 @@ function List() {
                                         <td className="content-bill" scope="row">{index + 1}</td>
                                         <td className="content-bill">{bills.codeBill}</td>
                                         <td className="content-bill">{moment(bills.dayOfBill).format('DD/MM/YYYY')}</td>
-                                        <td className="content-bill">{bills.employee.nameEmployee}</td>
-                                        <td className="content-bill">{bills.feedback.email}</td>
-                                        <td className="content-bill">{new Intl.NumberFormat().format(bills.employee.salary)}<span>đ</span></td>
+                                        <td className="content-bill">{bills.employee?.nameEmployee}</td>
+                                        <td className="content-bill">{bills.feedback?.email}</td>
+                                        <td className="content-bill">{new Intl.NumberFormat().format(bills.employee?.salary ?? 0)}<span>đ</span></td>
                                         <td>
                                             <button type="button" className="btn btn-light" data-bs-toggle="modal"
                                                     data-bs-target="#staticBackdrop" onClick={() =>

@@ -3,11 +3,12 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import saleAPI from "../service_API/sale";
 import {Modal} from "reactstrap";
+import sale from "../service_API/sale";
+import {Link} from "react-router-dom";
 
 const positionStatus = {
-    0: 'unavailable',
-    1: 'available',
-    2: 'sell',
+    0: 'available',
+    1: 'unavailable'
 };
 
 export function Sale() {
@@ -17,6 +18,7 @@ export function Sale() {
     const [showModal, setShowModal] = useState(false);
     const [paymentSuccess, setPaymentSuccess] = useState(false);
     const [showPaymentSuccess, setShowPaymentSuccess] = useState(false);
+    const [billId, setBillId] = useState();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -60,9 +62,9 @@ export function Sale() {
             });
 
             try {
-                const billDetails = await saleAPI.getBillDetails(seatId);
-                console.log(billDetails);
-                setData(billDetails);
+                const billData = await saleAPI.getBillDetails(seatId);
+                setData(billData.billDetailDTOS);
+                setBillId(billData.billId);
             } catch (error) {
                 console.error('Error fetching bill details:', error);
                 setData([]);
@@ -74,24 +76,20 @@ export function Sale() {
     };
 
     const handleUpdateSale = async () => {
-        if (listSelecting.length > 0) {
-            const seatId = listSelecting[0];
-            console.log("Payment confirmation for seatId:", seatId);
+        if (billId && listSelecting.length > 0) {
             try {
-                const response = await axios.patch(`http://localhost:8080/api/sale/update/${seatId}`);
-                console.log(response.data);
-                console.log("Sale updated successfully!");
-
+                 await saleAPI.updateSale(billId);
                 // Fetch updated seat data
                 const result = await saleAPI.findAll();
                 setSeatList(result);
-                window.location.reload();
 
                 // Set paymentSuccess to true
                 setPaymentSuccess(true);
                 setShowPaymentSuccess(true); // Show the success message
 
                 setShowModal(false);
+                window.location.reload();
+
             } catch (error) {
                 console.error("Error updating sale:", error);
             }
@@ -100,13 +98,12 @@ export function Sale() {
         }
     };
 
-    console.log(data)
     const handleCancelPayment = async () => {
         setShowModal(false);
     };
 
     return (
-        <>
+        <div id="salePage">
             <div className="container-lg">
                 <div className="row mt-4">
                     <div className="col-12 col-md-7">
@@ -262,43 +259,44 @@ export function Sale() {
                                             </div>
                                         </div>
                                     </Modal>
-                                    <button
-                                        className="btn"
-                                        type="button"
-                                        style={{
-                                            justifyContent: "center",
-                                            display: "flex",
-                                            alignItems: "center",
-                                            borderRadius: 10,
-                                            height: 35,
-                                            background: "#28a745",
-                                            color: "white",
-                                            marginRight: "3%",
-                                            width: "30%",
-                                            fontSize: 16
-                                        }}
-                                        data-text="Làm mới bàn"
-                                    />
-                                    <button
-                                        className="btn"
-                                        type="button"
-                                        style={{
-                                            justifyContent: "center",
-                                            display: "flex",
-                                            alignItems: "center",
-                                            borderRadius: 10,
-                                            height: 35,
-                                            background: "#dc3545",
-                                            color: "white",
-                                            width: "18%",
-                                            marginRight: "3%",
-                                            fontSize: 16
-                                        }}
-                                        data-text="Hóa đơn"
-                                        disabled={data.length === 0}
-                                    >
-                                    </button>
-                                    <button
+                                    {/*<button*/}
+                                    {/*    className="btn"*/}
+                                    {/*    type="button"*/}
+                                    {/*    style={{*/}
+                                    {/*        justifyContent: "center",*/}
+                                    {/*        display: "flex",*/}
+                                    {/*        alignItems: "center",*/}
+                                    {/*        borderRadius: 10,*/}
+                                    {/*        height: 35,*/}
+                                    {/*        background: "#28a745",*/}
+                                    {/*        color: "white",*/}
+                                    {/*        marginRight: "3%",*/}
+                                    {/*        width: "30%",*/}
+                                    {/*        fontSize: 16*/}
+                                    {/*    }}*/}
+                                    {/*    data-text="Làm mới bàn"*/}
+                                    {/*/>*/}
+                                    {/*<button*/}
+                                    {/*    className="btn"*/}
+                                    {/*    type="button"*/}
+                                    {/*    style={{*/}
+                                    {/*        justifyContent: "center",*/}
+                                    {/*        display: "flex",*/}
+                                    {/*        alignItems: "center",*/}
+                                    {/*        borderRadius: 10,*/}
+                                    {/*        height: 35,*/}
+                                    {/*        background: "#dc3545",*/}
+                                    {/*        color: "white",*/}
+                                    {/*        width: "18%",*/}
+                                    {/*        marginRight: "3%",*/}
+                                    {/*        fontSize: 16*/}
+                                    {/*    }}*/}
+                                    {/*    data-text="Hóa đơn"*/}
+                                    {/*    disabled={data.length === 0}*/}
+                                    {/*>*/}
+                                    {/*</button>*/}
+                                    <Link
+                                        to={"/"}
                                         className="btn"
                                         type="button"
                                         style={{
@@ -320,6 +318,6 @@ export function Sale() {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }

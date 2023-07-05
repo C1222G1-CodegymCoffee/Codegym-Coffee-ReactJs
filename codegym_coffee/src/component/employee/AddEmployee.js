@@ -71,8 +71,8 @@ export function AddEmployee() {
                                 .required('Không được để trống'),
 
                         })}
-                        onSubmit={values => {
-                            employeeService.addEmployee(values);
+                        onSubmit={async (values) => {
+                            await employeeService.addEmployee(values);
                             navigate("/employee")
                         }}>
                     <Form>

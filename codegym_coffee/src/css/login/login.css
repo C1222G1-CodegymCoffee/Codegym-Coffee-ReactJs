@@ -7,6 +7,10 @@
     box-sizing: border-box;
 }
 
+#loginPage {
+    margin-top: 120px;
+}
+
 #loginPage .text-forgot-password {
     color: silver;
 }
@@ -83,7 +87,13 @@
 }
 
 #loginPage span.password-icon {
-    color: white !important;
+    color: black !important;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 10px;
+    top:10px;
+    z-index: 88;
 }
 
 
