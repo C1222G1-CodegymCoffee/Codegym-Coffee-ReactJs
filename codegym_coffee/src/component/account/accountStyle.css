@@ -9,8 +9,7 @@
     background-color: #d7c1ab;
     border: #d7c1ab;
 }
-
-.row {
+ .row {
     padding-left: 5%;
 }
 
@@ -72,6 +71,7 @@
 
 .avatar {
     position: relative;
+    padding-right: 0;
 }
 
 .border-avatar {
@@ -98,3 +98,31 @@
 .bg-coffe {
     background-color: #d7c1ab;
 }
+
+.bi::before, [class^="bi-"]::before, [class*=" bi-"]::before {
+    display: inline !important;
+}
+
+.btn-quynh:hover {
+    box-shadow: none !important;
+    transform: scale(1.05);
+}
+
+.body_wrap, ::after, ::before {
+    background-color: transparent;
+}
+ @media (max-width: 820px) {
+     #quynh .container_password{
+        max-width: 763px ;
+    }
+     #quynh .container2_password{
+         margin-top: 6%;
+     }
+}
+@media (max-width: 375px) {
+    #quynh .container2_password{
+        margin-top: 10%;
+    }
+
+}
+

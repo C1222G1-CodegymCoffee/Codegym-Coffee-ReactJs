@@ -9,9 +9,9 @@ tr{
 /*}*/
 
 body {
-    background-size: cover;
-    background-attachment: fixed;
-    animation: flicker 4s ease-in-out infinite;
+    /*background-size: cover;*/
+    /*background-attachment: fixed;*/
+    /*animation: flicker 4s ease-in-out infinite;*/
 }
 
 @keyframes flicker {
@@ -155,13 +155,13 @@ button:active {
     animation: color-change-border 5s infinite;
 }
 
-@media only screen and (max-width: 767px) {
-}
+/*@media only screen and (max-width: 767px) {*/
+/*}*/
 
-@media only screen and (min-width: 768px) and (max-width: 1023px) {
-}
+/*@media only screen and (min-width: 768px) and (max-width: 1023px) {*/
+/*}*/
 
-@media only screen and (min-width: 1024px) {
-}
+/*@media only screen and (min-width: 1024px) {*/
+/*}*/
 
 

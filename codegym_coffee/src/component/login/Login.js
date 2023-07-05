@@ -12,11 +12,12 @@ function Login() {
     const navigate = useNavigate();
     //
     // const eye = document.querySelector(".bi");
-    const formPw = document.querySelector(".form-pw");
 
     const [showPassword, setShowPassword] = useState(false);
 
     const handlePassword = () => {
+        const formPw = document.querySelector(".form-pw");
+
         // if (eye.classList.contains("bi-eye-slash")) {
         //     eye.classList.remove("bi-eye-slash");
         //     eye.classList.add("bi-eye");
