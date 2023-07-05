@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {NavLink, useNavigate} from "react-router-dom";
+import {NavLink, useNavigate,Link} from "react-router-dom";
 import employeeInformationService from "../../service/employeeInformationService"
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from 'yup'
@@ -47,7 +47,7 @@ export default function EmployeeInformation() {
         );
     };
     useEffect(() => {
-        const detail = async () => {
+        (async () => {
             try {
                 const res = await employeeInformationService.detail()
                 setEmployeeDetail(res.data)
@@ -57,8 +57,7 @@ export default function EmployeeInformation() {
             } catch (error) {
                 console.log(error)
             }
-        }
-        detail()
+        })()
     }, [])
     const handleFileSelect = (event) => {
         const file = event.target.files[0];
@@ -78,7 +77,6 @@ export default function EmployeeInformation() {
             console.error('Invalid file or blob');
         }
     };
-    console.log(isAuth)
     const handleSubmitAsync = async () => {
         return new Promise((resolve, reject) => {
             const file = selectedFile;
@@ -113,19 +111,17 @@ export default function EmployeeInformation() {
     useEffect(() => {
         setAvatarDetail(employeeDetail?.image)
     }, [employeeDetail?.image])
-    if (!employeeDetail) {
-        return null
-    }
-    console.log(employeeDetail);
+
     return (
         <>
             <Formik
+                enableReinitialize={true}
                 initialValues={{
                     idEmployee: employeeDetail?.idEmployee,
                     nameEmployee: employeeDetail?.nameEmployee,
                     gender: employeeDetail?.gender,
                     dateOfBirth: employeeDetail?.dateOfBirth,
-                    salary: employeeDetail?.salary,
+                    salary: isAuth ? employeeDetail?.salary : employeeDetail?.salary.toLocaleString(),
                     phoneNumber: employeeDetail?.phoneNumber,
                     email: employeeDetail?.email,
                     address: employeeDetail?.address,
@@ -191,7 +187,7 @@ export default function EmployeeInformation() {
             >
                 {({ values, isSubmitting }) => (
                     <Form>
-                        <div className="container" style={{ marginTop: "10%" }}>
+                        <div className="container " style={{ marginTop: "10%" }}>
                             <div className="row row-no-gutters col-xs-12 col-md-12">
                                 <div className="col-xs-4 col-md-4" id="a">
                                     <p className="text-center avatar" style={{ marginTop: 10 }}>
@@ -218,7 +214,7 @@ export default function EmployeeInformation() {
                                     </p>
                                     <h3 style={{ textAlign: "center" }}>{employeeDetail?.account.nameAccount}</h3>
                                     <div className="mt-3" style={{ textAlign: "center" }}>
-                                        <i className="bi bi-emoji-smile" />
+                                        <i className="bi bi-emoji-smile me-1" />
                                         Chào mừng bạn trở lại
                                     </div>
                                     <hr />
@@ -394,24 +390,10 @@ export default function EmployeeInformation() {
                                                     :
                                                     <>
                                                         <div className="col-12" style={{textAlign: "center"}}>
-                                                            <button
+                                                            <Link
+                                                                to={"/"}
+                                                                className={"btn-quynh"}
                                                                 type="button"
-                                                                style={{
-                                                                    backgroundColor: "#8C6842",
-                                                                    width: 80,
-                                                                    color: "#ffffff",
-                                                                    padding: 5,
-                                                                    textAlign: "center",
-                                                                    marginRight: 10,
-                                                                    paddingRight: 5,
-                                                                    borderRadius: 10,
-                                                                    border: "none"
-                                                                }}
-                                                            >
-                                                                Quay về
-                                                            </button>
-                                                            <button
-                                                                type={avatarErr || !isAuth ? "button" : "submit"}
                                                                 style={{
                                                                     backgroundColor: "#B29A81",
                                                                     width: 80,
@@ -421,7 +403,27 @@ export default function EmployeeInformation() {
                                                                     marginRight: 10,
                                                                     paddingRight: 5,
                                                                     borderRadius: 10,
-                                                                    border: "none"
+                                                                    border: "none",
+                                                                    letterSpacing: '0px',
+                                                                    textDecoration:"none"
+                                                                }}
+                                                            >
+                                                                Quay về
+                                                            </Link>
+                                                            <button
+                                                                className={"btn-quynh"}
+                                                                type={avatarErr || !isAuth ? "button" : "submit"}
+                                                                style={{
+                                                                    backgroundColor: "#8C6842",
+                                                                    width: 80,
+                                                                    color: "#ffffff",
+                                                                    padding: 5,
+                                                                    textAlign: "center",
+                                                                    marginRight: 10,
+                                                                    paddingRight: 5,
+                                                                    borderRadius: 10,
+                                                                    border: "none",
+                                                                    letterSpacing: '0px'
                                                                 }}
                                                             >
                                                                 Cập nhật
