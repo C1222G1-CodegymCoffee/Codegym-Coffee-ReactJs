@@ -147,8 +147,6 @@ function List() {
                                     </div>
                                 </Form>
                             </Formik>
-
-
                         </div>
                         <table className="table table-striped mt-2">
                             <thead>
