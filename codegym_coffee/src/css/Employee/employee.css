@@ -1,0 +1,142 @@
+* {
+    font-family: Roboto;
+}
+
+/* tr {
+    text-align: center;
+} */
+
+#employeePage .container {
+    margin-top: 120px;
+}
+
+
+@keyframes flicker {
+
+    0%,
+    60% {
+        background-color: #000;
+        opacity: 0.9;
+    }
+
+    40% {
+        background-color: #000;
+        opacity: 0.9;
+    }
+}
+
+
+#employeePage th.content-title {
+    animation-name: color-change;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    font-size: 1.2rem;
+}
+
+#employeePage td.content-feedback {
+    font-size: 1rem;
+}
+
+
+#employeePage h2.text-center.pt-4 {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 2%;
+    margin-top: 5%;
+}
+
+#employeePage div.input-group.mb-4 {
+    width: 45%;
+}
+
+#employeePage svg {
+    height: 16px;
+    width: 16px;
+}
+
+
+#employeePage div.modal.fade {
+    margin-top: 5%;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+
+#employeePage div.modal-content {
+    background-size: 100% 100%;
+}
+
+#employeePage div.modal-dialog {
+    max-width: 55%;
+}
+
+#employeePage h5.modal-title {
+    font-weight: bold;
+}
+
+#employeePage span.name-title {
+    color: red;
+}
+
+#employeePage label.fs-5 {
+    padding-right: 5rem;
+    padding-left: 5rem;
+    width: 20rem;
+    color: mediumblue;
+}
+
+#employeePage p.content,
+#employeePage td.content {
+    padding-right: 4rem;
+    font-size: 1.2rem;
+}
+
+#employeePage img.content-img {
+    width: 70%;
+}
+
+#employeePage form .d-flex {
+    align-items: center;
+}
+
+#employeePage form .d-flex .from-group {
+    margin-left: 10px;
+}
+
+#employeePage form .d-flex .from-group > input {
+    padding: 4pt 10pt !important;
+    border-color: gainsboro !important;
+}
+
+#employeePage form .btn-search {
+    margin-left: 60px;
+    border: 1px solid gainsboro;
+    padding: 4pt 10pt;
+    border-radius: 5px;
+    background-color: gainsboro;
+}
+
+#employeePage form .btn-search:hover {
+    background-color: gray;
+    color: white;
+}
+
+
+#employeePage .table {
+    margin-top: 2%;
+}
+
+
+#employeePage .table.table-striped {
+    border: 0.1rem solid;
+    animation: color-change-border 5s infinite;
+}
+
+
+/*@media only screen and (max-width: 559px) {*/
+/*}*/
+
+/*@media only screen and (min-width: 560px) and (max-width: 900px) {*/
+/*}*/
+
+/*@media only screen and (min-width: 901px) {*/
+/*}*/

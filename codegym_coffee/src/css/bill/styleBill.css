@@ -1,0 +1,88 @@
+* {
+    font-family: Roboto;
+}
+
+
+
+th.content-title {
+    animation-name: color-change;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    font-size: 1.2rem;
+}
+
+td.content-bill {
+    font-size: 1rem;
+}
+
+
+h2.text-center.pt-4 {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 2%;
+    margin-top: 5%;
+}
+
+div.input-group.mb-4 {
+    width: 45%;
+}
+
+svg {
+    height: 16px;
+    width: 16px;
+}
+
+
+
+div.modal.fade {
+    margin-top: 5%;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+
+
+
+span.name-title {
+    color: red;
+}
+
+label.fs-5 {
+    padding-right: 5rem;
+    padding-left: 5rem;
+    width: 20rem;
+    color: mediumblue;
+}
+
+p,td.content {
+    padding-right: 4rem;
+    font-size: 1.2rem;
+}
+
+img.content-img {
+    width: 70%;
+}
+
+.table {
+    margin-top: 1%;
+}
+
+
+.table.table-striped {
+    border: 0.1rem solid;
+    animation: color-change-border 5s infinite;
+}
+
+/*@media only screen and (max-width: 559px) {*/
+/*}*/
+
+/*@media only screen and (min-width: 560px) and (max-width: 900px) {*/
+/*}*/
+
+/*@media only screen and (min-width: 901px) {*/
+/*}*/
+
+.page-link {
+    color: black;
+    border-color: #007bff;
+    font-weight: bold;
+}

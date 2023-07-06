@@ -1,0 +1,49 @@
+.container_news{
+    width: 80%;
+}
+
+.foodImg{
+    width:1200px;
+    height: 100%;
+}
+
+.h1ForService {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    color: #7BF70E;
+    text-transform: uppercase;
+}
+
+.pService{
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 15%;
+    margin-bottom: 40px;
+    color: #3C3F41;
+    text-transform: uppercase;
+}
+
+.titleService{
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    color: black;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    text-shadow: 4px 4px 0px white, 7px 7px 0px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 1079px) {
+    .container_news{
+        margin-top: 10%;
+    }
+    .pService{
+        margin-top: -3%;
+    }
+}

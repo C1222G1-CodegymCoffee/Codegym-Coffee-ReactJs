@@ -1,0 +1,196 @@
+#abc h1 {
+    text-align: center;
+}
+
+
+#abc .form-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 1px 3px 10px 5px rgba(0, 0, 0, 0.2);
+    margin-top: 150px !important;
+}
+
+#abc form {
+    width: 68%;
+    margin: auto;
+}
+
+#abc .form-group {
+    margin-bottom: 20px;
+}
+
+#abc .form-group label {
+    display: block;
+    font-weight: bold;
+    color: #333;
+}
+
+#abc .form-group.d-flex {
+    align-items: center;
+}
+
+#abc .form-group input[type="date"] {
+    padding: 4px 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#abc .form-group input[type="text"],
+#abc .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#abc .form-group textarea {
+    height: 150px;
+}
+
+#abc .form-group button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: darkblue;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#abc .form-row {
+    display: flex;
+    flex-direction: row;
+}
+
+#abc button {
+    padding: 11px 20px;
+    border-radius: 10px;
+    border: 0;
+    background-color: gainsboro;
+    color: black;
+    font-weight: 700;
+    font-size: 16px;
+    /* box-shadow: rgb(0 0 0/5%) 0 0 8px; */
+    /* letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 15px;
+    transition: all .5s ease; */
+}
+
+#abc button:hover {
+    background-color: gray;
+    color: white;
+}
+
+/* #abc button:active {
+    letter-spacing: 3px;
+    background-color: hsl(261deg 80% 48%);
+    color: hsl(0, 0%, 100%);
+    box-shadow: rgb(93 24 220) 0px 0px 0px 0px;
+    transform: translateY(10px);
+    transition: 100ms;
+} */
+
+#abc .form-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#abc h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#abc .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+#abc .form-group {
+    margin-bottom: 10px;
+}
+
+#abc .form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#abc .form-group input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+#abc .form-group button[type="submit"] {
+    padding: 8px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#abc .form-group button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+#abc table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#abc table th,
+table td {
+    padding: 8px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+#abc table th {
+    background-color: #f2f2f2;
+}
+
+
+#abc h1 {
+    text-align: center;
+    color: #fff;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#abc .custom-header {
+    background-color: gainsboro;
+    color: black;
+    /* Màu gradient đầu */
+    /* background-image: linear-gradient(to right, #4c8bf5, #55a7f9); */
+    /* Gradient màu từ trái sang phải */
+    /* Màu chữ */
+    padding: 10px;
+    font-weight: 700;
+    /* Khoảng cách giữa viền và chữ */
+}
+
+#abc .recharts-wrapper svg {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+#abc .no-data {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 500;
+}

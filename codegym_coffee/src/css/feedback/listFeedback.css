@@ -1,0 +1,172 @@
+* {
+    font-family: Roboto;
+}
+tr{
+    text-align: center;
+}
+
+#listFeedback body {
+    background-size: cover;
+    background-attachment: fixed;
+    /* animation: flicker 4s ease-in-out infinite; */
+}
+
+@keyframes flicker {
+    0%, 60% {
+        background-color: #000;
+        opacity: 0.9;
+    }
+    40% {
+        background-color: #000;
+        opacity: 0.9;
+    }
+}
+
+
+#listFeedback th.content-title {
+    animation-name: color-change;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    font-size: 1.2rem;
+    background: gainsboro;
+    color: black;
+}
+
+#listFeedback td.content-feedback {
+    font-size: 1rem;
+}
+
+#listFeedback td.content{
+    padding-right: 1rem;
+    font-size: 1.2rem;
+}
+
+#listFeedback h2.text-center.pt-4 {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 2%;
+    margin-top: 5%;
+}
+
+#listFeedback div.input-group.mb-4 {
+    width: 45%;
+}
+
+#listFeedback svg {
+    height: 16px;
+    width: 16px;
+}
+
+#listFeedback button.btn.btn-light {
+    background-color: white;
+    border: 0.1rem solid gray;
+}
+
+
+#listFeedback div.modal.fade {
+    margin-top: 4%;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+
+#listFeedback div.modal-content {
+    /*background-image: url('bg1.png');*/
+    background-size: 100% 100%;
+}
+
+#listFeedback table.table.table-striped {
+    border: none;
+}
+
+#listFeedback table.table-detail {
+    background: none;
+
+}
+
+#listFeedback div.modal-dialog {
+    max-width: 70%;
+}
+
+#listFeedback h5.modal-title {
+    font-weight: bold;
+}
+
+#listFeedback span.name-title {
+    color: red;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+#listFeedback h5.error-message{
+    text-align: center;
+    font-weight: bold;
+}
+
+#listFeedback label.fs-5 {
+    padding-right: 5rem;
+    padding-left: 5rem;
+    width: 20rem;
+    color: mediumblue;
+}
+
+#listFeedback img.content-img {
+    width: 45%;
+}
+
+#listFeedback button.btn.btn-secondary {
+    background: #f26b38;
+}
+
+#listFeedback button {
+    padding: 8px 11px;
+    border-radius: 8px;
+    border: 0;
+    /*background-color: white;*/
+    box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 15px;
+    transition: all .5s ease;
+}
+
+/* #listFeedback button:hover {
+    letter-spacing: 3px;
+    background-color: hsl(261deg 80% 48%);
+    color: hsl(0, 0%, 100%);
+    box-shadow: rgb(93 24 220) 0px 7px 29px 0px;
+} */
+
+/* #listFeedback button:active {
+    letter-spacing: 3px;
+    background-color: hsl(261deg 80% 48%);
+    color: hsl(0, 0%, 100%);
+    box-shadow: rgb(93 24 220) 0px 0px 0px 0px;
+    transform: translateY(10px);
+    transition: 100ms;
+} */
+
+#listFeedback .table {
+    margin-top: 2%;
+}
+
+
+#listFeedback .table.table-striped {
+    border: 0.1rem solid;
+    animation: color-change-border 5s infinite;
+}
+#listFeedback  .pagination .disabled .page-link {
+    color: #000;
+    font-weight: bold;
+    border-radius: 8px;
+}
+
+#listFeedback  .pagination .page-item:not(.disabled) .page-link {
+    border-color: #007bff;
+    font-weight: bold;
+    border-radius: 8px;
+}
+#listFeedback .detail-content{
+    text-align: inherit;
+}
+
+
+

@@ -1,0 +1,156 @@
+* {
+    margin: 0;
+    padding: 2px;
+    box-sizing: border-box;
+    font-family: 'Poppins';
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.6s;
+    padding: 40px 100px;
+    z-index: 100000;
+    max-height: 120px;
+}
+
+body {
+    background-image: url('bg_01.png');
+    z-index: 1;
+    position: relative;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+
+@media (max-width: 1080px) {
+    body {
+        background-image: url('bg_01.png');
+        background-size: 100% 100%;
+        z-index: 1;
+        position: relative;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+}
+
+
+header.sticky {
+    padding: 24px 100px;
+    background: #FFF2D9;
+}
+header.open{
+    background-color: #FFF2D9;
+}
+
+header.sticky .logo,
+header.sticky nav.menu ul li a {
+    color: black;
+}
+
+header .logo {
+    margin-top: -3%;
+    position: relative;
+    font-weight: 700;
+    color: black;
+    text-decoration: none;
+    font-size: 2em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: 0.6s;
+}
+
+header nav.menu {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+header nav.menu ul {
+    display: flex;
+    list-style: none;
+}
+
+header nav.menu ul.open {
+    display: block;
+    background-color: #FFF2D9;
+    border-radius: 20px;
+}
+
+header nav.menu ul li {
+    margin: 0 15px;
+}
+
+header nav.menu ul li a {
+    position: relative;
+    margin: 0 5px;
+    text-decoration: none;
+    color: black;
+    letter-spacing: 1px;
+    font-weight: 700;
+    transition: 0.6s;
+    font-size: 112%;
+}
+
+header .menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    margin-right: -28px;
+
+}
+
+header .menu-toggle .bar {
+    width: 25px;
+    height: 3px;
+    background-color: black;
+    margin: 3px 0;
+    transition: 0.4s;
+}
+
+header.sticky .menu-toggle .bar {
+    width: 25px;
+    height: 3px;
+    background-color: black;
+    margin: 3px 0;
+    transition: 0.4s;
+}
+
+@media (max-width: 1226px) {
+    header .menu-toggle {
+        display: flex;
+    }
+
+    header nav.menu ul {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: -87px;
+        width: 200px;
+        padding: 20px;
+        text-align: center;
+        transition: 0.6s;
+    }
+
+    header nav.menu ul.open {
+        display: block;
+        background-color: #FFF2D9;
+        border-radius: 20px;
+    }
+
+    header nav.menu ul li {
+        margin: 15px 0;
+    }
+
+    header.sticky nav.menu ul {
+        color: #000;
+    }
+}

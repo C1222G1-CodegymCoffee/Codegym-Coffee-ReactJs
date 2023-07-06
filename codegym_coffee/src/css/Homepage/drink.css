@@ -1,0 +1,45 @@
+.form-product {
+    box-shadow: 1px 3px 10px 5px rgba(0, 0, 0, 0.2);
+    height: 100%;
+    background-color: #FFF2D9;
+}
+
+.warning {
+    color: red;
+}
+
+@media screen and (max-width: 1100px) {
+    .container {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    .form-product {
+        box-shadow: none;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .form-product .col-3 {
+        width: 50%;
+        text-align: left !important;
+    }
+
+    .kind-list {
+        width: 50% !important;
+        margin: auto;
+    }
+
+    .col-8 {
+        margin: auto !important;
+    }
+}
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}

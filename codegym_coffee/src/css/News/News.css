@@ -1,0 +1,127 @@
+#thong body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+
+}
+
+#thong h1 {
+    text-align: center;
+}
+
+
+#thong .form-container {
+    max-width: 850px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 1px 3px 10px 5px rgba(0, 0, 0, 0.2);
+    margin-top: 120px !important;
+}
+
+#thong .form-group {
+    margin-bottom: 20px;
+}
+
+#thong .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    color: black;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    text-shadow: 4px 4px 0px white, 7px 7px 0px rgba(0, 0, 0, 0.2);
+}
+
+#thong .form-group input[type="text"],
+#thong .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#thong .form-group textarea {
+    height: 150px;
+}
+
+/*#thong.form-group button {*/
+/*    padding: 10px 20px;*/
+/*    background-color: #4CAF50;*/
+/*    color: white;*/
+/*    border: none;*/
+/*    cursor: pointer;*/
+/*    border-radius: 4px;*/
+/*}*/
+
+#thong custom-header {
+    background-color: #4c8bf5; /* Màu gradient đầu */
+    background-image: linear-gradient(to right, #4c8bf5, #55a7f9); /* Gradient màu từ trái sang phải */
+    color: white; /* Màu chữ */
+    padding: 10px; /* Khoảng cách giữa viền và chữ */
+    background-color: #4c8bf5;
+}
+
+#news{
+    width: 80%;
+}
+.foodImg #news{
+    width:1200px;
+    height: 100%;
+}
+.h1ForService  #news {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    color: #7BF70E;
+    text-transform: uppercase;
+}
+.pService  #news{
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 15%;
+    margin-bottom: 40px;
+    color: #3C3F41;
+    text-transform: uppercase;
+}
+.titleService  #news{
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    color: black;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    text-shadow: 4px 4px 0px white, 7px 7px 0px rgba(0, 0, 0, 0.2);
+}
+@media (max-width: 1079px) {
+    #news{
+        margin-top: 10%;
+    }
+    .pService{
+        margin-top: -3%;
+    }
+}
+
+#news, ::after,::before{
+    z-index: 1;
+    min-height: 0px;
+    position: relative;
+    background-size: cover;
+    background-color: #FFF2D9;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center center;
+    overflow: hidden;
+}
+
+#listNews .container {
+    margin-top: 120px;
+}

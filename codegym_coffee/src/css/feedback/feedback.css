@@ -1,0 +1,61 @@
+
+.feedback-content{
+    width: 45%;
+}
+.banner_image_feedback img  {
+    max-width: 100%;
+    height: auto;
+    animation: updown 1s infinite alternate;
+}
+
+.form-items {
+    border: 3px solid #fff;
+    padding: 40px;
+    width: 100%;
+    min-width: 540px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    text-align: left;
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+    height: 100%;
+    background: #FFF2D9;
+    overflow: hidden;
+}
+
+.title {
+    font-family: "Roboto Light";
+    text-align: left;
+    font-size: 42px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.title-p {
+    font-family: "Roboto Light";
+    text-align: left;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 20px;
+    margin-bottom: 30px;
+}
+
+.input-feedback {
+    width: 100%;
+    padding: 9px 20px;
+    text-align: left;
+    background-color: white;
+    font-size: 15px;
+    margin-top: 16px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+}
+.btn-create-feedback:hover {
+    box-shadow: none !important;
+    transform: scale(1.05);
+}
+
+#createFeedbackPage .container {
+    margin-top: 120px;
+}

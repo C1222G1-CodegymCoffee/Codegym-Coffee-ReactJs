@@ -1,0 +1,130 @@
+/*@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,700;1,400&display=swap');*/
+
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#loginPage {
+    margin-top: 120px;
+}
+
+#loginPage .text-forgot-password {
+    color: silver;
+}
+
+#loginPage .bg-modal {
+    background-color: #FDF0D3 !important;
+}
+
+#loginPage .text-modal {
+    color: #AA803B;
+}
+
+#loginPage .fs-15 {
+    font-size: 14px !important;
+}
+
+#loginPage .fs-10 {
+    font-size: 10px !important;
+}
+
+#loginPage .br-10 {
+    border-radius: 10px;
+}
+
+#loginPage .content {
+    background-color: #181A1B;
+    max-width: 80%;
+    width: 80%;
+    height: 450px;
+    margin: auto !important;
+    border-radius: 10px;
+    box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.5);
+    background-image: url(../../image/image_login.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: relative;
+}
+#loginPage .form-custom {
+    border-radius: 0px !important;
+    border: none !important;
+    border-bottom: 1px solid white !important;
+    background-color: transparent!important;
+    color: white !important;
+}
+#loginPage .form-custom::placeholder {
+    color: white !important;
+    opacity: 1;
+}
+#loginPage .form-custom:focus {
+    color: white;
+    background-color: #fff;
+    border-color: transparent;
+    outline: 0;
+    box-shadow: none !important;
+}
+#loginPage h1 {
+    font-weight: 700 !important;
+    color: white;
+}
+#loginPage form {
+    margin: 0 40px;
+}
+#loginPage .modal-header {
+    border-bottom: none !important;
+}
+
+.modal-footer {
+    border-top: none !important;
+}
+
+.modal-body {
+    padding: 0 1rem !important;
+}
+
+#loginPage span.password-icon {
+    color: black !important;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 10px;
+    top:10px;
+    z-index: 88;
+}
+
+
+#loginPage .button {
+    padding: 10px 25px;
+    border-radius: 50px !important;
+    border: 0;
+    background-color: white;
+    box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 15px;
+    font-weight: bold;
+    transition: all .5s ease;
+    color: #454B4B;
+}
+
+#loginPage .button:hover {
+    background-color: #b6751b;
+    color: hsl(0, 0%, 100%);
+}
+
+#loginPage .button:active {
+    letter-spacing: 3px;
+    background-color: #b6751b;
+    color: hsl(0, 0%, 100%);
+}
+#loginPage .icon-custom{
+    margin-top: 5px;
+    border-bottom: 1px solid white;
+}
+#loginPage .modal-content {
+    width: 70%;
+}
