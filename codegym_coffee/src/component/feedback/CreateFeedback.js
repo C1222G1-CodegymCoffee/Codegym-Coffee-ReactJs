@@ -65,7 +65,7 @@ export function CreateFeedback() {
 
 
     return (
-        <>
+        <div className='mx-auto'>
             <Formik
                 initialValues={{
                     codeFeedback: "F" + randomNum,
@@ -84,8 +84,8 @@ export function CreateFeedback() {
                         .max(99, "Ho va Ten khong duoc qua 99 ky tu"),
 
                     email: Yup.string()
-                        .min(20, "Email ít nhất 10 ký tự")
-                        .max(99, "Email tối đa 99 ký tự")
+                        .min(5, "Email ít nhất 5 ký tự")
+                        .max(50, "Email tối đa 50 ký tự")
                         .matches(
                             /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
                             "Email phai dung dinh dang xxx@gmail.com")
@@ -105,7 +105,7 @@ export function CreateFeedback() {
                     await saveFeedback(newValue);
                     Swal.fire({
                         icon: 'success',
-                        title: 'Gửi phản hồi thành công',
+                        title: 'Gửi phản hồi thành công, xin cảm ơn',
                         showConfirmButton: false,
                         timer: 1500
                     })
@@ -118,12 +118,12 @@ export function CreateFeedback() {
                     };
 
                     return (
-                        <div className="form-body">
+                        <div className="form-body" id="createFeedbackPage">
                             <div className="container">
-                                <div className="banner_image_feedback">
-                                    <img src="/Homepage/img_01.png"/>
-                                </div>
-                                <div className="feedback-content">
+                                {/*<div className="banner_image_feedback">*/}
+                                {/*    <img src="/Homepage/img_01.png"/>*/}
+                                {/*</div>*/}
+                                <div className="feedback-content mx-auto">
                                     <div className="form-items">
                                         <h3 className="title">Phản hồi</h3>
                                         <p className="title-p">Điền đầy đủ thông tin ở bên dưới.</p>
@@ -234,6 +234,6 @@ export function CreateFeedback() {
                     );
                 }}
             </Formik>
-        </>
+        </div>
     )
 }

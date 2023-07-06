@@ -1,9 +1,8 @@
 import request from "../request";
 
 const detail = () => {
-    const token = localStorage.getItem('token')
     try {
-        const res = request.get('/v2/employee/detail',
+        const res = request.get('/employee/detail',
             {
                 headers:
                     {
@@ -17,9 +16,8 @@ const detail = () => {
     }
 }
 const update = (value) => {
-    const token = localStorage.getItem('token')
     try {
-        const res = request.patch('/v2/employee/update',{...value}
+        const res = request.patch('/employee/update',{...value}
         ,
             {
                 headers:
@@ -34,9 +32,8 @@ const update = (value) => {
     }
 }
 const updatePassword = (value) => {
-    const token = localStorage.getItem('token')
     try {
-        const res = request.put('/v2/account/change-password',{...value}
+        const res = request.put('/account/change-password',{...value}
         ,
             {
                 headers:

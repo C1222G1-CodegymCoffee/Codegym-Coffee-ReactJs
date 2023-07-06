@@ -52,6 +52,11 @@ function Login() {
             })
     }
 
+    if (!!sessionStorage.getItem("TOKEN")) {
+        navigate('/');
+        return null;
+    }
+
     return (
         <div className="container" id="loginPage">
             <div className="content row w-500">

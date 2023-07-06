@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const findAllPosition = async () => {
-    const res = await axios.get(`http://localhost:8080/api/admin/position`, {
+    const res = await axios.get(`http://localhost:8080/position`, {
         headers:
             {
                 'Authorization': 'Bearer ' + sessionStorage.getItem("TOKEN")
@@ -42,7 +42,7 @@ const deleteByIdEmployee = async (idDelete) => {
 }
 const findByEmployee = async (nameSearch, nameAccount, phoneNumber) => {
     try {
-        const res = await axios.get(`http://localhost:8080/api/admin/employee/search/${nameSearch}&${nameAccount}&${phoneNumber}`,
+        const res = await axios.get(`http://localhost:8080/api/admin/employee/search?nameEmployee=${nameSearch}&nameAccount=${nameAccount}&phoneNumber=${phoneNumber}`,
             {
                 headers:
                     {

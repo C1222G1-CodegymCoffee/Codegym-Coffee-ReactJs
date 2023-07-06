@@ -25,6 +25,7 @@ import {CreateFeedback} from "./component/feedback/CreateFeedback";
 import EmployeeInformation from "./component/employee/EmployeeInformation";
 import Page403 from './component/login/Page403';
 import {Footer} from "./component/Homepage/Footer";
+import {BillDT} from "./component/bill/BillDT";
 
 function App() {
     return (
@@ -42,13 +43,14 @@ function App() {
                 <Route path="/menu" element={<DisplayMenu/>}></Route>
                 <Route path="/reset_password" element={<ResetPassword/>}></Route>
                 <Route path="/login" element={<Login/>}></Route>
-                <Route path="/news" element={<ListNews/>}></Route>
+                <Route path="/news" element={<NewsCreate/>}></Route>
                 <Route path="/createNews" element={<NewsCreate/>}/>
                 <Route path="/statistical" element={<Example/>}/>
                 <Route path="/createProduct" element={<CreateProduct/>}></Route>
                 <Route path="/editProduct/:idProduct" element={<EditProduct/>}></Route>
                 <Route path="/profile" element={<EmployeeInformation />} />
                 <Route path="/accessDenied" element={<Page403 />} />
+                <Route path="/billDetail" element={<BillDT />} />
             </Routes>
             <Footer/>
           <ToastContainer />

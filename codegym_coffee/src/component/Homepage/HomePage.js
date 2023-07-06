@@ -9,14 +9,14 @@ import {NewProduct} from "./NewProduct";
 import {ListNews} from "../News/ListNews";
 
 
-export const HomePage = () =>{
-    return(
+export const HomePage = () => {
+    return (
         <>
 
             <BackgroundHeader/>
             <section id="topProduct"><TopProduct/></section>
             <section id="newProduct"><NewProduct/></section>
-            <News/>
+            <ListNews/>
         </>
 
     )

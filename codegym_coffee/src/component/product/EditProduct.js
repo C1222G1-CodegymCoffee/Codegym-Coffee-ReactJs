@@ -1,19 +1,14 @@
-import { Formik, Form, Field, ErrorMessage } from "formik"
-import "../../css/Homepage/drink.css"
-import * as productService from "../../service/ProductService"
-import "react-toastify/dist/ReactToastify.css"
-import * as Yup from "yup";
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { useEffect, useState } from "react";
 import { ColorRing } from "react-loader-spinner";
-import { useEffect, useState } from "react"
-import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
+import {useNavigate, useParams} from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";
+import * as Yup from "yup";
+import "../../css/Homepage/drink.css";
 import { storage } from "../../firebase";
-import { useParams } from "react-router-dom";
-import Swal from "sweetalert2"
-import { Link } from 'react-router-dom';
-import { color } from "chart.js/helpers";
-
-
-
+import * as productService from "../../service/ProductService";
 
 export function EditProduct() {
     let param = useParams();
@@ -24,6 +19,8 @@ export function EditProduct() {
     const [flag, setFlag] = useState(false)
     const [imgErr, setImgErr] = useState('')
     const [productTypeDTO, setProductTypeDTO] = useState([]);
+    let navigate = useNavigate();
+
 
     useEffect(() => {
         const getproductTypeDTO = async () => {
@@ -95,9 +92,8 @@ export function EditProduct() {
                 validationSchema={
                     Yup.object({
                         ingredient: Yup.string().required("Vui lòng nhập thành phần")
-                            .matches(/^[^0-9]*$/, "Thành phần không được chứa số")
-                            .min(5, "Thành phần phải nhiều hơn 5 từ")
-                            .max(30, "Thành phần không dài quá 30 từ"),
+                            .matches(/^[^0-9]*$/, "Thành phần không được chứa số"),
+
                         nameProduct: Yup.string().required("Vui lòng nhập tên món").min(5, "Tên món phải nhiều hơn 5 từ")
                             .max(20, "Tên món không dài quá 20 từ"),
                         price: Yup.string().required("Vui lòng nhập giá"),
@@ -127,9 +123,10 @@ export function EditProduct() {
                             await productService.updateProduct(newValue);
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Thanh cong'
+                                title: 'Cập nhật món thành công'
                             })
                             setSubmitting(false)
+                            navigate('/menu')
                         } catch (error) {
                             console.log(error);
                         }
@@ -141,7 +138,7 @@ export function EditProduct() {
             >
 
                 {({ isSubmitting }) => (
-                    <div className="container">
+                    <div className="container" style={{marginTop:"120px"}}>
                         <div className="container my-5 form-product" style={{ maxWidth: 1000 }}>
                             <div className="container">
                                 <div className="content" style={{ maxWidth: 1000 }}>
@@ -255,7 +252,7 @@ export function EditProduct() {
                                                 <div className="form-group" style={{ paddingTop: 24 }}>
                                                     <div className="d-flex align-items-center mb-1">
                                                         <label htmlFor="ingredient" className="fw-bold">
-                                                            Thành phần:
+                                                            Mô tả:
                                                         </label>
                                                         <label style={{ color: "red" }}>*</label>
                                                     </div>

@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import '../../css/Homepage/header.css';
+import React, {useEffect, useState} from "react";
+import "../../css/Homepage/header.css";
 import {Link} from "react-router-dom";
 
 export const Header = () => {
@@ -55,42 +55,78 @@ export const Header = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
+    const logout = () => {
+        sessionStorage.removeItem("TOKEN");
+        sessionStorage.removeItem("USERNAME");
+        sessionStorage.removeItem("ROLES");
+        window.location.href = '/';
+    };
+
     return (
         <header className={isMenuOpen ? "open" : ""}>
-            <Link to="/" className="logo"><img src="/Homepage/logo.png" alt={""}/></Link>
+            <Link to="/" className="logo">
+                <img src="/Homepage/logo.png" alt={""}/>
+            </Link>
             <nav className="menu">
                 <ul className={isMenuOpen ? "open" : ""}>
-                    {
-                        sessionStorage.getItem("ROLES") === "ROLE_ADMIN" && (
-                          <>
-                              <li><Link to="/sale">Bán hàng</Link></li>
-                              <li><Link to="/bill">Hóa đơn</Link></li>
-                              <li><Link to="/news">Bài đăng</Link></li>
-                              <li><Link to="/menu">Sản phẩm</Link></li>
-                              <li><Link to="/feedback">Phản hồi</Link></li>
-                              <li><Link to="/statistical">Thu nhập</Link></li>
-                              <li><Link to="/employee">Quản lí nhân viên</Link></li>
-                          </>
-                        )
-                    }
+                    {sessionStorage.getItem("ROLES") === "ROLE_ADMIN" && (
+                        <>
+                            <li>
+                                <Link to="/sale">Bán hàng</Link>
+                            </li>
+                            <li>
+                                <Link to="/bill">Hóa đơn</Link>
+                            </li>
+                            <li>
+                                <Link to="/news">Bài đăng</Link>
+                            </li>
+                            <li>
+                                <Link to="/menu">Sản phẩm</Link>
+                            </li>
+                            <li>
+                                <Link to="/feedback">Phản hồi</Link>
+                            </li>
+                            <li>
+                                <Link to="/statistical">Thu nhập</Link>
+                            </li>
+                            <li>
+                                <Link to="/employee">Quản lí nhân viên</Link>
+                            </li>
+                            <li>
+                                <Link to="/profile">{sessionStorage.getItem("USERNAME")}</Link>
+                            </li>
+                            <li>
+                                <Link onClick={() => logout()}>Đăng xuất</Link>
+                            </li>
+                        </>
+                    )}
 
-                    {
-                        sessionStorage.getItem("ROLES") === "ROLE_STAFF" && (
-                            <>
-                                <li><Link to="/sale">Bán hàng</Link></li>
-                                <li><Link to="/news">Bài đăng</Link></li>
-                            </>
-                        )
-                    }
-                    {
-                        !sessionStorage.getItem("TOKEN") && (
-                            <>
-                                <li><Link to="/news">Bài đăng</Link></li>
-                                <li><Link to="/menu">Sản phẩm</Link></li>
-                                <li><Link to="/login">Đăng nhập</Link></li>
-                            </>
-                        )
-                    }
+                    {sessionStorage.getItem("ROLES") === "ROLE_STAFF" && (
+                        <>
+                            <li>
+                                <Link to="/sale">Bán hàng</Link>
+                            </li>
+                            <li>
+                                <Link to="/news">Bài đăng</Link>
+                            </li>
+                            <li>
+                                <Link to="/profile">{sessionStorage.getItem("USERNAME")}</Link>
+                            </li>
+                            <li>
+                                <Link onClick={() => logout()}>Đăng xuất</Link>
+                            </li>
+                        </>
+                    )}
+                    {!sessionStorage.getItem("TOKEN") && (
+                        <>
+                            <li>
+                                <Link to="/menu">Sản phẩm</Link>
+                            </li>
+                            <li>
+                                <Link to="/login">Đăng nhập</Link>
+                            </li>
+                        </>
+                    )}
                 </ul>
                 <div className="menu-toggle" onClick={toggleMenu}>
                     <div className="bar"></div>

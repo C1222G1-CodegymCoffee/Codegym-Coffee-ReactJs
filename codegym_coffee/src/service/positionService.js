@@ -1,8 +1,13 @@
 import request from "../request";
-const findAll=()=>{
-    // const token = localStorage.getItem('token')
+
+const findAll = () => {
     try {
-        return request.get('/position')
+        return request.get('/position', {
+            headers:
+                {
+                    'Authorization': 'Bearer ' + sessionStorage.getItem("TOKEN"),
+                },
+        })
     } catch (error) {
         console.log(error);
     }

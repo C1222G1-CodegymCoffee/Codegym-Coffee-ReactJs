@@ -1,5 +1,4 @@
 import axios from "axios";
-import {log10} from "chart.js/helpers";
 
 const addAccount = async (value) => {
     await  axios.post(`http://localhost:8080/api/admin/account`,{ ...value })
