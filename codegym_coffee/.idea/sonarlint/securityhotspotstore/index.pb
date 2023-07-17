@@ -17,11 +17,6 @@ e
 5src/component/service_API/employee/EmployeeService.js,a\b\ab05ac1100c89034a573f820c112527051cff685
 d
 4src/component/service_API/employee/AccountService.js,2\d\2d6c17df8d61106631e1daf271ea829729061eeb
-9
-	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
-:
-
-src/App.js,1\e\1e43fa63aecd2127be034b3fb9d4caa172275714
 P
  src/component/Homepage/Header.js,d\3\d38e694270c66b0bf14559ec2014876e6dda13bf
 R
